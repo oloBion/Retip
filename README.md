@@ -1,24 +1,7 @@
 # Retip
 Retip (Retention Time prediction for metabolomics) github
----
-title: "Retip - REtention TIme Prediction"
+
 author: "Paolo Bonini, Tobias Kind and Dinesh Barupal"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-
-vignette: >
-  %\VignetteIndexEntry{Retip workflow}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-library(Retip)
-```
 
 
 ## Introduction
