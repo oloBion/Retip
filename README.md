@@ -1,7 +1,8 @@
 # Retip
 Retip - Retention Time prediction for metabolomics
 
-author: "Paolo Bonini, Tobias Kind and Dinesh Barupal"
+Authors: "Paolo Bonini, Tobias Kind, Dinesh Barupal, Hirishi Tsugawa, Oliver Fiehn"
+
 
 
 ## Introduction
@@ -27,9 +28,15 @@ You need a simple excel with at least 300 hundred compounds acquired in your chr
 
 Just like this: 
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(HILIC,5))
-```
+| NAME                                         | InchIKey                    | SMILES                          | RT       |
+|----------------------------------------------|-----------------------------|---------------------------------|----------|
+| (2-oxo-2,3-dihydro-1H-indol-3-yl)acetic acid | ILGMGHZPXRDCCS-UHFFFAOYSA-N | C1=CC=C2C(=C1)C(C(=O)N2)CC(=O)O | 2.019083 |
+| 1,1-Dimethyl-4-phenylpiperazinium            | WVHNHHJEHFWYHH-UHFFFAOYSA-N | CC1C(NC(CN1)C2=CC=CC=C2)C       | 2.60795  |
+| 1,2-Cyclohexanediol                          | PFURGBBHAOXLIO-OLQVQODUSA-N | C1CC[C@@H]([C@@H](C1)O)O        | 4.87655  |
+| 1,2-Cyclohexanedione                         | OILAIQUEIWYQPH-UHFFFAOYSA-N | C1CCC(=O)C(=O)C1                | 5.772267 |
+| 1,3,7-Trimethyluric acid                     | BYXCFUMGEBZDDI-UHFFFAOYSA-N | CN1C2=C(NC1=O)N(C(=O)N(C2=O)C)C | 1.827733 |
+| 1,3 Cyclohexanedione                         | HJSLFCCWAKVHIW-UHFFFAOYSA-N | C1CC(=O)CC(=O)C1                | 1.473133 |
+| 1,4-Cyclohexanedicarboxylic acid             | PXGZQGDTEZPERC-UHFFFAOYSA-N | C1CC(CCC1C(=O)O)C(=O)O          | 1.560217 |
 
 I mean, simple is setting the excel with mandatory column to start with Retip; is not easy at all having more than 300 compounds annotated with retention time. This requires lot of time and investment. But if you are working in a big metabolomics lab you probably you have in your hands, and if you don’t... don’t worry about that. You can consider use the chromatographics methods you find in this work: FiehnHilic and Riken Plasma. Those method are fast and very generalist.You can easily set up in your lab buying few standards that are included in both library. Details of these amazing method in C18 and HILIC columns are included as pdf in Retip/inst/extdata. Look at that in your R folder.
 The main concept of this tip is avoid the needing to build a new chromatographic method with hundreds of standards. Simply follow Isaac Newton suggestion in 1675: "If I have seen further it is by standing on the shoulders of Giants."
