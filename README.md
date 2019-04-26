@@ -1,5 +1,5 @@
 # Retip
-Retip (Retention Time prediction for metabolomics) github
+Retip - Retention Time prediction for metabolomics
 
 author: "Paolo Bonini, Tobias Kind and Dinesh Barupal"
 
