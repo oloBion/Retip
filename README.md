@@ -1,13 +1,13 @@
 # Retip
-Retip - Retention Time prediction for metabolomics
+Retip - Retention Time Prediction for metabolomics
 
-Authors: "Paolo Bonini, Tobias Kind, Dinesh Barupal, Hirishi Tsugawa, Oliver Fiehn"
+Authors: Paolo Bonini, Tobias Kind,  Hirishi Tsugawa, Dinesh Barupal and Oliver Fiehn
 
 
 ## Introduction
 
-Retip is an R package useful to predict Retention Time in Liquid Chromatography. 
-It use 5 different machine learning algorithms to built a stable, accurate and fast RT prediction model:
+Retip is an R package for predicting Retention Time for small molecules in a Liquid Chromatography Mass Spectrometry analysis. 
+It uses 5 different machine learning algorithms to built a stable, accurate and fast RT prediction model:
 
 - Random Forest: a decision tree algorithms
 - BRNN: Bayesian Regularized Neural Network
@@ -15,7 +15,7 @@ It use 5 different machine learning algorithms to built a stable, accurate and f
 - lightGBM: a gradient boosting framework that uses tree based learning algorithms.
 - Keras: a high-level neural networks API for Tensorflow
 
-Retip also includes world leader metabolomics database like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB, STOFF
+Retip also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB and STOFF. 
 
 
 ## Get started
