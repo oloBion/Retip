@@ -1,7 +1,7 @@
 # Retip
 Retip - Retention Time Prediction for metabolomics
 
-Authors: Paolo Bonini, Tobias Kind,  Hirishi Tsugawa, Dinesh Barupal and Oliver Fiehn
+Authors: Paolo Bonini, Tobias Kind,  Hiroshi Tsugawa, Dinesh Barupal and Oliver Fiehn
 
 
 ## Introduction
@@ -20,7 +20,7 @@ Retip also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, EC
 
 ## Get started
 
-In this tutorial you will learn how to convert your hundreds compounds RT library into thousand of interesting predicted molecules. 
+In this tutorial you will learn how to convert your hundreds compounds RT library into several thousand of interesting predicted molecules. 
 The first question you probably have is: what do I need to get started?
 
 You need a simple excel with at least 300 hundred compounds acquired in your chromatographic system with your custom method.
@@ -37,7 +37,7 @@ Just like this:
 | 1,3 Cyclohexanedione                         | HJSLFCCWAKVHIW-UHFFFAOYSA-N | C1CC(=O)CC(=O)C1                | 1.473133 |
 | 1,4-Cyclohexanedicarboxylic acid             | PXGZQGDTEZPERC-UHFFFAOYSA-N | C1CC(CCC1C(=O)O)C(=O)O          | 1.560217 |
 
-I mean, simple is setting the excel with mandatory column to start with Retip; is not easy at all having more than 300 compounds annotated with retention time. This requires lot of time and investment. But if you are working in a big metabolomics lab you probably you have in your hands, and if you don’t... don’t worry about that. You can consider use the chromatographics methods you find in this work: FiehnHilic and Riken Plasma. Those method are fast and very generalist.You can easily set up in your lab buying few standards that are included in both library. Details of these amazing method in C18 and HILIC columns are included as pdf in Retip/inst/extdata. Look at that in your R folder.
+I mean, simple is setting the excel with mandatory column to start with Retip; is not easy at all having more than 300 compounds annotated with retention time. This requires lot of time and investment. But if you are working in a big metabolomics lab you probably you have in your hands, and if you don’t... don’t worry about that. You can consider use the chromatographics methods you find in this work: FiehnHilic and Riken Plasma. Those method are fast and very generalist. You can easily set up in your lab buying few standards that are included in both library. Details of these amazing method in C18 and HILIC columns are included as supplementary matirial in our paper.
 The main concept of this tip is avoid the needing to build a new chromatographic method with hundreds of standards. Simply follow Isaac Newton suggestion in 1675: "If I have seen further it is by standing on the shoulders of Giants."
 In this way I invite others “Giants” Lab to do the same as Riken and Fiehn: if you are interested in your chromatographic method be available in Retip, send to us an email.
 
@@ -70,10 +70,10 @@ HILIC <- HILIC
 
 Now it's time to compute chemical descriptors with CDK a JAVA based open source project aimed at cheminformatics. 
 Several core people around the Steinbeck group developed the code. According to Ohloh the development took 136 Person , several years and translated into several million dollars in development cost.
-For you will be simple as type “getCD” .
+For you will be simple as type “getCD”.
 Depending on your library length and your PC it will take few minutes to several hours. 
 There is a counter to visualize the progress.
-It’s possible that the return table have less compounds respect the one you have start with. This is because some of yours smile code is not well formatted or for some compounds CDK is not able to calculate chemical descriptors. It’s a pity but in real life happens that you have to leave behind even your favorite compound. If happens with most of compounds check SMILES. They must not have *c* minuscule. Don’t ask why, is a DDT (don’t do that).
+It’s possible that the return table have less compounds respect the one you have start with. This is because some of yours smile code is not well formatted or for some compounds CDK is not able to calculate chemical descriptors. It’s a pity but in real life happens that you have to leave behind even your favorite compound. If happens with most of compounds check SMILES, or better use Pubchem interchange service to get good working SMILES for your library. Remember: clean your SMILES from salts and metal containing compounds before starting Retip to avoid cavities. 
 
 
 ```{r, collapse = TRUE, comment = "#>",eval = FALSE}
@@ -111,15 +111,15 @@ In green you will see your library, in blue the chosen target.
 
 ```{r, collapse = TRUE, comment = "#>",eval = FALSE}
 
-#> still not working
+#> Plot chem space, the first value is your library with Chemical descriptors calculated, 
+#> the second one is your target that can be a included database 
+#> or your favourite one that you have uploaded inside Retip
+
+chem.space(db_rt,t="HMDB")
 
 ```
 
-```{r,echo=FALSE}
-
-knitr::include_graphics("chemspace.jpeg")
-
-```
+![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/chemspace.jpeg)
 
 
 ## Center and scal - Optional - Warning
