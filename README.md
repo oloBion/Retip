@@ -37,10 +37,21 @@ In  case, you want to avoid building a library from scratch, you can utilize pub
 
 If you want your retention time libray to be included in Retip, please contact the Retip team (email). 
 
+## Retip installation
+It is suggested that RStudio IDE is used to run Retip. 
+
+Run these commands to install the Retip package. 
+
+```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+install.packages(Retip)
+
+```
+
+
+
 ## Retip workflow functions
 
-To run the Retip workflow for an input compound library, following functions need to be called in a sequence. It is suggested that RStudio IDE is used to run these commands. 
-
+To run the Retip workflow for an input compound library, following functions need to be called in a sequence. 
 1) prep.wizard
 2) getCD
 3) proc.data
