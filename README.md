@@ -6,8 +6,8 @@ Authors: Paolo Bonini, Tobias Kind,  Hiroshi Tsugawa, Dinesh Barupal and Oliver 
 
 ## Introduction
 
-Retip is an R package for predicting Retention Time for small molecules in a Liquid Chromatography Mass Spectrometry analysis. 
-It uses 5 different machine learning algorithms to built a stable, accurate and fast RT prediction model:
+Retip is an R package for predicting Retention Time (RT) for small molecules in a Liquid Chromatography Mass Spectrometry analysis. Predictred retention time can be useful in identifying unknowns and removing false positive annotations. 
+It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model:
 
 - Random Forest: a decision tree algorithms
 - BRNN: Bayesian Regularized Neural Network
@@ -17,17 +17,13 @@ It uses 5 different machine learning algorithms to built a stable, accurate and 
 
 Retip also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB and STOFF. 
 
-
 ## Get started
 
-In this tutorial you will learn how to convert your hundreds compounds RT library into several thousand of interesting predicted molecules. 
-The first question you probably have is: what do I need to get started?
+To use Retip, an user needs to prepare a compound retention time library in this format (link). The input file needs compound name, InChiKey, SMILES code and experimental retention time information for each compound. The input must be an MS Excel file.  Retip will use this input file to build a the model and will predict retention times for other biochemical databases or an input query list of compounds. It is suggested that the file has at least 300 compounds to build a good retention time prediction model. 
 
-You need a simple excel with at least 300 hundred compounds acquired in your chromatographic system with your custom method.
+Input file view :
 
-Just like this: 
-
-| NAME                                         | InchIKey                    | SMILES                          | RT       |
+| NAME                                         | InChIKey                    | SMILES                          | RT       |
 |----------------------------------------------|-----------------------------|---------------------------------|----------|
 | (2-oxo-2,3-dihydro-1H-indol-3-yl)acetic acid | ILGMGHZPXRDCCS-UHFFFAOYSA-N | C1=CC=C2C(=C1)C(C(=O)N2)CC(=O)O | 2.019083 |
 | 1,1-Dimethyl-4-phenylpiperazinium            | WVHNHHJEHFWYHH-UHFFFAOYSA-N | CC1C(NC(CN1)C2=CC=CC=C2)C       | 2.60795  |
@@ -37,11 +33,21 @@ Just like this:
 | 1,3 Cyclohexanedione                         | HJSLFCCWAKVHIW-UHFFFAOYSA-N | C1CC(=O)CC(=O)C1                | 1.473133 |
 | 1,4-Cyclohexanedicarboxylic acid             | PXGZQGDTEZPERC-UHFFFAOYSA-N | C1CC(CCC1C(=O)O)C(=O)O          | 1.560217 |
 
-I mean, simple is setting the excel with mandatory column to start with Retip; is not easy at all having more than 300 compounds annotated with retention time. This requires lot of time and investment. But if you are working in a big metabolomics lab you probably you have in your hands, and if you don’t... don’t worry about that. You can consider use the chromatographics methods you find in this work: FiehnHilic and Riken Plasma. Those method are fast and very generalist. You can easily set up in your lab buying few standards that are included in both library. Details of these amazing method in C18 and HILIC columns are included as supplementary matirial in our paper.
-The main concept of this tip is avoid the needing to build a new chromatographic method with hundreds of standards. Simply follow Isaac Newton suggestion in 1675: "If I have seen further it is by standing on the shoulders of Giants."
-In this way I invite others “Giants” Lab to do the same as Riken and Fiehn: if you are interested in your chromatographic method be available in Retip, send to us an email.
+In  case, you want to avoid building a library from scratch, you can utilize publicly availlable libraries from Riken, Japan (link) and the West Coast Metabolomics Center UC Davis, USA (link). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions. 
 
-So at this point you are ready to start this adventure.
+If you want your retention time libray to be included in Retip, please contact the Retip team (email). 
+
+## Retip workflow functions
+
+To run the Retip workflow for an input compound library, following functions need to be called in a sequence. It is suggested that RStudio IDE is used to run these commands. 
+
+1) prep.wizard
+2) getCD
+3) proc.data
+4) chem.space
+5) ...
+6) ...
+
 
 ## Set up Retip
 
@@ -64,7 +70,6 @@ RP <- readxl::read_excel("Riken_PlaSMA_RP.xlsx", col_types = c("text",
 HILIC <- HILIC
 
 ```
-
 
 ## Compute Chemical Descriptors with CDK
 
