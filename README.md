@@ -56,8 +56,11 @@ To run the Retip workflow for an input compound library, following functions nee
 2) getCD
 3) proc.data
 4) chem.space
-5) ...
-6) ...
+5) split training and testing
+6) fit.model
+7) p.model
+8) get.score
+9) RT.spell
 
 
 ## Set up Retip
