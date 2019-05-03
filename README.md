@@ -135,10 +135,10 @@ chem.space(db_rt,t="HMDB")
 
 ```
 
-![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/chemspace.jpeg)
+![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/chemspace.jpg)
 
 
-## Center and scal - Optional - Warning
+## Center and scale - Optional - Warning
 
 Centering and scaling can be useful for Keras model, but can decrease performance of others models. 
 Actually is a very delicate step that you have to pay a lot of attention. If you use this function you have to remember to include cesc option also when you are predicting your target database. If you don’t you will have a completely wrong prediction. 
