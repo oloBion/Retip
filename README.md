@@ -33,7 +33,7 @@ Input file view :
 | 1,3 Cyclohexanedione                         | HJSLFCCWAKVHIW-UHFFFAOYSA-N | C1CC(=O)CC(=O)C1                | 1.473133 |
 | 1,4-Cyclohexanedicarboxylic acid             | PXGZQGDTEZPERC-UHFFFAOYSA-N | C1CC(CCC1C(=O)O)C(=O)O          | 1.560217 |
 
-In  case, you want to avoid building a library from scratch, you can utilize publicly available libraries from Riken, Japan (link) and the West Coast Metabolomics Center UC Davis, USA (link). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions. 
+In  case, you want to avoid building a library from scratch, you can utilize publicly available libraries from Riken, Japan (http://plasma.riken.jp/) and the West Coast Metabolomics Center UC Davis, USA (http://mona.fiehnlab.ucdavis.edu/). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions. 
 
 If you want your retention time library to be included in Retip, please contact the Retip team (pb@ngalab.com). 
 
