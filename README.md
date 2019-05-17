@@ -1,12 +1,12 @@
 # Retip
 Retip - Retention Time Prediction for metabolomics
 
-Authors: Paolo Bonini, Tobias Kind,  Hiroshi Tsugawa, Dinesh Barupal and Oliver Fiehn
+Authors: Paolo Bonini, Tobias Kind, Hiroshi Tsugawa, Dinesh Barupal and Oliver Fiehn
 
 
 ## Introduction
 
-Retip is an R package for predicting Retention Time (RT) for small molecules in a Liquid Chromatography Mass Spectrometry analysis. Predictred retention time can be useful in identifying unknowns and removing false positive annotations. 
+Retip is an R package for predicting Retention Time (RT) for small molecules in a Liquid Chromatography Mass Spectrometry analysis. Predicted retention time can be useful in identifying unknowns and removing false positive annotations. 
 It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model:
 
 - Random Forest: a decision tree algorithms
@@ -19,7 +19,7 @@ Retip also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, EC
 
 ## Get started
 
-To use Retip, an user needs to prepare a compound retention time library in this format (link). The input file needs compound name, InChiKey, SMILES code and experimental retention time information for each compound. The input must be an MS Excel file.  Retip will use this input file to build a the model and will predict retention times for other biochemical databases or an input query list of compounds. It is suggested that the file has at least 300 compounds to build a good retention time prediction model. 
+To use Retip, an user needs to prepare a compound retention time library in the format below. The input file needs compound Name, InChiKey, SMILES code and experimental retention time information for each compound. The input must be an MS Excel file. Retip will use this input file to build a the model and will predict retention times for other biochemical databases or an input query list of compounds. It is suggested that the file has at least 300 compounds to build a good retention time prediction model. 
 
 Input file view :
 
@@ -33,9 +33,9 @@ Input file view :
 | 1,3 Cyclohexanedione                         | HJSLFCCWAKVHIW-UHFFFAOYSA-N | C1CC(=O)CC(=O)C1                | 1.473133 |
 | 1,4-Cyclohexanedicarboxylic acid             | PXGZQGDTEZPERC-UHFFFAOYSA-N | C1CC(CCC1C(=O)O)C(=O)O          | 1.560217 |
 
-In  case, you want to avoid building a library from scratch, you can utilize publicly availlable libraries from Riken, Japan (link) and the West Coast Metabolomics Center UC Davis, USA (link). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions. 
+In  case, you want to avoid building a library from scratch, you can utilize publicly available libraries from Riken, Japan (link) and the West Coast Metabolomics Center UC Davis, USA (link). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions. 
 
-If you want your retention time libray to be included in Retip, please contact the Retip team (email). 
+If you want your retention time library to be included in Retip, please contact the Retip team (pb@ngalab.com). 
 
 ## Retip installation
 It is suggested that RStudio IDE is used to run Retip. 
@@ -44,9 +44,18 @@ Run these commands to install the Retip package.
 
 ```{r, collapse = TRUE, comment = "#>",eval = FALSE}
 install.packages(Retip)
+# Also install Retip library from CRAN repository
+install.packages(Retiplib)
 
 ```
 
+To make the package fully works in R you need to install also:
+1) Keras. We suggest to do it with Anaconda, it's the easiest way. But also you can follow these instructions: https://keras.rstudio.com/
+
+2) LightGBM. We already know that is a very difficult to do it, and you have to find your way if you want to use this machine learning. Follow these instructions: 
+https://github.com/microsoft/LightGBM/tree/master/R-package
+
+If you can't install don't worry, you can use Xgboost, RandomForest and BRNN, that are installed together with Retip.
 
 
 ## Retip workflow functions
@@ -92,7 +101,7 @@ Several core people around the Steinbeck group developed the code. According to 
 For you will be simple as type “getCD”.
 Depending on your library length and your PC it will take few minutes to several hours. 
 There is a counter to visualize the progress.
-It’s possible that the return table have less compounds respect the one you have start with. This is because some of yours smile code is not well formatted or for some compounds CDK is not able to calculate chemical descriptors. It’s a pity but in real life happens that you have to leave behind even your favorite compound. If happens with most of compounds check SMILES, or better use Pubchem interchange service to get good working SMILES for your library. Remember: clean your SMILES from salts and metal containing compounds before starting Retip to avoid cavities. 
+It’s possible that the return table have less compounds respect the one you have start with. This is because some of yours smile code is not well formatted or for some compounds CDK is not able to calculate chemical descriptors. It’s a pity but in real life happens that you have to leave behind even your favorite compound. If happens with most of compounds check SMILES, or better use Pubchem interchange service to get good working SMILES for your library. Remember: clean your SMILES from salts and metal containing compounds before starting Retip to avoid cavities. You can use for this purpose ChemAxon standardizer, for example.
 
 
 ```{r, collapse = TRUE, comment = "#>",eval = FALSE}
@@ -273,7 +282,8 @@ knitr::include_graphics("error_hilic.jpeg")
 knitr::include_graphics("pred_real_hilic.jpeg")
 
 ```
-
+![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/error_hilic.jpeg)
+![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/pred_real_hilic.jpeg)
 
 You can do this for all your model and see the difference between them. You can also use training data or whole data to see how it change, even if the only really important is the testing one.
 
@@ -346,13 +356,13 @@ YES, as you have seen you can chose from different output style of your predicti
 
 Remember these few tips:
 
-- split your data into training and testing 80/20. And if you want to be as cool as Tobias&Dinesh use also an additional external dataset;
+- split your data into training and testing 80/20. And if you want to be cool use also an additional external dataset;
 - Don’t cheat yourself doing cherry picking with testing molecules that are out-liner and putting in training data. Leave at it is, is better know the truth than lie to yourself;
-- As you probably know R use set.seed when you have a random function. This is needed to get the same results when you do it again. There is a set seed before the split training/testing. If you modify you get a slightly different results in your models if the problematic compounds are inside training data. This is not a real cheat because is random driven but please don’t tell to Tobias...
+- As you probably know R use set.seed when you have a random function. This is needed to get the same results when you do it again. There is a set seed before the split training/testing. If you modify you get a slightly different results in your models if the problematic compounds are inside training data. This is not a real cheat because is random driven ;-)
 - Look at your smiles before import in Retip, if you have cavities will not work properly.
 
 Remember Leonardo Da Vinci suggestion:
 “I have been impressed with the urgency of doing. Knowing is not enough; we must apply. Being willing is not enough; we must do."
 
-Retip born to helps you in identification in metabolomics workflow, it’s not an exhibition of knowledge. The success of this app is helps in your work, in real word metabolomics experiments.
+Retip born to helps you in identification in metabolomics workflow, it’s not an exhibition of knowledge. The success of this app is if helps in your work, in real world metabolomics experiments.
 
