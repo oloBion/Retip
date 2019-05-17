@@ -126,7 +126,7 @@ In green you will see your library, in blue the chosen target.
 
 ```{r,echo=FALSE}
 
-knitr::include_graphics("chemspace.jpeg")
+knitr::include_graphics("chemspace.jpg")
 
 ```
 

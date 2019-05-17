@@ -5,10 +5,15 @@ Version: 0.3.0
 Authors@R: c(
     person("Paolo", "Bonini", , "pb@ngalab.com", c("aut", "cre")),
     person("Tobias", "Kind", , "tkind@ucdavis.edu",role = "aut"),
+    person("Hiroshi", "Tsugawa", , "hiroshi.tsugawa@riken.jp", role = "aut"),
     person("Dinesh", "Barupal", , "dinkumar@ucdavis.edu", role = "aut"),
     person("Oliver", "Fiehn", , "ofiehn@ucdavis.edu", role = "aut"))
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description:     Retip is an R package for predicting Retention Time (RT) for small molecules 
+    in a Liquid Chromatography Mass Spectrometry analysis. 
+    Predicted retention time can be useful in identifying unknowns and removing false positive annotations. 
+    It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model.
+    Retip also includes useful biochemical databases like: 
+    BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB and STOFF.
 License: CC BY-SA 4.0
 Encoding: UTF-8
 LazyData: true
