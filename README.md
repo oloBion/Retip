@@ -1,4 +1,7 @@
-![Image](https://github.com/PaoloBnn/Retip/blob/master/vignettes/Rerip_logo.png)
+![Retip Logo](/vignettes/Rerip_logo.png)
+Format: ![Alt Text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/Rerip_logo.png)
+
+
 
 # Retip - Retention Time Prediction for metabolomics
 
