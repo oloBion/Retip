@@ -1,7 +1,10 @@
-![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/Rerip_logo.png
+![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/Rerip_logo.png)
+
 # Retip - Retention Time Prediction for metabolomics
 
 Authors: Paolo Bonini, Tobias Kind, Hiroshi Tsugawa, Dinesh Barupal and Oliver Fiehn
+
+
 
 
 ## Introduction
@@ -16,6 +19,7 @@ It uses five different machine learning algorithms to built a stable, accurate a
 - Keras: a high-level neural networks API for Tensorflow
 
 Retip also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB and STOFF. 
+
 
 ## Get started
 
