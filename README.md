@@ -1,5 +1,5 @@
 ![Retip Logo](/vignettes/Rerip_logo.png)
-Format: ![Alt Text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/Rerip_logo.png)
+
 
 
 
@@ -57,9 +57,9 @@ install.packages(Retiplib)
 ```
 
 To make the package fully works in R you need to install also:
-1) Keras. We suggest to do it with Anaconda, it's the easiest way. But also you can follow these instructions: https://keras.rstudio.com/
+1. Keras. We suggest to do it with Anaconda, it's the easiest way. But also you can follow these instructions: https://keras.rstudio.com/
 
-2) LightGBM. We already know that is a very difficult to do it, and you have to find your way if you want to use this machine learning. Follow these instructions: 
+2. LightGBM. We already know that is a very difficult to do it, and you have to find your way if you want to use this machine learning. Follow these instructions: 
 https://github.com/microsoft/LightGBM/tree/master/R-package
 
 If you can't install don't worry, you can use Xgboost, RandomForest and BRNN, that are installed together with Retip.
@@ -68,15 +68,15 @@ If you can't install don't worry, you can use Xgboost, RandomForest and BRNN, th
 ## Retip workflow functions
 
 To run the Retip workflow for an input compound library, following functions need to be called in a sequence. 
-1) prep.wizard
-2) getCD
-3) proc.data
-4) chem.space
-5) split training and testing
-6) fit.model
-7) p.model
-8) get.score
-9) RT.spell
+1. prep.wizard
+2. getCD
+3. proc.data
+4. chem.space
+5. split training and testing
+6. fit.model
+7. p.model
+8. get.score
+9. RT.spell
 
 
 ## Set up Retip
@@ -154,7 +154,7 @@ chem.space(db_rt,t="HMDB")
 
 ```
 
-![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/chemspace.jpg)
+![Chemspace](/vignettes/chemspace.jpg)
 
 
 ## Center and scale - Optional - Warning
@@ -283,8 +283,8 @@ p.model(testing, m=brnn,title = "  RIKEN PLASMA")
 
 ```
 
-![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/error_hilic.jpeg)
-![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/pred_real_hilic.jpeg)
+![error hilic](/vignettes/error_hilic.jpeg)
+![predreal hilic](/vignettes/pred_real_hilic.jpeg)
 
 You can do this for all your model and see the difference between them. You can also use training data or whole data to see how it change, even if the only really important is the testing one.
 
@@ -299,7 +299,7 @@ You have 3 options to make a prediction:
 - for downloaded mona.msp 
 - for a Retip included database 
 
-1) In the first case you have to import your excel with 3 mandatory columns NAME INCHKEY and SMILES, compute CD and then make the prediction. Just like this:
+1. In the first case you have to import your excel with 3 mandatory columns NAME INCHKEY and SMILES, compute CD and then make the prediction. Just like this:
 
 
 ```{r}
@@ -316,7 +316,7 @@ pathogen_box_pred <- RT.spell(training,pathogen_box_desc,model=keras)
 
 ```
 
-2) In the second case you have to put your msp downloaded from Mona inside your project folder. First function is needed to extract information from msp and build input table. Then you have to compute CD, make the prediction and incorporate again inside msp. In this way the msp you have in your project folder is ready to be used for compound identification with MSMS and Retention time prediction.
+2. In the second case you have to put your msp downloaded from Mona inside your project folder. First function is needed to extract information from msp and build input table. Then you have to compute CD, make the prediction and incorporate again inside msp. In this way the msp you have in your project folder is ready to be used for compound identification with MSMS and Retention time prediction.
 Here an example:
 
 ```{r}
