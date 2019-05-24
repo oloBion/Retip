@@ -48,7 +48,7 @@ Run these commands to install the Retip package.
 
 ```{r, collapse = TRUE, comment = "#>",eval = FALSE}
 install.packages(Retip)
-# Also install Retip library from CRAN repository
+#> Also install Retip library from CRAN repository
 install.packages(Retiplib)
 
 ```
@@ -280,12 +280,6 @@ p.model(testing, m=brnn,title = "  RIKEN PLASMA")
 
 ```
 
-```{r,echo=FALSE}
-
-knitr::include_graphics("error_hilic.jpeg")
-knitr::include_graphics("pred_real_hilic.jpeg")
-
-```
 ![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/error_hilic.jpeg)
 ![alt text](https://github.com/PaoloBnn/Retip/blob/master/vignettes/pred_real_hilic.jpeg)
 
