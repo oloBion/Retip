@@ -46,7 +46,7 @@ It is suggested that RStudio IDE is used to run Retip.
 
 Run these commands to install the Retip package. 
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 install.packages(Retip)
 #> Also install Retip library from CRAN repository
 install.packages(Retiplib)
@@ -82,7 +82,7 @@ First of all you have execute function prepare.wizard that is needed to activate
 
 Then you have to import your custom excel file or use FiehnLab Hilic or Riken Plasma included library.
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 library(Retip)
 
 #>Starts parallel computing
@@ -108,7 +108,7 @@ There is a counter to visualize the progress.
 It’s possible that the return table have less compounds respect the one you have start with. This is because some of yours smile code is not well formatted or for some compounds CDK is not able to calculate chemical descriptors. It’s a pity but in real life happens that you have to leave behind even your favorite compound. If happens with most of compounds check SMILES, or better use Pubchem interchange service to get good working SMILES for your library. Remember: clean your SMILES from salts and metal containing compounds before starting Retip to avoid cavities. You can use for this purpose ChemAxon standardizer, for example.
 
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #> Calculate Chemical Descriptors from CDK
 descs <- getCD(HILIC)
@@ -121,7 +121,7 @@ Some machine learning model didn’t like NA value, or low variance columns.
 So they are eliminated to improve model performance.
 This is done in Retip function proc.data 
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #> Clean dataset from NA and low variance value
 db_rt <- proc.data(descs)
@@ -141,7 +141,7 @@ The answer is not easy and pass trough another question: is the chemical space o
 So we have created function chem.space to plot your indulged data into chemical reality. You can chose a target between several database^[BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB, STOFF]. 
 In green you will see your library, in blue the chosen target.
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #> Plot chem space, the first value is your library with Chemical descriptors calculated, 
 #> the second one is your target that can be a included database 
@@ -162,7 +162,7 @@ Actually is a very delicate step that you have to pay a lot of attention. If you
 Pay attention!
 
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #>################ Options center and scale data  ####################################
 
@@ -190,7 +190,7 @@ This is not new, is known from the Ancient Rome “divide et impera” (divide a
 We can use caret function createdatapartition as follow:
 
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #> Split in training and testing using caret::createDataPartition
 set.seed(101)
@@ -212,7 +212,7 @@ Don't worry too much about over fitting because we have done 10 times fold cross
 Each model have his advantage or disadvantage, it's simply depends on your data the one that fit better. 
 Have fun!
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #> Train Model
 
@@ -231,7 +231,7 @@ lightgbm <- fit.lightgbm(training,testing)
 
 OBS: if you are going to quit your R project and open again Lightgbm and Keras disappears and you have to compute it again...To avoid this problem you have to save yours models in this simple way:
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #> save an RF, XGBOOST, BRNN, LIGHTGBM models 
 saveRDS(lightgbm, "light_plasma.rds")
@@ -262,7 +262,7 @@ First of all check the scores with function get.score. Returns:
 The best model is always the first based on lower RMSE value.
 You can check only one model or all of them (maximum 5) at same time.
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #> first you have to put the testing daframe and then the name of the models you have computed
 stat <- get.score(testing,xgb,rf,brnn,keras,lightgbm)
@@ -272,7 +272,7 @@ stat <- get.score(testing,xgb,rf,brnn,keras,lightgbm)
 
 You can also visualize model performance in a plot using function p.model with testing dataframe.
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #> first you have to put the testing daframe and then the name of the models you want to visualize. 
 #> Last value is the title of the graphics.
@@ -299,7 +299,7 @@ You have 3 options to make a prediction:
 1) In the first case you have to import your excel with 3 mandatory columns NAME INCHKEY and SMILES, compute CD and then make the prediction. Just like this:
 
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #> import dataset
 
@@ -316,7 +316,7 @@ pathogen_box_pred <- RT.spell(training,pathogen_box_desc,model=keras)
 2) In the second case you have to put your msp downloaded from Mona inside your project folder. First function is needed to extract information from msp and build input table. Then you have to compute CD, make the prediction and incorporate again inside msp. In this way the msp you have in your project folder is ready to be used for compound identification with MSMS and Retention time prediction.
 Here an example:
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 
 db_mona <- prep.mona(msp="MoNA-export-CASMI_2016.msp")
@@ -332,7 +332,7 @@ addRT.mona(msp="MoNA-export-CASMI_2016.msp",mona_rt)
 The last option is the easiest one. We have computed for you more than 300k compounds to save your time and more important save electricity (we love nature). 
 You have just to chose a target database and a type of output: 
 
-```{r, collapse = TRUE, comment = "#>",eval = FALSE}
+```{r}
 
 #> example of Human Metabolome database predicted STILL NOT WORKING!!!!
 
