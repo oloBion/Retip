@@ -7,9 +7,9 @@
 
 Authors: Paolo Bonini(1), Tobias Kind(2), Hiroshi Tsugawa(3), Dinesh Barupal(2) and Oliver Fiehn(2)
 
-1. [http://www.ngalab.com/]
-2. [https://fiehnlab.ucdavis.edu/]
-3. [http://prime.psc.riken.jp/]
+1. [Link](http://www.ngalab.com/)
+2. [Link](https://fiehnlab.ucdavis.edu/)
+3. [Link](http://prime.psc.riken.jp/)
 
 
 ## Introduction
@@ -42,7 +42,7 @@ Input file view :
 | 1,3 Cyclohexanedione                         | HJSLFCCWAKVHIW-UHFFFAOYSA-N | C1CC(=O)CC(=O)C1                | 1.473133 |
 | 1,4-Cyclohexanedicarboxylic acid             | PXGZQGDTEZPERC-UHFFFAOYSA-N | C1CC(CCC1C(=O)O)C(=O)O          | 1.560217 |
 
-In  case, you want to avoid building a library from scratch, you can utilize publicly available libraries from Riken, Japan ([Link]http://plasma.riken.jp/) and the West Coast Metabolomics Center UC Davis, USA ([Link]http://mona.fiehnlab.ucdavis.edu/). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions. 
+In  case, you want to avoid building a library from scratch, you can utilize publicly available libraries from Riken, Japan [Link](http://plasma.riken.jp/) and the West Coast Metabolomics Center UC Davis, USA [Link](http://mona.fiehnlab.ucdavis.edu/). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions. 
 
 If you want your retention time library to be included in Retip, please contact the Retip team (pb@ngalab.com). 
 
@@ -59,10 +59,10 @@ install.packages(Retiplib)
 ```
 
 To make the package fully works in R you need to install also:
-1. Keras. We suggest to do it with Anaconda, it's the easiest way. But also you can follow these instructions: [https://keras.rstudio.com/]
+1. Keras. We suggest to do it with Anaconda, it's the easiest way. But also you can follow these instructions: [Link](https://keras.rstudio.com/)
 
 2. LightGBM. We already know that is a very difficult to do it, and you have to find your way if you want to use this machine learning. Follow these instructions: 
-[https://github.com/microsoft/LightGBM/tree/master/R-package]
+[Link](https://github.com/microsoft/LightGBM/tree/master/R-package)
 
 If you can't install don't worry, you can use Xgboost, RandomForest and BRNN, that are installed together with Retip.
 
@@ -143,7 +143,7 @@ It’s time to visualize your data and answer a two crucial question:
 - Can I use my library to predict the whole Human Metabolome Database? Or PlantCyc?
 
 The answer is not easy and pass trough another question: is the chemical space of my library large enough?
-So we have created function chem.space to plot your indulged data into chemical reality. You can chose a target between several database^[BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB, STOFF]. 
+So we have created function chem.space to plot your indulged data into chemical reality. You can chose a target between several database (BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB, STOFF). 
 In green you will see your library, in blue the chosen target.
 
 ```{r}
