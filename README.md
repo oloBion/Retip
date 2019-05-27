@@ -154,7 +154,7 @@ chem.space(db_rt,t="HMDB")
 
 ```
 
-![Chemspace](/vignettes/chemsp.jpg)
+![Chemspace](/vignettes/chemspace.jpeg)
 
 
 ## Center and scale - Optional - Warning
