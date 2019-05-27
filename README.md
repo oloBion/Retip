@@ -5,11 +5,11 @@
 
 # Retip - Retention Time Prediction for metabolomics
 
-Authors: Paolo Bonini(a), Tobias Kind(b), Hiroshi Tsugawa(c), Dinesh Barupal(a) and Oliver Fiehn(a)
+Authors: Paolo Bonini(1), Tobias Kind(2), Hiroshi Tsugawa(3), Dinesh Barupal(2) and Oliver Fiehn(2)
 
-a. [Link]http://www.ngalab.com/
-b. [Link]https://fiehnlab.ucdavis.edu/
-c. [Link]http://prime.psc.riken.jp/
+1. [http://www.ngalab.com/]
+2. [https://fiehnlab.ucdavis.edu/]
+3. [http://prime.psc.riken.jp/]
 
 
 ## Introduction
@@ -59,10 +59,10 @@ install.packages(Retiplib)
 ```
 
 To make the package fully works in R you need to install also:
-1. Keras. We suggest to do it with Anaconda, it's the easiest way. But also you can follow these instructions: [Link]https://keras.rstudio.com/
+1. Keras. We suggest to do it with Anaconda, it's the easiest way. But also you can follow these instructions: [https://keras.rstudio.com/]
 
 2. LightGBM. We already know that is a very difficult to do it, and you have to find your way if you want to use this machine learning. Follow these instructions: 
-[Link]https://github.com/microsoft/LightGBM/tree/master/R-package
+[https://github.com/microsoft/LightGBM/tree/master/R-package]
 
 If you can't install don't worry, you can use Xgboost, RandomForest and BRNN, that are installed together with Retip.
 
