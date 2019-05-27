@@ -5,14 +5,16 @@
 
 # Retip - Retention Time Prediction for metabolomics
 
-Authors: Paolo Bonini, Tobias Kind, Hiroshi Tsugawa, Dinesh Barupal and Oliver Fiehn
+Authors: Paolo Bonini(a), Tobias Kind(b), Hiroshi Tsugawa(c), Dinesh Barupal(a) and Oliver Fiehn(a)
 
-
+(a) http://www.ngalab.com/
+(b) https://fiehnlab.ucdavis.edu/
+(c) http://prime.psc.riken.jp/
 
 
 ## Introduction
 
-Retip is an R package for predicting Retention Time (RT) for small molecules in a Liquid Chromatography Mass Spectrometry analysis. Predicted retention time can be useful in identifying unknowns and removing false positive annotations. 
+Retip is an R package for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis. Retention time calculation can be useful in identifying unknowns and removing false positive annotations. 
 It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model:
 
 - Random Forest: a decision tree algorithms
