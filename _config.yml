@@ -2,3 +2,25 @@ theme: jekyll-theme-cayman
 plugins:
   - jekyll-seo-tag
   
+
+url: "https://www.retip.app/"
+baseurl: ""
+
+# Name of website
+title: Retip - Retention Time prediction for Metabolomics
+
+# Short description of your site
+description: Retip is an R package for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis.
+
+
+
+
+# --- Web Statistics Section --- #
+
+
+# Fill in your Google Analytics ID to track your website using GA
+google_analytics: "UA-140798017-1"
+
+# Google Tag Manager ID
+gtm: "GTM-T9KK2X5"
+
