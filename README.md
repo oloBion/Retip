@@ -7,9 +7,9 @@
 
 Authors: Paolo Bonini(a), Tobias Kind(b), Hiroshi Tsugawa(c), Dinesh Barupal(a) and Oliver Fiehn(a)
 
-(a) http://www.ngalab.com/
-(b) https://fiehnlab.ucdavis.edu/
-(c) http://prime.psc.riken.jp/
+a. [Link]http://www.ngalab.com/
+b. [Link]https://fiehnlab.ucdavis.edu/
+c. [Link]http://prime.psc.riken.jp/
 
 
 ## Introduction
@@ -42,7 +42,7 @@ Input file view :
 | 1,3 Cyclohexanedione                         | HJSLFCCWAKVHIW-UHFFFAOYSA-N | C1CC(=O)CC(=O)C1                | 1.473133 |
 | 1,4-Cyclohexanedicarboxylic acid             | PXGZQGDTEZPERC-UHFFFAOYSA-N | C1CC(CCC1C(=O)O)C(=O)O          | 1.560217 |
 
-In  case, you want to avoid building a library from scratch, you can utilize publicly available libraries from Riken, Japan (http://plasma.riken.jp/) and the West Coast Metabolomics Center UC Davis, USA (http://mona.fiehnlab.ucdavis.edu/). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions. 
+In  case, you want to avoid building a library from scratch, you can utilize publicly available libraries from Riken, Japan ([Link]http://plasma.riken.jp/) and the West Coast Metabolomics Center UC Davis, USA ([Link]http://mona.fiehnlab.ucdavis.edu/). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions. 
 
 If you want your retention time library to be included in Retip, please contact the Retip team (pb@ngalab.com). 
 
@@ -59,10 +59,10 @@ install.packages(Retiplib)
 ```
 
 To make the package fully works in R you need to install also:
-1. Keras. We suggest to do it with Anaconda, it's the easiest way. But also you can follow these instructions: https://keras.rstudio.com/
+1. Keras. We suggest to do it with Anaconda, it's the easiest way. But also you can follow these instructions: [Link]https://keras.rstudio.com/
 
 2. LightGBM. We already know that is a very difficult to do it, and you have to find your way if you want to use this machine learning. Follow these instructions: 
-https://github.com/microsoft/LightGBM/tree/master/R-package
+[Link]https://github.com/microsoft/LightGBM/tree/master/R-package
 
 If you can't install don't worry, you can use Xgboost, RandomForest and BRNN, that are installed together with Retip.
 
