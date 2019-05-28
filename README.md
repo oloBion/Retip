@@ -5,10 +5,10 @@
 
 # Retip - Retention Time Prediction for metabolomics
 
-Authors: Paolo Bonini(1), Tobias Kind(2), Hiroshi Tsugawa(3), Dinesh Barupal(2) and Oliver Fiehn(2)
+Authors: Paolo Bonini(2), Tobias Kind(1), Hiroshi Tsugawa(3), Dinesh Barupal(1) and Oliver Fiehn(1)
 
-1. [NGAlab](http://www.ngalab.com/)
-2. [FiehnLab](https://fiehnlab.ucdavis.edu/)
+1. [FiehnLab](https://fiehnlab.ucdavis.edu/)
+2. [NGAlab](http://www.ngalab.com/)
 3. [Riken](http://prime.psc.riken.jp/)
 
 
@@ -339,7 +339,7 @@ You have just to chose a target database and a type of output:
 
 ```{r}
 
-#> example of Human Metabolome database predicted STILL NOT WORKING!!!!
+#> example of Human Metabolome database predicted
 
 hmdb_pred <- RT.spell(training,target="HMBD",model=keras,output="MSFINDER")
 
@@ -347,8 +347,8 @@ hmdb_pred <- RT.spell(training,target="HMBD",model=keras,output="MSFINDER")
 ```
 
 YES, as you have seen you can chose from different output style of your prediction. Now we have available:
-- "MSDIAL": identification with accurate Mass and RTP (RECOMANDED)
-- "MSFINDER": identification with accurate Mass, in silico fragmentation MS2 and RTP (RECOMANDED)
+- "MSDIAL": identification with accurate Mass and RTP (RECOMMENDED) [get MSDIAL](http://prime.psc.riken.jp/Metabolomics_Software/MS-DIAL/index2.html)
+- "MSFINDER": identification with accurate Mass, in silico fragmentation MS2 and RTP (RECOMMENDED) [get MSFINDER](http://prime.psc.riken.jp/Metabolomics_Software/MS-FINDER/index2.html)
 - "AGILENT": works with Mass Hunter software
 - "THERMO"
 - "WATERS"
