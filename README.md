@@ -5,7 +5,7 @@
 
 # Retip - Retention Time Prediction for metabolomics
 
-Authors: Paolo Bonini(2), Tobias Kind(1), Hiroshi Tsugawa(3), Dinesh Barupal(1) and Oliver Fiehn(1)
+Authors: [Paolo Bonini(2)](https://www.researchgate.net/profile/Paolo_Bonini2) , [Tobias Kind(1)](https://fiehnlab.ucdavis.edu/staff/kind), [Hiroshi Tsugawa(3)](https://www.researchgate.net/profile/Hiroshi_Tsugawa), [Dinesh Barupal(1)](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30) and [Oliver Fiehn(1)](https://fiehnlab.ucdavis.edu/staff/fiehn)
 
 1. [FiehnLab](https://fiehnlab.ucdavis.edu/)
 2. [NGAlab](http://www.ngalab.com/)
@@ -368,4 +368,3 @@ Remember Leonardo Da Vinci suggestion:
 “I have been impressed with the urgency of doing. Knowing is not enough; we must apply. Being willing is not enough; we must do."
 
 Retip born to helps you in identification in metabolomics workflow, it’s not an exhibition of knowledge. The success of this app is if helps in your work, in real world metabolomics experiments.
-
