@@ -1,8 +1,7 @@
 theme: jekyll-theme-cayman
 plugins:
   - jekyll-seo-tag
-  
-show_downloads: true
+ 
 
 url: "https://www.retip.app/"
 baseurl: ""
