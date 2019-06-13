@@ -47,21 +47,47 @@ In  case, you want to avoid building a library from scratch, you can utilize pub
 If you want your retention time library to be included in Retip, please contact the Retip team (pb@ngalab.com). 
 
 ## Retip installation
-It is suggested that RStudio IDE is used to run Retip. 
+It is suggested that RStudio IDE is used to run Retip.
+
+Download R and install (64 bit version Recommended):
+[CRAN](https://cran.r-project.org/)
+
+Download RStudio and install:
+[RStudio](https://www.rstudio.com/products/rstudio/download/#download)
+
+Download Java JDK and install:
+[Java_JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+
+Download Rtools and install:
+[RTools](https://cran.rstudio.com/bin/windows/Rtools/)
+
 
 Run these commands to install the Retip package. 
 
 ```{r}
-install.packages(Retip)
-#> Also install Retip library from CRAN repository
-install.packages(Retiplib)
+install.packages("devtools")
+install.packages("caret")
+install.packages("ggplot2")
+install.packages("rcdk")
+install.packages("stringi")
+install.packages("xgboost")
+install.packages("doParallel")
+install.packages("brnn")
+install.packages("dplyr")
+
+devtools::install_github("rstudio/keras")
+library(keras)
+install_keras()
+
+install.packages("https://github.com/Paolobnn/Retiplib/raw/master/Retiplib_0.2.1.tar.gz", repos = NULL , type = "source")
+
+install.packages("https://github.com/Paolobnn/Retip/raw/master/Retip_0.5.2.tar.gz", repos = NULL , type = "source")
 
 ```
 
 To make the package fully works in R you need to install also:
-1. Keras. We suggest to do it with Anaconda, it's the easiest way. But also you can follow these instructions: [Keras](https://keras.rstudio.com/)
 
-2. LightGBM. We already know that is a very difficult to do it, and you have to find your way if you want to use this machine learning. Follow these instructions: 
+1. LightGBM. We already know that is a very difficult to do it, and you have to find your way if you want to use this machine learning. Follow these instructions: 
 [LightGBM](https://github.com/microsoft/LightGBM/tree/master/R-package)
 
 If you can't install don't worry, you can use Xgboost, RandomForest and BRNN, that are installed together with Retip.
