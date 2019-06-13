@@ -62,7 +62,7 @@ Download Rtools and install:
 [RTools](https://cran.rstudio.com/bin/windows/Rtools/)
 
 
-Run these commands to install the Retip package. 
+Run these commands in RStudio console to install the Retip package. 
 
 ```{r}
 install.packages("devtools")
