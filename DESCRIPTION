@@ -29,11 +29,11 @@ Imports:
     Retiplib,
     dplyr
 Suggests: 
-    lightgbm,
     knitr,
     rmarkdown
-Additional_repositories: https://github.com/microsoft/LightGBM/tree/master/R-package,
-                        https://paolobnn.github.io/Retiplib/
+Enhances: 
+    lightgbm
+Additional_repositories: https://paolobnn.github.io/Retiplib/
 URL: https://www.retip.app
 VignetteBuilder: knitr
 
