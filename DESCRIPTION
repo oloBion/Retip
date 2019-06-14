@@ -26,14 +26,13 @@ Imports:
     xgboost,
     doParallel,
     brnn,
-    Retiplib,
     dplyr
 Suggests: 
     knitr,
     rmarkdown
 Enhances: 
-    lightgbm
-Additional_repositories: https://paolobnn.github.io/Retiplib/
+    lightgbm,
+    Retiplib
 URL: https://www.retip.app
 VignetteBuilder: knitr
 
