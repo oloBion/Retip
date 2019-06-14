@@ -1,0 +1,9 @@
+Package: Retip
+Version: 0.5.2
+Depends: R (>= 3.5), caret, ggplot2, rcdk, keras
+Imports: stringi, xgboost, doParallel, brnn, dplyr
+Suggests: knitr, rmarkdown
+Enhances: lightgbm, Retiplib
+License: CC BY 4.0
+MD5sum: 7525394bff269b5626d014d0dcc0b82f
+NeedsCompilation: no
