@@ -66,22 +66,11 @@ Run these commands in RStudio console to install the Retip package.
 
 ```{r}
 install.packages("devtools")
-install.packages("caret")
-install.packages("ggplot2")
-install.packages("rcdk")
-install.packages("stringi")
-install.packages("xgboost")
-install.packages("doParallel")
-install.packages("brnn")
-install.packages("dplyr")
+devtools::install_github("Paolobnn/Retiplib")
+devtools::install_github("Paolobnn/Retip")
 
-devtools::install_github("rstudio/keras")
 library(keras)
 install_keras()
-
-install.packages("https://github.com/Paolobnn/Retiplib/raw/master/Retiplib_0.2.1.tar.gz", repos = NULL , type = "source")
-
-install.packages("https://github.com/Paolobnn/Retip/raw/master/Retip_0.5.2.tar.gz", repos = NULL , type = "source")
 
 ```
 
