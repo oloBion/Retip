@@ -8,7 +8,7 @@
 Authors: [Paolo Bonini(2)](https://www.researchgate.net/profile/Paolo_Bonini2) , [Tobias Kind(1)](https://fiehnlab.ucdavis.edu/staff/kind), [Hiroshi Tsugawa(3)](https://www.researchgate.net/profile/Hiroshi_Tsugawa), [Dinesh Barupal(1)](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30) and [Oliver Fiehn(1)](https://fiehnlab.ucdavis.edu/staff/fiehn)
 
 1. [FiehnLab](https://fiehnlab.ucdavis.edu/)
-2. [NGAlab](http://www.ngalab.com/)
+2. [NGAlab](https://www.researchgate.net/lab/NGALAB-Paolo-Bonini)
 3. [Riken](http://prime.psc.riken.jp/)
 
 
