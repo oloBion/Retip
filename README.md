@@ -108,12 +108,14 @@ library(Retip)
 #>Starts parallel computing
 prep.wizard()
 
-#>import excel file with mandatory field
+# import excel file for training and testing data
+RP2 <- readxl::read_excel("Plasma_positive.xlsx", sheet = "lib_2", col_types = c("text", 
+                                                                              "text", "text", "numeric"))
+# import excel file for external validation set
+RP_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext", col_types = c("text", 
+                                                                                  "text", "text", "numeric"))
 
-RP <- readxl::read_excel("Riken_PlaSMA_RP.xlsx", col_types = c("text", 
-                                              "text", "text", "numeric"))
-
-#> or use HILIC database included
+#> or use HILIC database included in Retip
 HILIC <- HILIC
 
 ```
