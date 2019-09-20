@@ -1,7 +1,7 @@
 Package: Retip
 Type: Package
 Title: Retention Time Prediction for Metabolomics
-Version: 0.5.3
+Version: 0.5.4
 Authors@R: c(
     person("Paolo", "Bonini", , "pb@ngalab.com", c("aut", "cre")),
     person("Tobias", "Kind", , "tkind@ucdavis.edu",role = "aut"),

@@ -33,7 +33,7 @@ valids <- list(test = dtest)
 params <- list(objective = "regression", metric = "rmse")
 
 # building cross validation model
-modelcv <- lightgbm::lgb.cv(params, dtrain, nrounds=5000,nfold = 10, valids,verbose = 1, early_stopping_rounds = 1000, record = TRUE, eval_freq = 1L,stratified = TRUE)
+modelcv <- lightgbm::lgb.cv(params, dtrain, nrounds=5000,nfold = 10, valids,verbose = 1, early_stopping_rounds = 1000, record = TRUE, eval_freq = 1L,stratified = TRUE,max_depth=4,max_leaf=20,max_bin=100)
 
 # select the best iter in cross validation
 best.iter <- modelcv$best_iter
@@ -42,9 +42,10 @@ best.iter <- modelcv$best_iter
 params <- list(objective = "regression_l2",metric = "rmse")
 
 # building final model
-model <- lightgbm::lgb.train(params, dtrain, nrounds=best.iter, valids,verbose = 0, early_stopping_rounds =1000, record = TRUE, eval_freq = 1L)
+model <- lightgbm::lgb.train(params, dtrain, nrounds=best.iter, valids,verbose = 0, early_stopping_rounds =1000, record = TRUE, eval_freq = 1L,max_depth=4,max_leaf=20,max_bin=100)
 
 print(paste0("End training"))
+
 
 return(model)
 
