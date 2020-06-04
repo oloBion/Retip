@@ -5,6 +5,16 @@
 
 # Retip - Retention Time Prediction for metabolomics
 
+Published 10 May 2020 in Analytical Chemistry [link](https://doi.org/10.1021/acs.analchem.9b05765)
+
+Please cite: 
+
+Retip: Retention Time Prediction for Compound Annotation in Untargeted Metabolomics
+Paolo Bonini, Tobias Kind, Hiroshi Tsugawa, Dinesh Kumar Barupal, and Oliver Fiehn
+Analytical Chemistry 2020 92 (11), 7515-7522 
+DOI: 10.1021/acs.analchem.9b05765
+
+
 Authors: [Paolo Bonini(2)](https://www.researchgate.net/profile/Paolo_Bonini2) , [Tobias Kind(1)](https://fiehnlab.ucdavis.edu/staff/kind), [Hiroshi Tsugawa(3)](https://www.researchgate.net/profile/Hiroshi_Tsugawa), [Dinesh Barupal(1)](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30) and [Oliver Fiehn(1)](https://fiehnlab.ucdavis.edu/staff/fiehn)
 
 1. [FiehnLab](https://fiehnlab.ucdavis.edu/)
@@ -356,10 +366,10 @@ You have just to chose a target database and a type of output:
 
 ```{r}
 
-#> example of Human Metabolome database predicted
+#> example of all Retip included compounds predicted and exported to MSFINDER
 
-hmdb_pred <- RT.spell(training,target="HMBD",model=keras,output="MSFINDER")
-
+all_pred <- RT.spell(training,target="ALL",model=keras,output="MSFINDER")
+export_rtp <- RT.export(all_pred, program="MSFINDER",pol="pos")
 
 ```
 
@@ -371,6 +381,7 @@ YES, as you have seen you can chose from different output style of your predicti
 - "WATERS"
 - "SCIEX"
 
+You have to chose the polarity you are working "pos" or "neg"
 
 ## Conclusions Remarks:
 
@@ -379,7 +390,7 @@ Remember these few tips:
 - split your data into training and testing 80/20. And if you want to be cool use also an additional external dataset;
 - Don’t cheat yourself doing cherry picking with testing molecules that are out-liner and putting in training data. Leave at it is, is better know the truth than lie to yourself;
 - As you probably know R use set.seed when you have a random function. This is needed to get the same results when you do it again. There is a set seed before the split training/testing. If you modify you get a slightly different results in your models if the problematic compounds are inside training data. This is not a real cheat because is random driven ;-)
-- Look at your smiles before import in Retip, if you have cavities will not work properly.
+- Look at your smiles before import in Retip, if you have cavities in it will not work properly.
 
 Remember Leonardo Da Vinci suggestion:
 “I have been impressed with the urgency of doing. Knowing is not enough; we must apply. Being willing is not enough; we must do."
