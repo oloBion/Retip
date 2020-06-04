@@ -374,8 +374,8 @@ export_rtp <- RT.export(all_pred, program="MSFINDER",pol="pos")
 ```
 
 YES, as you have seen you can chose from different output style of your prediction. Now we have available:
-- "MSDIAL": identification with accurate Mass and RTP (RECOMMENDED) [get MSDIAL](http://prime.psc.riken.jp/Metabolomics_Software/MS-DIAL/index2.html)
-- "MSFINDER": identification with accurate Mass, in silico fragmentation MS2 and RTP (RECOMMENDED) [get MSFINDER](http://prime.psc.riken.jp/Metabolomics_Software/MS-FINDER/index2.html)
+- "MSDIAL": identification with accurate Mass and RTP (RECOMMENDED) [get MSDIAL](http://prime.psc.riken.jp/compms/msdial/main.html)
+- "MSFINDER": identification with accurate Mass, in silico fragmentation MS2 and RTP (RECOMMENDED) [get MSFINDER](http://prime.psc.riken.jp/compms/msfinder/main.html)
 - "AGILENT": works with Mass Hunter software
 - "THERMO"
 - "WATERS"
