@@ -14,10 +14,32 @@ RUN Rscript -e 'install.packages(c("rcdklibs", "rJava", "png", "ggplot2", "Model
 
 RUN mkdir -p /build/retip
 WORKDIR /build
-#COPY Dockerfile DESCRIPTION NAMESPACE R/ Retip.Rproj data/ examples/ man/ vignettes/ /build/retip/
-COPY . /build/retip/
+COPY DESCRIPTION NAMESPACE Retip.Rproj /build/retip/
+COPY R/ /build/retip/R/
+COPY data/ /build/retip/data/
+COPY examples/ /build/retip/examples/
+COPY man/ /build/retip/man/
+COPY vignettes/ /build/retip/vignettes/
+
 
 WORKDIR /build/retip
 RUN R CMD build .
 RUN Rscript -e 'install.packages("Retip_0.5.4.tar.gz")'
+
+WORKDIR /
+RUN rm -rf /build
+
+# examples need it
+RUN Rscript -e 'install.packages("readxl",repos="https://mirrors.nic.cz/R/")'
+
+RUN apt -y remove $(dpkg -l | grep -- -dev | awk '{print $2}')
+RUN apt -y remove openjdk-11-jdk-headless
+# nice but removes too much
+# RUN apt -y autoremove
+
+# if we ever need it
+# RUN apt -y install openjdk-11-jre-headless
+
+RUN apt -y clean
+
 
