@@ -48,11 +48,15 @@ getCD <- function(x){
   x_na_rem <- x_na_rem [,-c(1:6)]
 
   # computing the whole descriptos on the good on the clean dataset
-  print(paste0("Computing Chemical Descriptors 1 of ",nrow(x_na_rem)," ... Please wait"))
+  print(paste0("Computing Chemical Descriptors 1 of ",nrow(x_na_rem)," ... Please wait, vole"))
 
+  print(paste0("Uraaa"))
   mols_x1 <- rcdk::parse.smiles(as.character(unlist(x_na_rem[1,"SMILES"])))[[1]]
+  print(paste0("parse.smiles",as.character(unlist(x_na_rem[1,"SMILES"]))))
   rcdk::convert.implicit.to.explicit(mols_x1)
+  print(paste0("implicit.to.explicit"))
   descs_x_loop <- rcdk::eval.desc(mols_x1, descNames)
+  print(paste0("eval.desc"))
 
 
   for (i in 2:nrow(x_na_rem)) {

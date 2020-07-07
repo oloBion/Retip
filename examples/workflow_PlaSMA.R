@@ -1,5 +1,7 @@
-library(Retip)
+#options(java.parameters = c("-XX:+UseConcMarkSweepGC", "-Xmx8192m"))
+# options(java.parameters = c("-Xmx1024m"))
 
+library(Retip)
 
 #Starts parallel computing
 prep.wizard()
@@ -10,7 +12,6 @@ RP2 <- readxl::read_excel("Plasma_positive.xlsx", sheet = "lib_2", col_types = c
 # import excel file for external validation set
 RP_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext", col_types = c("text", 
                                                                                   "text", "text", "numeric"))
-
 # Calculate Chemical Descriptors fron RCDK
 descs2 <- getCD(RP2)
 descs_ext <- getCD(RP_ext)

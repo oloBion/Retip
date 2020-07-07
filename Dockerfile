@@ -12,6 +12,12 @@ RUN apt -y install libicu-dev
  
 RUN Rscript -e 'install.packages(c("rcdklibs", "rJava", "png", "ggplot2", "ModelMetrics" ,"keras", "caret", "xgboost", "doParallel", "brnn", "rcdk", "dplyr"),repos="https://mirrors.nic.cz/R/")'
 
+RUN Rscript -e 'install.packages("randomForest",repos="https://mirrors.nic.cz/R/")'
+
+# examples need it
+RUN Rscript -e 'install.packages("readxl",repos="https://mirrors.nic.cz/R/")'
+
+
 RUN mkdir -p /build/retip
 WORKDIR /build
 COPY DESCRIPTION NAMESPACE Retip.Rproj /build/retip/
@@ -28,9 +34,6 @@ RUN Rscript -e 'install.packages("Retip_0.5.4.tar.gz")'
 
 WORKDIR /
 RUN rm -rf /build
-
-# examples need it
-RUN Rscript -e 'install.packages("readxl",repos="https://mirrors.nic.cz/R/")'
 
 RUN apt -y remove $(dpkg -l | grep -- -dev | awk '{print $2}')
 RUN apt -y remove openjdk-11-jdk-headless
