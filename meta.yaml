@@ -1,53 +1,62 @@
+{% set name = "r-retip" %}
 {% set version = "0.5.4" %}
 
-# whats the difference between traditional Galaxy packages and Conda packages?
-
 package:
-        name: r-retip
-        version: {{ version }}
+    name: {{ name }}
+    version: {{ version }}
 
 source:
-        git_url: https://github.com/PaoloBnn/Retip.git
-        git_rev: v{{ version }}
+    url: https://github.com/PaoloBnn/Retip/archive/v{{ version }}.tar.gz
+    sha256: 8aeb6e6326fc5fd56c3757549c6571aa271fc41d28a1f9a4db3fe30fc23f290c
 
 build:
-        noarch: generic # is it fine to have R packages declared as generic?
-        script: R CMD INSTALL .
-        # number: what are the use cases of build number? is it possible do conda install of a package with a specific build number
-        # rpaths: what are they doing? is it relevant for R-only packages? Is this transive?
+    noarch: generic
+    script: R CMD INSTALL .
 
 requirements:
-        build:
-                - r-rcdklibs
-                - r-rjava
-                - r-png
-                - r-ggplot2
-                - r-modelmetrics
-                - r-keras
-                - r-caret
-                - r-xgboost
-                - r-doparallel
-                - r-brnn
-                - r-rcdk
-                - r-dplyr
-                - r-randomforest
-                - r-readxl
-        run:    # do we need to copy the run list from the build list? what is host list exactly?
-                - r-rcdklibs
-                - r-rjava
-                - r-png
-                - r-ggplot2
-                - r-modelmetrics
-                - r-keras
-                - r-caret
-                - r-xgboost
-                - r-doparallel
-                - r-brnn
-                - r-rcdk
-                - r-dplyr
-                - r-randomforest
-                - r-readxl
-        # entry_points: what are those?
+    host:
+        - r-rcdklibs
+        - r-rjava
+        - r-png
+        - r-ggplot2
+        - r-modelmetrics
+        - r-keras
+        - r-caret
+        - r-xgboost
+        - r-doparallel
+        - r-brnn
+        - r-rcdk
+        - r-dplyr
+        - r-randomforest
+        - r-readxl
+    run:
+        - r-rcdklibs
+        - r-rjava
+        - r-png
+        - r-ggplot2
+        - r-modelmetrics
+        - r-keras
+        - r-caret
+        - r-xgboost
+        - r-doparallel
+        - r-brnn
+        - r-rcdk
+        - r-dplyr
+        - r-randomforest
+        - r-readxl
+
+test:
+    commands:
+        - $R -e "library('{{ name }}')"           # [not win]
+        - "\"%R%\" -e \"library('{{ name }}')\""  # [win]
 
 about:
-        home: https://github.com/PaoloBnn/Retip
+    home: https://github.com/PaoloBnn/Retip
+    license: CC BY 4.0
+    summary: Retention time prediction for metabolomics
+    description: |
+        Predicted retention time can be useful in liquid chromatography 
+        analysis to identify unknowns and removing false positive annotations. 
+        It uses five different machine learning algorithms to built a stable,
+        accurate and fast RT prediction model. Retip also includes 20 useful 
+        biochemical databases.
