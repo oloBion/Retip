@@ -47,8 +47,8 @@ requirements:
 
 test:
     commands:
-        - $R -e "library('{{ name }}')"           # [not win]
-        - "\"%R%\" -e \"library('{{ name }}')\""  # [win]
+        - $R -e "library('retip')"           # [not win]
+        - "\"%R%\" -e \"library('retip')\""  # [win]
 
 about:
     home: https://github.com/PaoloBnn/Retip
