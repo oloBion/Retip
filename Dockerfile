@@ -30,4 +30,4 @@ RUN apt -y remove openjdk-11-jdk-headless
 
 RUN apt -y clean
 
-
+RUN chmod go+x /root
