@@ -46,5 +46,10 @@ RUN apt -y remove openjdk-11-jdk-headless
 # RUN apt -y autoremove
 
 RUN apt -y clean
-
 RUN chmod go+x /root
+
+RUN mkdir /Retip
+COPY galaxy/*.R /Retip/
+COPY galaxy/run.sh /
+
+ENTRYPOINT [ "/run.sh" ]
