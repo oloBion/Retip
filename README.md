@@ -23,21 +23,30 @@ For testing etc., standalone invocation is:
 
     chemdesc.R compounds.tsv descriptors.feather
     
-Input: compounds.tsv is a table with columns Name, InChIKey, SMILES, RT
+Input: *compounds.tsv* is a table with columns *Name, InChIKey, SMILES, RT*
 
-Output: table of RDKIT chemical descriptors, to be used as input to the other tools
+Output: *descriptors.feather*, table of RDKIT chemical descriptors, to be used as input to the other tools
 
 ### Train Keras model
 
     trainKeras.R descr-train.feather model.hdf5 
     
-Input: descr-train.feather -- set of the descriptors and RTs, as produced by chemdesc.R
+Input: *descr-train.feather* -- set of the descriptors and RTs, as produced by chemdesc.R
+Output: *model.hdf5* -- trained model
 
 ### Apply the Keras model to a single SMILES
 
     oneSmiles.R descr-train.feather model.hdf5 SMILES
 
-Inputs: descr-train.feather -- the same file that was used to train Keras; model.hdf5 -- output of tranKeras.R
+Inputs:* descr-train.feather* -- the same file that was used to train Keras; *model.hdf5* -- output of tranKeras.R, *SMILES* the formula
+
+
+## Testing data
+
+In *galaxy/examples/*: 
+- *compounds.tsv*: converted from original *examples/Plasma_positive.xlsx*, 494 records, takes some time to process
+- *compounds-small.tsv*: first 80 lines of the original example, just few minutes test run
+- *compounds-tiny.tsv*: just few lines, 
 
 ----
 
