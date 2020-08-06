@@ -17,7 +17,7 @@ Helper scripts galaxy/*.R invoke the library, they are intended to be executed w
 For testing etc., standalone invocation is:
 
     $ cd /where/your/data/are
-    $ docker run -u $(id -u) -w /work -v $PWD:/work CONTAINER/NAME:TAG Rscript /Retip/SCRIPT.R ARGS ...
+    $ docker run -u $(id -u) -w /work -v $PWD:/work CONTAINER/NAME:TAG SCRIPT.R ARGS ...
 
 ### Compute chemical descriptors
 
@@ -29,12 +29,15 @@ Output: table of RDKIT chemical descriptors, to be used as input to the other to
 
 ### Train Keras model
 
-    trainKeras.R descr-train.feather descr-centered.feather model.hdf5 cesc.feather
+    trainKeras.R descr-train.feather model.hdf5 
+    
+Input: descr-train.feather -- set of the descriptors and RTs, as produced by chemdesc.R
 
+### Apply the Keras model to a single SMILES
 
+    oneSmiles.R descr-train.feather model.hdf5 SMILES
 
-
-
+Inputs: descr-train.feather -- the same file that was used to train Keras; model.hdf5 -- output of tranKeras.R
 
 ----
 
