@@ -52,4 +52,5 @@ RUN mkdir /Retip
 COPY galaxy/*.R /Retip/
 COPY galaxy/run.sh /
 
-ENTRYPOINT [ "/run.sh" ]
+#Don't add entrypoint because with entry point it fails with galaxy
+#ENTRYPOINT [ "/run.sh" ]
