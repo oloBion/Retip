@@ -1,0 +1,18 @@
+<tool id="retip-descriptors" name="Retip chemical descriptors" version="{{tool_version}}">
+	<description>to be used for retention time prediction</description>
+    <requirements>
+      <container type="docker">{{container_registry}}:{{tool_version}}</container>
+    </requirements>
+	<command detect_errors="exit_code"><![CDATA[
+            /run.sh chemdesc.R '$compounds' '$output_file1'
+      ]]>
+    </command>
+	<inputs>
+                <param name="compounds" label="Select Compounds Dataset" type="data" format="tabular" optional="false"/>
+	</inputs>
+    <outputs>
+        <data format="feather" name="output_file1" label="Descriptors.Feather Dataset" from_work_dir="">
+        </data>
+    </outputs>
+    <help>Compute chemical descriptors of a set of compound. To be used in retention time prediction.</help>
+</tool>
