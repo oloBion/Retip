@@ -22,6 +22,6 @@ keras <- load_model_hdf5(args[2])
 data <- read_tsv(args[3])
 desc <- getCD(data)
 
-rt <- RT.spell(training,desc,model=keras)
+rt <- RT.spell(training,desc,model=keras,cesc=preProc)
 
 write_tsv(rt,args[4])
