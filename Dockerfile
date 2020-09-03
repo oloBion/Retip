@@ -23,7 +23,7 @@ COPY data/ /build/retip/data/
 COPY examples/ /build/retip/examples/
 COPY man/ /build/retip/man/
 COPY vignettes/ /build/retip/vignettes/
-COPY .git/ /build/retip/.git
+COPY .git/ /build/retip/.git/
 
 RUN apt -y install pkg-config
 
