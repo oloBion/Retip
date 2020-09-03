@@ -1,6 +1,6 @@
 include:
   - project: 'Recetox/mass-spectrometry/galaxy-tools-deployment'
-    file: '/pipeline_templates/.gitlab-ci-docker.yml'
+    file: '/pipeline_templates/.gitlab-ci-docker-rev.yml'
 #  - project: 'Recetox/mass-spectrometry/galaxy-tools-deployment'
 #    file: '/pipeline_templates/.gitlab-ci-toolshed.yml'
 #  - project: 'Recetox/mass-spectrometry/galaxy-tools-deployment'
@@ -13,6 +13,7 @@ stages:
 
 variables:
   TOOL_PANEL_SECTION_LABEL: "Public"
+  DOCKER_TAG: "1.0.0"
   DOCKER_REBUILD: "true"
 
 # Docker build and release
