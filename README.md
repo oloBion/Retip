@@ -29,16 +29,16 @@ Output: *descriptors.feather*, table of RDKIT chemical descriptors, to be used a
 
 ### Train Keras model
 
-    trainKeras.R descr-train.feather model.hdf5 
+    trainKeras.R descriptors.feather model.hdf5 
     
-Input: *descr-train.feather* -- set of the descriptors and RTs, as produced by chemdesc.R
+Input: *descriptors.feather* -- set of the descriptors and RTs, as produced by chemdesc.R
 Output: *model.hdf5* -- trained model
 
 ### Apply the Keras model to a single SMILES
 
-    oneSmiles.R descr-train.feather model.hdf5 SMILES
+    oneSmiles.R descriptors.feather model.hdf5 SMILES
 
-Inputs:* descr-train.feather* -- the same file that was used to train Keras; *model.hdf5* -- output of tranKeras.R, *SMILES* the formula
+Inputs:*descriptors.feather* -- the same file that was used to train Keras; *model.hdf5* -- output of tranKeras.R, *SMILES* the formula
 
 
 ## Testing data
