@@ -28,7 +28,7 @@ COPY .git/ /build/retip/.git/
 RUN apt -y install pkg-config
 
 WORKDIR /build/retip
-RUN Rscript -e "devtools::install_git('.',repos='${MIRROR}')" 
+RUN Rscript -e "devtools::install_local('.',repos='${MIRROR}')"
 RUN rm -rf /build/retip
 
 RUN Rscript -e "install.packages('readxl',repos='${MIRROR}')"
