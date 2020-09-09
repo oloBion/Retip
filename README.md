@@ -36,10 +36,11 @@ Output: *model.hdf5* -- trained model
 
 ### Apply the Keras model to a single SMILES
 
-    oneSmiles.R descriptors.feather model.hdf5 SMILES
+    spell.R descriptors.feather model.hdf5 input.tsv output.tsv
 
-Inputs:*descriptors.feather* -- the same file that was used to train Keras; *model.hdf5* -- output of tranKeras.R, *SMILES* the formula
-
+Inputs:*descriptors.feather* -- the same file that was used to train Keras; *model.hdf5* -- output of trainKeras.R, 
+*SMILES* the formula
+Output: output.tsv (with predictions)
 
 ## Testing data
 
