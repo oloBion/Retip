@@ -1,13 +1,16 @@
 library(Retip)
-library(feather)
+library(hdf5r)
 library(readr)
 
 args <- commandArgs(trailingOnly = TRUE)
-if (length(args) != 4) stop("usage: spell.R descr-train.feather model.hdf5 in.tsv out.tsv") 
+if (length(args) != 4) stop("usage: spell.R descr-train.h5 model.h5 in.tsv out.tsv") 
 
 prep.wizard()
 
-cleanTrain <- proc.data(read_feather(args[1]))
+desc <- H5File$new(args[1],mode="r")
+ds <- desc[["/desc"]]
+cleanTrain <- ds[]
+
 preProc <- cesc(cleanTrain)
 centerTrain <- predict(preProc,cleanTrain)
 

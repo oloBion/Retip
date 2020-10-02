@@ -36,7 +36,10 @@ RUN Rscript -e 'reticulate::install_miniconda()'
 RUN bash -c "source /root/.local/share/r-miniconda/bin/activate r-reticulate && Rscript -e 'library(keras); install_keras()'"
 
 RUN Rscript -e "install.packages('readr',repos='${MIRROR}')"
-RUN Rscript -e "install.packages('feather',repos='${MIRROR}')"
+# RUN Rscript -e "install.packages('feather',repos='${MIRROR}')"
+
+RUN apt -y install libhdf5-dev
+RUN Rscript -e "install.packages('hdf5r',repos='${MIRROR}')"
 
 WORKDIR /
 
