@@ -15,5 +15,5 @@ library(keras)
 install_keras()
 
 devtools::install_github('Paolobnn/Retiplib')
-devtools::install_github('Paolobnn/Retip')
+devtools::install_github('Paolobnn/Retip@v0.5.4')
 
