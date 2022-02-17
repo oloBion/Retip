@@ -16,16 +16,6 @@ ENV LD_LIBRARY_PATH=/usr/lib/jvm/java-11-openjdk-amd64/lib/server:${LD_LIBRARY_P
 
 RUN R CMD javareconf
 
-# install Python
-ENV PATH=/opt/conda/bin:${PATH}
-
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh -O miniconda.sh && \
-    bash miniconda.sh -b -p /opt/conda && \
-    rm miniconda.sh && \
-    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate base" >> ~/.bashrc
-
 # install Retip dependencies
 COPY install_dependencies.R /home/docker
 RUN Rscript /home/docker/install_dependencies.R && \
@@ -36,6 +26,8 @@ RUN cd /home/docker && \
     cd LightGBM && \
     Rscript build_r.R && \
     rm -rf /home/docker/LightGBM
+
+ENV R_HOME /usr/lib/R
 
 # set data volume
 VOLUME /data
