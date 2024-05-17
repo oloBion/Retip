@@ -19,10 +19,7 @@
 
 
 p.model <- function(t,m,title="title",crh_leght=16){
-  # cheating devtools to avoid horrible notes
-  ..density..<- "ciao"
-  model_name2 <- paste0(title)
-
+  # Test data
   t1 <- as.matrix(t)
   ncolt1 <- ncol(t1)
 
@@ -31,33 +28,53 @@ p.model <- function(t,m,title="title",crh_leght=16){
   prd <- data.frame(prd)
   names(prd) <- c("RTP")
 
+  # RT observed, predicted and error df
+  df <- data.frame(t$RT, prd$RTP, t$RT - prd$RTP)
+  names(df) <- c("RT_obs", "RT_pred", "RT_ERR")
+  # Regression obs - pred
+  reg <- lm(data=df, formula = RT_obs ~ RT_pred)                       
+  coeff <- coefficients(reg)  
+  # Stats
+  res_rf_fh <- data.frame(round((caret::postResample(t$RT, prd$RTP)),2))
+  names(res_rf_fh) <- c("Stats") 
+  stats_table <- cbind(Stats=c("RMSE", "R2", "MAE") ,res_rf_fh$Stats)
+  stats_table <- gridExtra::tableGrob(stats_table, rows=NULL, cols=NULL,
+                                      theme = ttheme_minimal(core=list(fg_params = list(hjust=0, x = 0.1)),
+                                                             base_colour = "#384049"))
+  stats_table <- gtable::gtable_add_grob(stats_table, grobs = rectGrob(gp=gpar(fill=NA, lwd=2)), 
+                                         t = 1, b = nrow(stats_table), l = 1, r = ncol(stats_table))
 
-  x <- t$RT
-  y <- prd$RTP
-  res_rf_fh <- data.frame(round((caret::postResample(x, y)),2))
-  names(res_rf_fh) <- c("Stats")
-  # plot the line graphic
-  graphics::plot(t$RT, prd$RTP,
-       xlab="Observed RT", ylab="Predicted RT",
-       pch=19, xlim=c(0, crh_leght), ylim=c(0, crh_leght), main =paste0("Predicted RT vs Real - ", model_name2))
-  graphics::abline(0,1, col='red')
-  graphics::legend('topleft',inset=.05, text.font=4,ncol = 2, title = 'Stats',legend = c("RMSE", "R2", "MAE",res_rf_fh$Stats))
+  # Plot the line graphic
+  lg <- ggplot2::ggplot(df, aes(RT_obs, RT_pred)) +
+          ggplot2::geom_point(aes(RT_obs, RT_pred), colour="#5E676F") +
+          ggplot2::geom_abline(intercept = coeff[1], slope = coeff[2], color="#D02937") +
+          ggplot2::labs(title=paste0("Predicted RT vs Real - ", title), x ="Observed RT", y = "Predicted RT") + 
+          ggplot2::xlim(0, crh_leght) + ggplot2::ylim(0, crh_leght) + 
+          ggplot2::annotation_custom(stats_table, xmin=1, xmax = 2, ymin = crh_leght-4, ymax = crh_leght-1) +
+          ggplot2::theme_classic() + ggplot2::theme(plot.title = element_text(color="#384049",
+                                                    face="bold", hjust=0.5),
+                                                    axis.line = element_line(colour = "#384049"),
+                                                    axis.text = element_text(colour = "#384049"),
+                                                    axis.title = element_text(colour = "#384049"))
+  print(lg)
 
-  # plotting histograms
-  df <- data.frame(t$RT - prd$RTP)
-  names(df) <- c("RT_ERR")
-  ggplot2::ggplot(df, ggplot2::aes(df$RT_ERR)) +
-    ggplot2::geom_histogram(ggplot2::aes(y =..density..),
-                   breaks = seq(-5, 5, by = .1),
-                   colour = "black",
-                   fill = "white")+
-    ggplot2::labs(title = paste0("Error distribution - ", model_name2),x="RT_ERR")+
-    ggplot2::scale_color_manual("Legend", values = c("blue","red"))+
-    ggplot2::stat_function(fun = stats::pnorm, ggplot2::aes(colour = "pnorm"), args = list(mean = mean(df$RT_ERR), sd = stats::sd(df$RT_ERR)))+
-    ggplot2::stat_function(fun = stats::dnorm, ggplot2::aes(colour = "dnorm"), args = list(mean = mean(df$RT_ERR), sd = stats::sd(df$RT_ERR)))
-
-
+  # Plot histograms
+  hg <- ggplot2::ggplot(df, ggplot2::aes(RT_ERR)) +
+          ggplot2::geom_histogram(ggplot2::aes(y =after_stat(density)), breaks = seq(-5, 5, by = .1),
+                                  colour = "#5E676F", fill = "#DDE0E3")+
+          ggplot2::labs(title = paste0("Error distribution - ", title), x="RT error", y="Density")+
+          ggplot2::scale_color_manual(values = c("#092DF7","#D02937"))+
+          ggplot2::stat_function(fun = stats::pnorm, ggplot2::aes(colour = "pnorm"),
+                                args = list(mean = mean(df$RT_ERR), sd = stats::sd(df$RT_ERR)))+
+          ggplot2::stat_function(fun = stats::dnorm, ggplot2::aes(colour = "dnorm"),
+                                args = list(mean = mean(df$RT_ERR), sd = stats::sd(df$RT_ERR))) +
+          ggplot2::theme_classic() + ggplot2::theme(plot.title = element_text(color="#384049", 
+                                                    face="bold", hjust=0.5),
+                                                    axis.line = element_line(colour = "#384049"),
+                                                    axis.text = element_text(colour = "#384049"),
+                                                    axis.title = element_text(colour = "#384049"),
+                                                    legend.text = element_text(colour = "#384049"),
+                                                    legend.position = c(0.1, 0.9), legend.title = element_blank())
+  print(hg)
 
 }
-
-
