@@ -9,7 +9,7 @@
 #' \donttest{
 #' chem.space(db_rt,t="HMDB")}
 
-chem.space <- function (db_rt,t="HMDB"){
+chem.space <- function (db_rt,t){
 
   retip_lib_v1 <- data.frame(Retip::retip_lib_head,Retiplib::retip_lib_v1)
 
@@ -47,13 +47,24 @@ chem.space <- function (db_rt,t="HMDB"){
   pca_model <-  caret::preProcess(db, method = c("pca"))
 
   pca_db <-  stats::predict(pca_model, db)
+  pca_db_df <- as.data.frame(pca_db)
 
   pca_db_rt <- stats::predict(pca_model, db_rt)
+  pca_db_rt_df <- as.data.frame(pca_db_rt)
 
-  graphics::plot(pca_db[,1],pca_db[,2],type = "p",col="blue",pch=4,xlab="", ylab="", xlim=c(-20, 50), ylim=c(-30, 30))
-  graphics::par(new=TRUE)
-  graphics::plot(pca_db_rt[,1],pca_db_rt[,2],type = "p",pch=5,col="green",xlab="PCA1", ylab="PCA2", xlim=c(-20, 50), ylim=c(-30, 30))
-
-
+  ggplot() +
+      # database pca
+      geom_point(data=pca_db_df, aes(x=PC1, y=PC2, colour = 'Database'), size=1) +
+      stat_ellipse(data=pca_db_df, aes(x=PC1, y=PC2, colour = 'Database'), type = "t") +
+      # target pca
+      geom_point(data=pca_db_rt_df, aes(x=PC1, y=PC2, colour="Target"), size=1) +
+      stat_ellipse(data=pca_db_rt_df, aes(x=PC1, y=PC2, colour = 'Target'), type = "t") +
+      theme_classic() + theme(axis.line = element_line(colour = "#384049"),
+                              axis.text = element_text(colour = "#384049"),
+                              axis.title = element_text(colour = "#384049"),
+                              legend.text = element_text(colour = "#384049"),
+                              legend.title = element_text(colour = "#384049")) +
+      scale_color_manual(name='',
+                         breaks=c('Database', 'Target'),
+                         values=c('Database'='#5E676F', 'Target'='#D02937'))
 }
-
