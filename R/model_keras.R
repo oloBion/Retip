@@ -57,7 +57,7 @@ fit.keras <- function(training,testing) {
 
   model1 <- keras_model(input, predictions) %>% compile(
     loss = 'mse',
-    optimizer = optimizer_rmsprop(lr = FLAGS$learning_rate),
+    optimizer = optimizer_rmsprop(learning_rate = FLAGS$learning_rate),
     metrics = c('mean_absolute_error')
   )
 
@@ -93,7 +93,7 @@ fit.keras <- function(training,testing) {
 
   model2 <- keras_model(input, predictions2) %>% compile(
     loss = 'mse',
-    optimizer = optimizer_rmsprop(lr = FLAGS$learning_rate),
+    optimizer = optimizer_rmsprop(learning_rate = FLAGS$learning_rate),
     metrics = c('mean_absolute_error')
   )
 
@@ -127,7 +127,7 @@ fit.keras <- function(training,testing) {
 
   model3 <- keras_model(input, predictions3) %>% compile(
     loss = 'mse',
-    optimizer = optimizer_rmsprop(lr = FLAGS$learning_rate),
+    optimizer = optimizer_rmsprop(learning_rate = FLAGS$learning_rate),
     metrics = c('mean_absolute_error')
   )
 
