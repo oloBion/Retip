@@ -49,6 +49,9 @@ RT.spell <- function(training,target,model=model,cesc=cesc) {
     target_db <- data.frame(target[,c(1:3)],target_desc_f)
     # remuove na values
     target_db <- target_db [stats::complete.cases(target_db), ]
+    if (is.element("RT", names(target_db))){
+      target_db <- target_db[names(target_db) != "RT"]
+    }
     # separate column with descriptions
     target_head <- target_db[,c(1:3)]
     # convert to matrix to work with keras and lightgbm
@@ -74,9 +77,12 @@ RT.spell <- function(training,target,model=model,cesc=cesc) {
   target_db <- data.frame(target[,c(1:3)],target_desc_f)
 
   target_db <- target_db [stats::complete.cases(target_db), ]
+  if (is.element("RT", names(target_db))){
+      target_db <- target_db[names(target_db) != "RT"]
+    }
 
   target_head <- target_db[,c(1:3)]
-
+  
   target_desc <- as.matrix(target_db[,-c(1:3)])
 
   ncol1 <- ncol(target_desc)
