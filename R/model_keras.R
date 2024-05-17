@@ -63,7 +63,7 @@ fit.keras <- function(training,testing) {
 
 
 
-  print(paste0("Computing model1 Keras  ... Please wait ..."))
+  print("Computing model1 Keras  ... Please wait ...")
 
   early_stop <- callback_early_stopping(monitor = "val_loss", patience = 50,restore_best_weights = TRUE)
 
@@ -99,7 +99,7 @@ fit.keras <- function(training,testing) {
 
 
 
-  print(paste0("Computing model2 Keras  ... Please wait ..."))
+  print("Computing model2 Keras  ... Please wait ...")
 
 
 
