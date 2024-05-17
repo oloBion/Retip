@@ -41,7 +41,7 @@ p.model <- function(t,m,title="title",crh_leght=16){
   stats_table <- gridExtra::tableGrob(stats_table, rows=NULL, cols=NULL,
                                       theme = ttheme_minimal(core=list(fg_params = list(hjust=0, x = 0.1)),
                                                              base_colour = "#384049"))
-  stats_table <- gtable::gtable_add_grob(stats_table, grobs = rectGrob(gp=gpar(fill=NA, lwd=2)), 
+  stats_table <- gtable::gtable_add_grob(stats_table, grobs = grid::rectGrob(gp=grid::gpar(fill=NA, lwd=2)), 
                                          t = 1, b = nrow(stats_table), l = 1, r = ncol(stats_table))
 
   # Plot the line graphic
