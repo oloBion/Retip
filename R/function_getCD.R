@@ -17,7 +17,7 @@ getCD <- function(x){
   for (i in 1:nrow(x)) {
     smi <- rcdk::parse.smiles(as.character(unlist(x[i,"SMILES"]))) [[1]]
     smi1 <- rcdk::generate.2d.coordinates(smi)
-    smi1 <- rcdk::get.smiles(smi,smiles.flavors(c('CxSmiles')))
+    smi1 <- rcdk::get.smiles(smi, rcdk::smiles.flavors(c('CxSmiles')))
     x$SMILES[i] <- smi1
     print(paste0(i," of ",nrow(x)))
   }

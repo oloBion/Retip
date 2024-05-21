@@ -9,7 +9,7 @@
 #' \donttest{
 #' chem.space(db_rt,t="HMDB")}
 
-chem.space <- function (db_rt,t){
+chem.space <- function (db_rt,t, title=''){
 
   retip_lib_v1 <- data.frame(Retip::retip_lib_head,Retiplib::retip_lib_v1)
 
@@ -52,19 +52,20 @@ chem.space <- function (db_rt,t){
   pca_db_rt <- stats::predict(pca_model, db_rt)
   pca_db_rt_df <- as.data.frame(pca_db_rt)
 
-  ggplot() +
+  ggplot2::ggplot() +
       # database pca
-      geom_point(data=pca_db_df, aes(x=PC1, y=PC2, colour = 'Database'), size=1) +
-      stat_ellipse(data=pca_db_df, aes(x=PC1, y=PC2, colour = 'Database'), type = "t") +
+      ggplot2::geom_point(data=pca_db_df, aes(x=PC1, y=PC2, colour = 'Database'), size=1) +
       # target pca
-      geom_point(data=pca_db_rt_df, aes(x=PC1, y=PC2, colour="Target"), size=1) +
-      stat_ellipse(data=pca_db_rt_df, aes(x=PC1, y=PC2, colour = 'Target'), type = "t") +
-      theme_classic() + theme(axis.line = element_line(colour = "#384049"),
-                              axis.text = element_text(colour = "#384049"),
-                              axis.title = element_text(colour = "#384049"),
-                              legend.text = element_text(colour = "#384049"),
-                              legend.title = element_text(colour = "#384049")) +
-      scale_color_manual(name='',
-                         breaks=c('Database', 'Target'),
-                         values=c('Database'='#5E676F', 'Target'='#D02937'))
+      ggplot2::geom_point(data=pca_db_rt_df, aes(x=PC1, y=PC2, colour="Target"), size=1) +
+      ggplot2::labs(title=paste0("ChemSpace - ", title)) +
+      ggplot2::theme_classic() + theme(plot.title = element_text(color="#384049",
+                                                                 face="bold", hjust=0.5),
+                                       axis.line = element_line(colour = "#384049"),
+                                       axis.text = element_text(colour = "#384049"),
+                                       axis.title = element_text(colour = "#384049"),
+                                       legend.text = element_text(colour = "#384049"),
+                                       legend.title = element_text(colour = "#384049")) +
+      ggplot2::scale_color_manual(name='',
+                                  breaks=c('Database', 'Target'),
+                                  values=c('Database'='#5E676F', 'Target'='#D02937'))
 }
