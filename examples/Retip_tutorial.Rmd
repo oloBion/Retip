@@ -10,7 +10,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
 ## Introduction
 
 **Retip** is an R package for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis. Retention time calculation can be useful in identifying unknowns and removing false positive annotations. It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model:
@@ -23,15 +22,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Retip** also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB and STOFF.
 
-
 ## Get started
 
-To use **Retip**, you need to prepare a compound retention time library in the format below. The input file needs compound **Name**, **InChiKey**, **SMILES code** and experimental **retention time** information for each compound. The input must be an MS Excel file. **Retip** will use this input file to build a the model and will predict retention times for other biochemical databases or an input query list of compounds. It is suggested that the file has at least 300 compounds to build a good retention time prediction model.
+To use **Retip**, you need to prepare a compound retention time library in the format below. The input file needs compound **Name**, **InChiKey**, **SMILES** code and experimental **retention time** information for each compound. The input must be an MS Excel file. **Retip** will use this input file to build a the model and will predict retention times for other biochemical databases or an input query list of compounds. It is suggested that the file has at least 300 compounds to build a good retention time prediction model.
 
 Input file view:
 
-| NAME                                         | InChiKey                    | SMILES                                               | RT       |
-|---------------------|---------------|-----------------------|---------------|
+| **Name**                                     | **InChiKey**                | **SMILES**                                           | **RT**   |
+|----------------------------------------------|-----------------------------|------------------------------------------------------|----------|
 | (2-oxo-2,3-dihydro-1H-indol-3-yl)acetic acid | ILGMGHZPXRDCCS-UHFFFAOYSA-N | C1=CC=C2C(=C1)C(C(=O)N2)CC(=O)O                      | 2.019083 |
 | 1,1-Dimethyl-4-phenylpiperazinium            | WVHNHHJEHFWYHH-UHFFFAOYSA-N | CC1C(NC(CN1)C2=CC=CC=C2)C                            | 2.60795  |
 | 1,2-Cyclohexanediol                          | PFURGBBHAOXLIO-OLQVQODUSA-N | C1CC[C\@\@H](https://www.retip.app/%5BC@@H%5D(C1)O)O | 4.87655  |
@@ -42,11 +40,10 @@ Input file view:
 
 In case you want to avoid building a library from scratch, you can utilize publicly available libraries from Riken, Japan [PlaSMA](http://plasma.riken.jp/) and the West Coast Metabolomics Center UC Davis, USA [MoNA](https://mona.fiehnlab.ucdavis.edu/). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions.
 
-
 ## Packages import
 
 ```{r}
-setwd("~/Documentos/retip")
+setwd("~/Documentos/Retip/examples")
 library(keras)
 #> install_keras()
 library(rJava)
@@ -59,14 +56,15 @@ library(grid)
 library(gtable)
 library(readxl)
 library(lattice)
+library(h2o)
 source("~/Documentos/Retip/R/function_getCD.R")
 source("~/Documentos/Retip/R/function_chemspace.R")
 source("~/Documentos/Retip/R/model_lighgbm.R")
 source("~/Documentos/Retip/R/model_keras.R")
+source("~/Documentos/Retip/R/model_automl.R")
 source("~/Documentos/Retip/R/fuction_plotmodel.R")
 source("~/Documentos/Retip/R/function_RT_spell.R")
 ```
-
 
 ## Set up Retip
 
@@ -86,7 +84,6 @@ rp2 <- readxl::read_excel("Plasma_positive.xlsx", sheet = "lib_2",
 #> HILIC <- HILIC
 ```
 
-
 ## Compute Chemical Descriptors with CDK
 
 Now it is time to compute chemical descriptors with CDK a JAVA based open source project aimed at cheminformatics. Several core people around the Steinbeck group developed the code. According to Ohloh the development took 136 Person, several years and translated into several million dollars in development cost. For you will be simple as type `getCD`. Depending on your library length and your PC it will take few minutes to several hours. There is a counter to visualize the progress. It’s possible that the return table have less compounds respect the one you have start with. This is because some of yours smile code is not well formatted or for some compounds CDK is not able to calculate chemical descriptors. It is a pity but in real life happens that you have to leave behind even your favorite compound. If happens with most of compounds check SMILES, or better use Pubchem interchange service to get good working SMILES for your library.
@@ -97,7 +94,6 @@ Now it is time to compute chemical descriptors with CDK a JAVA based open source
 descs <- getCD(rp2)
 ```
 
-
 ## Clean dataset
 
 Some machine learning model did not like NA value, or low variance columns. So they are eliminated to improve model performance. This is done in Retip function `proc.data`.
@@ -106,7 +102,6 @@ Some machine learning model did not like NA value, or low variance columns. So t
 #> Clean dataset from NA and low variance value
 db_rt <- proc.data(descs)
 ```
-
 
 ## Plot ChemSpace
 
@@ -120,7 +115,6 @@ The answer is not easy and pass trough another question: is the chemical space o
 ```{r warning=FALSE}
 chem.space(db_rt, t = "HMDB", title = "HMDB - RIKEN PLASMA")
 ```
-
 
 ## Center and scale - Optional - Warning
 
@@ -150,7 +144,6 @@ if (cesc) {
 #> rt.spell and getRT.smile functions
 ```
 
-
 ## Training and Testing set-up
 
 A very important step is to split in training and testing your data frame.
@@ -168,7 +161,6 @@ in_training <- caret::createDataPartition(db_rt$XLogP, p = .8, list = FALSE)
 training <- db_rt[in_training, ]
 testing <- db_rt[-in_training, ]
 ```
-
 
 ## Building QSAR models
 
@@ -196,15 +188,18 @@ if (build_models) {
 
   xgb <- fit.xgboost(training)
   saveRDS(xgb, "xgb_model.rds")
+  
+  aml <- fit.automl.h2o(training)
+  h2o::h2o.saveModel(aml@leader, "automl_h2o_model")
 } else {
   xgb <- readRDS("xgb_model.rds")
   rf <- readRDS("rf_model.rds")
   brnn <- readRDS("brnn_model.rds")
-  keras <- load_model_hdf5("keras_HI")
+  keras <- keras::load_model_hdf5("keras_HI")
   lightgbm <- readRDS("lightgbm_model.rds")
+  aml <- h2o.loadModel("automl_h2o_model/###") ### add the name of your saved model
 }
 ```
-
 
 ## Testing and plot models
 
@@ -227,7 +222,6 @@ stat <- get.score(testing, xgb, rf, brnn, keras, lightgbm)
 
 You can also visualize model performance using function `p.model` using testing dataframe as input. You can also use training data or whole data to see how it change, even if the only really important is the testing one.
 
-
 ### XGBoost
 
 ```{r warning=FALSE}
@@ -236,7 +230,6 @@ You can also visualize model performance using function `p.model` using testing 
 #> Last value is the title of the graphics.
 p.model(testing, m = xgb, title = "XGBoost - RIKEN PLASMA")
 ```
-
 
 ### Random forest
 
@@ -247,7 +240,6 @@ p.model(testing, m = xgb, title = "XGBoost - RIKEN PLASMA")
 p.model(testing, m = rf, title = "Random forest - RIKEN PLASMA")
 ```
 
-
 ### BRNN
 
 ```{r warning=FALSE}
@@ -256,7 +248,6 @@ p.model(testing, m = rf, title = "Random forest - RIKEN PLASMA")
 #> Last value is the title of the graphics.
 p.model(testing, m = brnn, title = "BRNN - RIKEN PLASMA")
 ```
-
 
 ### LightGBM
 
@@ -267,7 +258,6 @@ p.model(testing, m = brnn, title = "BRNN - RIKEN PLASMA")
 p.model(testing, m = lightgbm, title = "LightGBM - RIKEN PLASMA")
 ```
 
-
 ### Keras
 
 ```{r warning=FALSE}
@@ -277,6 +267,14 @@ p.model(testing, m = lightgbm, title = "LightGBM - RIKEN PLASMA")
 p.model(testing, m = keras, title = "Keras - RIKEN PLASMA")
 ```
 
+### autoML
+
+```{r warning=FALSE}
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
+#> Last value is the title of the graphics.
+p.model(testing, m = aml, title = "autoML - RIKEN PLASMA")
+```
 
 ## Retention Time Prediction SPELL
 
@@ -287,7 +285,6 @@ You have 3 options to make a prediction:
 -   for your personal database
 -   for downloaded mona.msp
 -   for a Retip included database
-
 
 ### 1. Personal database
 
@@ -301,7 +298,6 @@ rp_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext",
 rp_ext_desc <- getCD(rp_ext)
 ```
 
-
 #### XGBoost
 
 ```{r}
@@ -313,7 +309,6 @@ if (cesc) {
   rp_ext_pred_xgb <- Retip::RT.spell(training, rp_ext_desc, model = xgb)
 }
 ```
-
 
 #### Random forest
 
@@ -327,7 +322,6 @@ if (cesc) {
 }
 ```
 
-
 #### BRNN
 
 ```{r}
@@ -339,7 +333,6 @@ if (cesc) {
   rp_ext_pred_brnn <- Retip::RT.spell(training, rp_ext_desc, model = brnn)
 }
 ```
-
 
 #### LightGBM
 
@@ -353,7 +346,6 @@ if (cesc) {
 }
 ```
 
-
 #### Keras
 
 ```{r}
@@ -366,6 +358,17 @@ if (cesc) {
 }
 ```
 
+#### autoML
+
+```{r}
+#> perform the RT spell
+if (cesc) {
+  rp_ext_pred_aml <- RT.spell(training, rp_ext_desc, model = aml,
+                                cesc = preproc)
+} else {
+  rp_ext_pred_aml <- RT.spell(training, rp_ext_desc, model = aml)
+}
+```
 
 ### 2. Downloaded mona.msp
 
@@ -376,7 +379,6 @@ db_mona <- prep.mona(msp = "MoNA-export-CASMI_2016.msp")
 
 mona <- getCD(db_mona)
 ```
-
 
 #### XGBoost
 
@@ -390,7 +392,6 @@ if (cesc) {
 addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_xgb)
 ```
 
-
 #### Random forest
 
 ```{r message=FALSE, results='hide'}
@@ -402,7 +403,6 @@ if (cesc) {
 
 addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_rf)
 ```
-
 
 #### BRNN
 
@@ -417,7 +417,6 @@ if (cesc) {
 addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_brnn)
 ```
 
-
 #### LightGBM
 
 ```{r message=FALSE, results='hide'}
@@ -430,7 +429,6 @@ if (cesc) {
 
 addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_lightgbm)
 ```
-
 
 #### Keras
 
@@ -445,6 +443,18 @@ if (cesc) {
 addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_keras)
 ```
 
+#### autoML
+
+```{r message=FALSE, results='hide'}
+if (cesc) {
+  mona_rt_aml <- RT.spell(training, mona, model = aml,
+                            cesc = preproc)
+} else {
+  mona_rt_aml <- RT.spell(training, mona, model = aml)
+}
+
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_aml)
+```
 
 ### 3. Retip included database
 
@@ -458,7 +468,6 @@ The available outputs are:
 -   **`THERMO`**
 -   **`WATERS`**
 -   **`SCIEX`**
-
 
 #### XGBoost
 
@@ -474,7 +483,6 @@ if (cesc) {
 export_rtp <- RT.export(all_pred_xgb, program = "MSFINDER", pol = "pos")
 ```
 
-
 #### Random forest
 
 ```{r}
@@ -488,7 +496,6 @@ if (cesc) {
 
 export_rtp <- RT.export(all_pred_rf, program = "MSFINDER", pol = "pos")
 ```
-
 
 #### BRNN
 
@@ -504,7 +511,6 @@ if (cesc) {
 export_rtp <- RT.export(all_pred_brnn, program = "MSFINDER", pol = "pos")
 ```
 
-
 #### LightGBM
 
 ```{r}
@@ -518,7 +524,6 @@ if (cesc) {
 
 export_rtp <- RT.export(all_pred_lightgbm, program = "MSFINDER", pol = "pos")
 ```
-
 
 #### Keras
 
@@ -534,6 +539,19 @@ if (cesc) {
 export_rtp <- RT.export(all_pred_keras, program = "MSFINDER", pol = "pos")
 ```
 
+#### autoML
+
+```{r}
+#> example of all Retip included compounds predicted and exported to MSFINDER
+if (cesc) {
+  all_pred_aml <- RT.spell(training, target = "ALL", model = aml,
+                             cesc = preproc)
+} else {
+  all_pred_aml <- RT.spell(training, target = "ALL", model = aml)
+}
+
+export_rtp <- RT.export(all_pred_aml, program = "MSFINDER", pol = "pos")
+```
 
 ## Conclusions remarks
 
