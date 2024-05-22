@@ -48,7 +48,7 @@ In case you want to avoid building a library from scratch, you can utilize publi
 ```{r}
 setwd("~/Documentos/retip")
 library(keras)
-# install_keras()
+#> install_keras()
 library(rJava)
 library(rcdklibs)
 library(rcdk)
@@ -79,11 +79,11 @@ Then you have to import your custom excel file or use FiehnLab Hilic or Riken Pl
 prep.wizard()
 
 # import excel file for training and testing data
-RP2 <- readxl::read_excel("Plasma_positive.xlsx", sheet = "lib_2",
+rp2 <- readxl::read_excel("Plasma_positive.xlsx", sheet = "lib_2",
                           col_types = c("text", "text", "text", "numeric"))
 
 #> or use HILIC database included in Retip
-# HILIC <- HILIC
+#> HILIC <- HILIC
 ```
 
 
@@ -94,7 +94,7 @@ Now it is time to compute chemical descriptors with CDK a JAVA based open source
 **Remember:** clean your SMILES from salts and metal containing compounds before starting Retip to avoid cavities. You can use for this purpose ChemAxon standardizer, for example.
 
 ```{r warning=FALSE, message=FALSE, results='hide'}
-descs <- getCD(RP2)
+descs <- getCD(rp2)
 ```
 
 
@@ -118,7 +118,7 @@ You have now created your library with chemical descriptors. It is time to visua
 The answer is not easy and pass trough another question: is the chemical space of my library large enough? So we have created function `chem.space` to plot your indulged data into chemical reality. You can chose a target between several database (BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB, STOFF). In red you will see your library, in gray the chosen database.
 
 ```{r warning=FALSE}
-chem.space(db_rt,t="HMDB", title='HMDB - RIKEN PLASMA')
+chem.space(db_rt, t = "HMDB", title = "HMDB - RIKEN PLASMA")
 ```
 
 
@@ -131,20 +131,23 @@ Centering and scaling can be useful for Keras model, but can decrease performanc
 ```{r warning=FALSE, message=FALSE, results='hide'}
 #> Optional center and scale data
 
-removeDescriptors = TRUE
-if (removeDescriptors) {
+remove_descriptors <- TRUE
+if (remove_descriptors) {
   library(dplyr)
   db_rt <- select(db_rt, -c(Fsp3, nA, nG))
 }
 
 #> this option improves Keras model
-cesc = FALSE
+cesc <- FALSE
 if (cesc) {
-  preProc <- cesc(db_rt) #Build a model to use for center and scale a dataframe 
-  db_rt <- predict(preProc,db_rt) # use the above created model for center and scale dataframe
+  # Build a model to use for center and scale a dataframe
+  preproc <- cesc(db_rt)
+  # use the above created model for center and scale dataframe
+  db_rt <- predict(preproc, db_rt)
 }
 
-#> IMPORTANT : if you use this option remember to set cesc variable into rt.spell and getRT.smile functions
+#> IMPORTANT : if you use this option remember to set cesc variable into
+#> rt.spell and getRT.smile functions
 ```
 
 
@@ -161,9 +164,9 @@ We can use caret function `createDataPartition` as follow:
 ```{r}
 #> Split in training and testing using caret::createDataPartition
 set.seed(101)
-inTraining <- caret::createDataPartition(db_rt$XLogP, p = .8, list = FALSE)
-training <- db_rt[ inTraining,]
-testing  <- db_rt[-inTraining,]
+in_training <- caret::createDataPartition(db_rt$XLogP, p = .8, list = FALSE)
+training <- db_rt[in_training, ]
+testing <- db_rt[-in_training, ]
 ```
 
 
@@ -176,30 +179,30 @@ Our suggestion is to compute all of them. Each function have an integrated tunin
 **Have fun!**
 
 ```{r warning=FALSE, message=FALSE, results='hide'}
-buildModels = TRUE
+build_models <- TRUE
 
-if (buildModels) {
+if (build_models) {
   rf  <- fit.rf(training)
   saveRDS(rf, "rf_model.rds")
-  
+
   brnn <- fit.brnn(training)
   saveRDS(brnn, "brnn_model.rds")
-  
-  keras <- fit.keras(training,testing)
-  save_model_hdf5(keras,filepath = "keras_HI")
-  
-  lightgbm <- fit.lightgbm(training,testing)
+
+  keras <- fit.keras(training, testing)
+  save_model_hdf5(keras, filepath = "keras_HI")
+
+  lightgbm <- fit.lightgbm(training, testing)
   saveRDS(lightgbm, "lightgbm_model.rds")
-  
+
   xgb <- fit.xgboost(training)
   saveRDS(xgb, "xgb_model.rds")
 } else {
-   xgb <- readRDS("xgb_model.rds")
-   rf <- readRDS("rf_model.rds")
-   brnn <- readRDS("brnn_model.rds")
-   keras <- load_model_hdf5("keras_HI")
-   lightgbm <- readRDS("lightgbm_model.rds")
- }
+  xgb <- readRDS("xgb_model.rds")
+  rf <- readRDS("rf_model.rds")
+  brnn <- readRDS("brnn_model.rds")
+  keras <- load_model_hdf5("keras_HI")
+  lightgbm <- readRDS("lightgbm_model.rds")
+}
 ```
 
 
@@ -217,7 +220,8 @@ Let’s see how much accurate it is. First of all check the scores with function
 The best model is always the first based on lower RMSE value. You can check only one model or all of them (maximum 5) at same time.
 
 ```{r}
-#> first you have to put the testing daframe and then the name of the models you have computed
+#> first you have to put the testing daframe and then the name of the models
+#> you have computed
 stat <- get.score(testing, xgb, rf, brnn, keras, lightgbm)
 ```
 
@@ -227,45 +231,50 @@ You can also visualize model performance using function `p.model` using testing 
 ### XGBoost
 
 ```{r warning=FALSE}
-#> first you have to put the testing daframe and then the name of the models you want to visualize. 
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
 #> Last value is the title of the graphics.
-p.model(testing, m=xgb, title = "XGBoost - RIKEN PLASMA")
+p.model(testing, m = xgb, title = "XGBoost - RIKEN PLASMA")
 ```
 
 
 ### Random forest
 
 ```{r warning=FALSE}
-#> first you have to put the testing daframe and then the name of the models you want to visualize. 
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
 #> Last value is the title of the graphics.
-p.model(testing, m=rf, title = "Random forest - RIKEN PLASMA")
+p.model(testing, m = rf, title = "Random forest - RIKEN PLASMA")
 ```
 
 
 ### BRNN
 
 ```{r warning=FALSE}
-#> first you have to put the testing daframe and then the name of the models you want to visualize. 
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
 #> Last value is the title of the graphics.
-p.model(testing, m=brnn, title = "BRNN - RIKEN PLASMA")
+p.model(testing, m = brnn, title = "BRNN - RIKEN PLASMA")
 ```
 
 
 ### LightGBM
 
 ```{r warning=FALSE}
-#> first you have to put the testing daframe and then the name of the models you want to visualize. 
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
 #> Last value is the title of the graphics.
-p.model(testing, m=lightgbm, title = "LightGBM - RIKEN PLASMA")
+p.model(testing, m = lightgbm, title = "LightGBM - RIKEN PLASMA")
 ```
 
 
 ### Keras
 
 ```{r warning=FALSE}
-#> first you have to put the testing daframe and then the name of the models you want to visualize. 
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
 #> Last value is the title of the graphics.
-p.model(testing, m=keras, title = "Keras - RIKEN PLASMA")
+p.model(testing, m = keras, title = "Keras - RIKEN PLASMA")
 ```
 
 
@@ -286,10 +295,10 @@ In that case, you have to import your excel with compound **Name**, **InChiKey**
 
 ```{r warning = FALSE, message = FALSE, results='hide'}
 # import excel file for external validation set
-RP_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext",
+rp_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext",
                              col_types = c("text", "text", "text", "numeric"))
 #> compute Chemical descriptors
-RP_ext_desc <- getCD(RP_ext)
+rp_ext_desc <- getCD(rp_ext)
 ```
 
 
@@ -298,9 +307,10 @@ RP_ext_desc <- getCD(RP_ext)
 ```{r}
 #> perform the RT spell
 if (cesc) {
-  RP_ext_pred_xgb <- Retip::RT.spell(training, RP_ext_desc, model=xgb, cesc = preProc)
+  rp_ext_pred_xgb <- Retip::RT.spell(training, rp_ext_desc, model = xgb,
+                                     cesc = preproc)
 } else {
-  RP_ext_pred_xgb <- Retip::RT.spell(training, RP_ext_desc, model=xgb)
+  rp_ext_pred_xgb <- Retip::RT.spell(training, rp_ext_desc, model = xgb)
 }
 ```
 
@@ -310,9 +320,10 @@ if (cesc) {
 ```{r}
 #> perform the RT spell
 if (cesc) {
-  RP_ext_pred_rf <- Retip::RT.spell(training, RP_ext_desc, model=rf, cesc = preProc)
+  rp_ext_pred_rf <- Retip::RT.spell(training, rp_ext_desc, model = rf,
+                                    cesc = preproc)
 } else {
-  RP_ext_pred_rf <- Retip::RT.spell(training, RP_ext_desc, model=rf)
+  rp_ext_pred_rf <- Retip::RT.spell(training, rp_ext_desc, model = rf)
 }
 ```
 
@@ -322,9 +333,10 @@ if (cesc) {
 ```{r}
 #> perform the RT spell
 if (cesc) {
-  RP_ext_pred_brnn <- Retip::RT.spell(training, RP_ext_desc, model=brnn, cesc = preProc)
+  rp_ext_pred_brnn <- Retip::RT.spell(training, rp_ext_desc, model = brnn,
+                                      cesc = preproc)
 } else {
-  RP_ext_pred_brnn <- Retip::RT.spell(training, RP_ext_desc, model=brnn)
+  rp_ext_pred_brnn <- Retip::RT.spell(training, rp_ext_desc, model = brnn)
 }
 ```
 
@@ -334,9 +346,10 @@ if (cesc) {
 ```{r}
 #> perform the RT spell
 if (cesc) {
-  RP_ext_pred_lightgbm <- RT.spell(training, RP_ext_desc, model=lightgbm, cesc = preProc)
+  rp_ext_pred_lightgbm <- RT.spell(training, rp_ext_desc, model = lightgbm,
+                                   cesc = preproc)
 } else {
-  RP_ext_pred_lightgbm <- RT.spell(training, RP_ext_desc, model=lightgbm)
+  rp_ext_pred_lightgbm <- RT.spell(training, rp_ext_desc, model = lightgbm)
 }
 ```
 
@@ -346,9 +359,10 @@ if (cesc) {
 ```{r}
 #> perform the RT spell
 if (cesc) {
-  RP_ext_pred_keras <- RT.spell(training, RP_ext_desc, model=keras, cesc = preProc)
+  rp_ext_pred_keras <- RT.spell(training, rp_ext_desc, model = keras,
+                                cesc = preproc)
 } else {
-  RP_ext_pred_keras <- RT.spell(training, RP_ext_desc, model=keras)
+  rp_ext_pred_keras <- RT.spell(training, rp_ext_desc, model = keras)
 }
 ```
 
@@ -358,7 +372,7 @@ if (cesc) {
 Here, you have to put your msp downloaded from [Mona](https://mona.fiehnlab.ucdavis.edu/downloads) inside your project folder. First, `prep.mona` function is needed to extract information from msp file and build input table. Then, you have to compute CD using `getCD`, make the prediction and incorporate again inside msp file. In this way the msp file you have in your project folder is ready to be used for compound identification with MSMS and Retention time prediction.
 
 ```{r warning=FALSE, message=FALSE, results='hide'}
-db_mona <- prep.mona(msp="MoNA-export-CASMI_2016.msp")
+db_mona <- prep.mona(msp = "MoNA-export-CASMI_2016.msp")
 
 mona <- getCD(db_mona)
 ```
@@ -368,12 +382,12 @@ mona <- getCD(db_mona)
 
 ```{r message=FALSE, results='hide'}
 if (cesc) {
-  mona_rt_xgb <- RT.spell(training, mona, model=xgb, cesc = preProc)
+  mona_rt_xgb <- RT.spell(training, mona, model = xgb, cesc = preproc)
 } else {
-  mona_rt_xgb <- RT.spell(training, mona, model=xgb)
+  mona_rt_xgb <- RT.spell(training, mona, model = xgb)
 }
 
-addRT.mona(msp="MoNA-export-CASMI_2016.msp", mona_rt_xgb)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_xgb)
 ```
 
 
@@ -381,12 +395,12 @@ addRT.mona(msp="MoNA-export-CASMI_2016.msp", mona_rt_xgb)
 
 ```{r message=FALSE, results='hide'}
 if (cesc) {
-  mona_rt_rf <- RT.spell(training, mona, model=rf, cesc = preProc)
+  mona_rt_rf <- RT.spell(training, mona, model = rf, cesc = preproc)
 } else {
-  mona_rt_rf <- RT.spell(training, mona, model=rf)
+  mona_rt_rf <- RT.spell(training, mona, model = rf)
 }
 
-addRT.mona(msp="MoNA-export-CASMI_2016.msp", mona_rt_rf)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_rf)
 ```
 
 
@@ -394,12 +408,13 @@ addRT.mona(msp="MoNA-export-CASMI_2016.msp", mona_rt_rf)
 
 ```{r message=FALSE, results='hide'}
 if (cesc) {
-  mona_rt_brnn <- RT.spell(training, mona, model=brnn, cesc = preProc)
+  mona_rt_brnn <- RT.spell(training, mona, model = brnn,
+                           cesc = preproc)
 } else {
-  mona_rt_brnn <- RT.spell(training, mona, model=brnn)
+  mona_rt_brnn <- RT.spell(training, mona, model = brnn)
 }
 
-addRT.mona(msp="MoNA-export-CASMI_2016.msp", mona_rt_brnn)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_brnn)
 ```
 
 
@@ -407,12 +422,13 @@ addRT.mona(msp="MoNA-export-CASMI_2016.msp", mona_rt_brnn)
 
 ```{r message=FALSE, results='hide'}
 if (cesc) {
-  mona_rt_lightgbm <- RT.spell(training, mona, model=lightgbm, cesc = preProc)
+  mona_rt_lightgbm <- RT.spell(training, mona, model = lightgbm,
+                               cesc = preproc)
 } else {
-  mona_rt_lightgbm <- RT.spell(training, mona, model=lightgbm)
+  mona_rt_lightgbm <- RT.spell(training, mona, model = lightgbm)
 }
 
-addRT.mona(msp="MoNA-export-CASMI_2016.msp", mona_rt_lightgbm)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_lightgbm)
 ```
 
 
@@ -420,12 +436,13 @@ addRT.mona(msp="MoNA-export-CASMI_2016.msp", mona_rt_lightgbm)
 
 ```{r message=FALSE, results='hide'}
 if (cesc) {
-  mona_rt_keras <- RT.spell(training, mona, model=keras, cesc = preProc)
+  mona_rt_keras <- RT.spell(training, mona, model = keras,
+                            cesc = preproc)
 } else {
-  mona_rt_keras <- RT.spell(training, mona, model=keras)
+  mona_rt_keras <- RT.spell(training, mona, model = keras)
 }
 
-addRT.mona(msp="MoNA-export-CASMI_2016.msp", mona_rt_keras)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_keras)
 ```
 
 
@@ -448,12 +465,13 @@ The available outputs are:
 ```{r}
 #> example of all Retip included compounds predicted and exported to MSFINDER
 if (cesc) {
-  all_pred_xgb <- RT.spell(training, target="ALL", model=xgb, cesc = preProc)
+  all_pred_xgb <- RT.spell(training, target = "ALL", model = xgb,
+                           cesc = preproc)
 } else {
-  all_pred_xgb <- RT.spell(training, target="ALL", model=xgb)
+  all_pred_xgb <- RT.spell(training, target = "ALL", model = xgb)
 }
 
-export_rtp <- RT.export(all_pred_xgb, program="MSFINDER",pol="pos")
+export_rtp <- RT.export(all_pred_xgb, program = "MSFINDER", pol = "pos")
 ```
 
 
@@ -462,12 +480,13 @@ export_rtp <- RT.export(all_pred_xgb, program="MSFINDER",pol="pos")
 ```{r}
 #> example of all Retip included compounds predicted and exported to MSFINDER
 if (cesc) {
-  all_pred_rf <- RT.spell(training, target="ALL", model=rf, cesc = preProc)
+  all_pred_rf <- RT.spell(training, target = "ALL", model = rf,
+                          cesc = preproc)
 } else {
-  all_pred_rf <- RT.spell(training, target="ALL", model=rf)
+  all_pred_rf <- RT.spell(training, target = "ALL", model = rf)
 }
 
-export_rtp <- RT.export(all_pred_rf, program="MSFINDER",pol="pos")
+export_rtp <- RT.export(all_pred_rf, program = "MSFINDER", pol = "pos")
 ```
 
 
@@ -476,12 +495,13 @@ export_rtp <- RT.export(all_pred_rf, program="MSFINDER",pol="pos")
 ```{r}
 #> example of all Retip included compounds predicted and exported to MSFINDER
 if (cesc) {
-  all_pred_brnn <- RT.spell(training, target="ALL", model=brnn, cesc = preProc)
+  all_pred_brnn <- RT.spell(training, target = "ALL", model = brnn,
+                            cesc = preproc)
 } else {
-  all_pred_brnn <- RT.spell(training, target="ALL", model=brnn)
+  all_pred_brnn <- RT.spell(training, target = "ALL", model = brnn)
 }
 
-export_rtp <- RT.export(all_pred_brnn, program="MSFINDER",pol="pos")
+export_rtp <- RT.export(all_pred_brnn, program = "MSFINDER", pol = "pos")
 ```
 
 
@@ -490,12 +510,13 @@ export_rtp <- RT.export(all_pred_brnn, program="MSFINDER",pol="pos")
 ```{r}
 #> example of all Retip included compounds predicted and exported to MSFINDER
 if (cesc) {
-  all_pred_lightgbm <- RT.spell(training, target="ALL", model=lightgbm, cesc = preProc)
+  all_pred_lightgbm <- RT.spell(training, target = "ALL", model = lightgbm,
+                                cesc = preproc)
 } else {
-  all_pred_lightgbm <- RT.spell(training, target="ALL", model=lightgbm)
+  all_pred_lightgbm <- RT.spell(training, target = "ALL", model = lightgbm)
 }
 
-export_rtp <- RT.export(all_pred_lightgbm, program="MSFINDER",pol="pos")
+export_rtp <- RT.export(all_pred_lightgbm, program = "MSFINDER", pol = "pos")
 ```
 
 
@@ -504,12 +525,13 @@ export_rtp <- RT.export(all_pred_lightgbm, program="MSFINDER",pol="pos")
 ```{r}
 #> example of all Retip included compounds predicted and exported to MSFINDER
 if (cesc) {
-  all_pred_keras <- RT.spell(training, target="ALL", model=keras, cesc = preProc)
+  all_pred_keras <- RT.spell(training, target = "ALL", model = keras,
+                             cesc = preproc)
 } else {
-  all_pred_keras <- RT.spell(training, target="ALL", model=keras)
+  all_pred_keras <- RT.spell(training, target = "ALL", model = keras)
 }
 
-export_rtp <- RT.export(all_pred_keras, program="MSFINDER",pol="pos")
+export_rtp <- RT.export(all_pred_keras, program = "MSFINDER", pol = "pos")
 ```
 
 
