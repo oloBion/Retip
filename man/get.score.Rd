@@ -2,7 +2,7 @@
 % Please edit documentation in R/fuction_getscore.R
 \name{get.score}
 \alias{get.score}
-\title{Calculate score from each model to testing dataset. You can also use training data or whole dataset. It accept untill 5 models}
+\title{Calculate score from each model to testing dataset. You can also use training data or whole dataset. It accept untill 6 models}
 \usage{
 get.score(t, m1, m2, m3, m4, m5, m6)
 }
