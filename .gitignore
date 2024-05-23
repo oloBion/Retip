@@ -11,3 +11,4 @@ examples/xgb_model.rds
 examples/automl_h2o_model/StackedEnsemble_BestOfFamily_1_AutoML_1_20240523_84024
 examples/automl_h2o_model/StackedEnsemble_BestOfFamily_1_AutoML_3_20240523_112915
 examples/MoNA-export-CASMI_2016.msp
+examples/Retip_tutorial.html

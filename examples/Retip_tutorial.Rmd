@@ -42,31 +42,10 @@ In case you want to avoid building a library from scratch, you can utilize publi
 
 ## Packages import
 
-```{r}
+```{r message=FALSE, warning=FALSE, results='hide'}
 setwd("~/Documentos/Retip/examples")
 library(Retip)
-# library(keras)
-# install_keras()
-# library(rJava)
-# library(rcdklibs)
-# library(rcdk)
-# library(ggplot2)
-# library(Retip)
-# library(gridExtra)
-# library(grid)
-# library(gtable)
-# library(readxl)
-# library(lattice)
-# library(h2o)
-# h2o::h2o.init(nthreads = -1)
-# source("~/Documentos/Retip/R/function_getCD.R")
-# source("~/Documentos/Retip/R/function_chemspace.R")
-# source("~/Documentos/Retip/R/model_lighgbm.R")
-# source("~/Documentos/Retip/R/model_keras.R")
-# source("~/Documentos/Retip/R/model_automl.R")
-# source("~/Documentos/Retip/R/fuction_plotmodel.R")
-# source("~/Documentos/Retip/R/function_RT_spell.R")
-# source("~/Documentos/Retip/R/fuction_getscore.R")
+keras::install_keras()
 ```
 
 ## Set up Retip
