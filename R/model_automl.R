@@ -1,6 +1,6 @@
 #' Build autoML Model
 #' @export fit.automl.h2o
-#' @param x A training dataset with calculated Chemical Descriptors
+#' @param training A training dataset with calculated Chemical Descriptors
 #' @return  Returns a trained model ready to predict
 #' @examples
 #' \donttest{
