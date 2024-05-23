@@ -47,7 +47,7 @@ Set `keras_installed = TRUE` if you have installed keras.
 ```{r message=FALSE, warning=FALSE, results='hide'}
 setwd("~/Documentos/Retip/examples")
 library(Retip)
-keras_installed = TRUE
+keras_installed <- TRUE
 if (!keras_installed) {
   keras::install_keras()
 }
@@ -184,7 +184,7 @@ if (build_models) {
   keras <- keras::load_model_hdf5("keras_HI")
   lightgbm <- readRDS("lightgbm_model.rds")
   h2o::h2o.init(nthreads = -1)
-  aml <- h2o.loadModel("automl_h2o_model/StackedEnsemble_BestOfFamily_1_AutoML_1_20240523_84024") ### add the name of your saved model
+  aml <- h2o.loadModel("automl_h2o_model/StackedEnsemble_BestOfFamily_1_AutoML_1_20240523_84024") # replace ### with the name of your saved model
 }
 ```
 
@@ -261,7 +261,7 @@ p.model(testing, m = keras, title = "Keras - RIKEN PLASMA")
 #> first you have to put the testing daframe and then the name of the models
 #> you want to visualize.
 #> Last value is the title of the graphics.
-Retip::p.model(testing, m = aml, title = "autoML - RIKEN PLASMA")
+p.model(testing, m = aml, title = "autoML - RIKEN PLASMA")
 ```
 
 ## Retention Time Prediction SPELL

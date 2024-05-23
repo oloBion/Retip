@@ -1,111 +1,192 @@
+# Variables
+keras_installed <- TRUE
+remove_descriptors <- TRUE
+cesc <- FALSE
+build_models <- TRUE
+
+# Packages import
+setwd("~/Documentos/Retip/examples")
 library(Retip)
+if (!keras_installed) {
+  keras::install_keras()
+}
 
-
-#Starts parallel computing
+# Starts parallel computing
 prep.wizard()
 
-# import excel file for training and testing data
-RP2 <- readxl::read_excel("Plasma_positive.xlsx", sheet = "lib_2", col_types = c("text", 
-                                                                              "text", "text", "numeric"))
-# import excel file for external validation set
-RP_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext", col_types = c("text", 
-                                                                                  "text", "text", "numeric"))
+# Import excel file for training and testing data
+rp2 <- readxl::read_excel("Plasma_positive.xlsx", sheet = "lib_2",
+                          col_types = c("text", "text", "text", "numeric"))
+
 
 # Calculate Chemical Descriptors fron RCDK
-descs2 <- getCD(RP2)
-descs_ext <- getCD(RP_ext)
+descs <- getCD(rp2)
 
 # Clean dataset from NA and low variance value
-db_rt <- proc.data(descs2)
-db_ext <- descs_ext[names(descs_ext) %in% names(db_rt)]
+db_rt <- proc.data(descs)
 
-#####################################################################################
-################# Options center and scale data  ####################################
+# Plot ChemSpace
+chem.space(db_rt, t = "HMDB", title = "HMDB - RIKEN PLASMA")
 
-# this option improves Keras model
+# Remove missing descriptors in Retip library
+if (remove_descriptors) {
+  db_rt <- dplyr::select(db_rt, -c(Fsp3, nA, nG))
+}
 
-preProc <- cesc(db_rt) #Build a model to use for center and scale a dataframe 
-db_rt <- predict(preProc,db_rt) # use the above created model for center and scale dataframe
-db_ext <- predict(preProc,db_ext)
+# Optional center and scale data
+if (cesc) {
+  # Build a model to use for center and scale a dataframe
+  preproc <- cesc(db_rt)
+  # use the above created model for center and scale dataframe
+  db_rt <- predict(preproc, db_rt)
+}
 
-# IMPORTANT : if you use this option remember to set cesc variable 
-# #########   into rt.spell and getRT.smile functions
-
-#####################################################################################
-#####################################################################################
-
-
-#Split in training and testing using caret::createDataPartition
+# Split in training and testing using caret::createDataPartition
 set.seed(101)
-inTraining <- caret::createDataPartition(db_rt$XLogP, p = .8, list = FALSE)
-training <- db_rt[ inTraining,]
-testing  <- db_rt[-inTraining,]
-
-
+in_training <- caret::createDataPartition(db_rt$XLogP, p = .8, list = FALSE)
+training <- db_rt[in_training, ]
+testing <- db_rt[-in_training, ]
 
 # Train Model
+if (build_models) {
+  rf  <- fit.rf(training)
+  saveRDS(rf, "rf_model.rds")
 
-xgb <- fit.xgboost(training)
+  brnn <- fit.brnn(training)
+  saveRDS(brnn, "brnn_model.rds")
 
-rf  <- fit.rf(training)
+  keras <- fit.keras(training, testing)
+  save_model_hdf5(keras, filepath = "keras_HI")
 
-brnn <- fit.brnn(training)
+  lightgbm <- fit.lightgbm(training, testing)
+  saveRDS(lightgbm, "lightgbm_model.rds")
 
-keras <- fit.keras(training,testing)
+  xgb <- fit.xgboost(training)
+  saveRDS(xgb, "xgb_model.rds")
 
-lightgbm <- fit.lightgbm(training,testing)
+  aml <- fit.automl.h2o(training)
+  h2o::h2o.saveModel(aml@leader, "automl_h2o_model")
+} else {
+  xgb <- readRDS("xgb_model.rds")
+  rf <- readRDS("rf_model.rds")
+  brnn <- readRDS("brnn_model.rds")
+  keras <- keras::load_model_hdf5("keras_HI")
+  lightgbm <- readRDS("lightgbm_model.rds")
+  h2o::h2o.init(nthreads = -1)
+  aml <- h2o.loadModel("automl_h2o_model/###") 
+  # replace ### with the name of your saved model
+}
 
+# Testing and plot Models
+stat <- get.score(testing, xgb, rf, brnn, keras, lightgbm, aml)
+print(stat)
 
-# Plot Variable importance for Xgboost or Random Forest or Brnn using Caret function
+p.model(testing, m = xgb, title = "XGBoost - RIKEN PLASMA")
+p.model(testing, m = rf, title = "Random forest - RIKEN PLASMA")
+p.model(testing, m = brnn, title = "BRNN - RIKEN PLASMA")
+p.model(testing, m = lightgbm, title = "LightGBM - RIKEN PLASMA")
+p.model(testing, m = keras, title = "Keras - RIKEN PLASMA")
+p.model(testing, m = aml, title = "autoML - RIKEN PLASMA")
 
-plot(caret::varImp(xgb), top =20, main="Top 20 Variable Impact Plot - XGB - RIKEN PLASMA")
+# Retention Time Prediction SPELL
 
+## Personal database
 
-# Plot Model
+# Import excel file for external validation set
+rp_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext",
+                             col_types = c("text", "text", "text", "numeric"))
 
-p.model2(training, m=xgb,title = "RP - TRAINING- XGB",crh_leght = 12)
+# Calculate Chemical Descriptors fron RCDK
+rp_ext_desc <- getCD(rp_ext)
 
+# Models
+if (cesc) {
+  rp_ext_pred_xgb <- Retip::RT.spell(training, rp_ext_desc, model = xgb,
+                                     cesc = preproc)
+  rp_ext_pred_rf <- Retip::RT.spell(training, rp_ext_desc, model = rf,
+                                    cesc = preproc)
+  rp_ext_pred_brnn <- Retip::RT.spell(training, rp_ext_desc, model = brnn,
+                                      cesc = preproc)
+  rp_ext_pred_lightgbm <- RT.spell(training, rp_ext_desc, model = lightgbm,
+                                   cesc = preproc)
+  rp_ext_pred_keras <- RT.spell(training, rp_ext_desc, model = keras,
+                                cesc = preproc)
+  rp_ext_pred_aml <- RT.spell(training, rp_ext_desc, model = aml,
+                              cesc = preproc)
+} else {
+  rp_ext_pred_xgb <- Retip::RT.spell(training, rp_ext_desc, model = xgb)
+  rp_ext_pred_rf <- Retip::RT.spell(training, rp_ext_desc, model = rf)
+  rp_ext_pred_brnn <- Retip::RT.spell(training, rp_ext_desc, model = brnn)
+  rp_ext_pred_lightgbm <- RT.spell(training, rp_ext_desc, model = lightgbm)
+  rp_ext_pred_keras <- RT.spell(training, rp_ext_desc, model = keras)
+  rp_ext_pred_aml <- RT.spell(training, rp_ext_desc, model = aml)
+}
 
-stat <- get.score(db_ext,keras)
+## Mona database
 
+# From downloaded file
+db_mona <- prep.mona(msp = "MoNA-export-CASMI_2016.msp")
 
-# save or load model all except keras #
-
-saveRDS(lightgbm, "light_plasma.rds")
-
-light_plasma <- readRDS("light_plasma.rds")
-
-
-# save or load model  keras #
-
-save_model_hdf5(keras1,filepath = "keras_HI")
-
-keras_HI <- load_model_hdf5("keras_HI")
-
-
-
-#mona
-
-db_mona <- prep.mona(msp="MoNA-export-CASMI_2016.msp")
-
+# Calculate Chemical Descriptors fron RCDK
 mona <- getCD(db_mona)
 
-mona_rt3 <- RT.spell(training,mona,model=keras_HI)
+# Models
+if (cesc) {
+  mona_rt_xgb <- Retip::RT.spell(training, mona, model = xgb,
+                                 cesc = preproc)
+  mona_rt_rf <- Retip::RT.spell(training, mona, model = rf,
+                                cesc = preproc)
+  mona_rt_brnn <- Retip::RT.spell(training, mona, model = brnn,
+                                  cesc = preproc)
+  mona_rt_lightgbm <- RT.spell(training, mona, model = lightgbm,
+                               cesc = preproc)
+  mona_rt_keras <- RT.spell(training, mona, model = keras,
+                            cesc = preproc)
+  mona_rt_aml <- RT.spell(training, mona, model = aml,
+                          cesc = preproc)
+} else {
+  mona_rt_xgb <- Retip::RT.spell(training, mona, model = xgb)
+  mona_rt_rf <- Retip::RT.spell(training, mona, model = rf)
+  mona_rt_brnn <- Retip::RT.spell(training, mona, model = brnn)
+  mona_rt_lightgbm <- RT.spell(training, mona, model = lightgbm)
+  mona_rt_keras <- RT.spell(training, mona, model = keras)
+  mona_rt_aml <- RT.spell(training, mona, model = aml)
+}
 
-addRT.mona(msp="MoNA-export-CASMI_2016.msp",mona_rt)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_xgb)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_rf)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_brnn)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_lightgbm)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_keras)
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_aml)
 
+## Retip included library
 
-all_pred <- RT.spell(training,target = "ALL",model=xgb)
-all_pred$Name <- NULL
-all_pred$SMILES <- NULL
-colnames(all_pred) <- c("INCHKEY","RT")
-write.table(x = all_pred, "all_msfinder_Riken.txt", sep = "\t", col.names = T, row.names=F, dec = ".", quote = F)
+if (cesc) {
+  all_pred_xgb <- RT.spell(training, target = "ALL", model = xgb,
+                           cesc = preproc)
+  all_pred_rf <- RT.spell(training, target = "ALL", model = rf,
+                          cesc = preproc)
+  all_pred_brnn <- RT.spell(training, target = "ALL", model = brnn,
+                            cesc = preproc)
+  all_pred_lightgbm <- RT.spell(training, target = "ALL", model = lightgbm,
+                                cesc = preproc)
+  all_pred_keras <- RT.spell(training, target = "ALL", model = keras,
+                             cesc = preproc)
+  all_pred_aml <- RT.spell(training, target = "ALL", model = aml,
+                           cesc = preproc)
+} else {
+  all_pred_xgb <- RT.spell(training, target = "ALL", model = xgb)
+  all_pred_rf <- RT.spell(training, target = "ALL", model = rf)
+  all_pred_brnn <- RT.spell(training, target = "ALL", model = brnn)
+  all_pred_lightgbm <- RT.spell(training, target = "ALL", model = lightgbm)
+  all_pred_keras <- RT.spell(training, target = "ALL", model = keras)
+  all_pred_aml <- RT.spell(training, target = "ALL", model = aml)
+}
 
-
-
-#get individual prediction from single smile
-
-smi <- "C1=CC(=CC=C1C(=O)O)N"
-getRT.smile(smile=smi,training,model=xgb)
-
-
+export_rtp <- RT.export(all_pred_xgb, program = "MSFINDER", pol = "pos")
+export_rtp <- RT.export(all_pred_rf, program = "MSFINDER", pol = "pos")
+export_rtp <- RT.export(all_pred_brnn, program = "MSFINDER", pol = "pos")
+export_rtp <- RT.export(all_pred_lightgbm, program = "MSFINDER", pol = "pos")
+export_rtp <- RT.export(all_pred_keras, program = "MSFINDER", pol = "pos")
+export_rtp <- RT.export(all_pred_aml, program = "MSFINDER", pol = "pos")
