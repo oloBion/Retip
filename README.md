@@ -8,7 +8,7 @@ Please cite:
 
 > Retip: Retention Time Prediction for Compound Annotation in Untargeted Metabolomics Paolo Bonini, Tobias Kind, Hiroshi Tsugawa, Dinesh Kumar Barupal, and Oliver Fiehn Analytical Chemistry 2020 92 (11), 7515-7522 DOI: 10.1021/acs.analchem.9b05765
 
-### Introduction
+## Introduction
 
 **Retip** is an R package for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis. Retention time calculation can be useful in identifying unknowns and removing false positive annotations. It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model:
 
@@ -20,7 +20,7 @@ Please cite:
 
 **Retip** also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB and STOFF.
 
-### Retip installation
+## Retip installation
 
 Retip 0.5.5 requires R 4.4.0 and it is recommended to use RStudio IDE to run it.
 
@@ -54,6 +54,6 @@ devtools::install_github('Paolobnn/Retip')
 
 :warning: It is not possible to install Retip in conda enviroment because `rJava` requires NVIDIA drivers.
 
-### Usage
+## Usage
 
 You will find a tutorial in the [**Retip app**](https://www.retip.app/) as well as in the examples folder of the [**GitHub repository**](https://github.com/PaoloBnn/Retip/tree/master?tab=readme-ov-file).
