@@ -42,10 +42,15 @@ In case you want to avoid building a library from scratch, you can utilize publi
 
 ## Packages import
 
+Set `keras_installed = TRUE` if you have installed keras.
+
 ```{r message=FALSE, warning=FALSE, results='hide'}
 setwd("~/Documentos/Retip/examples")
 library(Retip)
-keras::install_keras()
+keras_installed = TRUE
+if (!keras_installed) {
+  keras::install_keras()
+}
 ```
 
 ## Set up Retip
@@ -551,7 +556,7 @@ Remember Leonardo Da Vinci suggestion:
 blockquote {
     padding: 10px 20px;
     margin: 0 0 20px;
-    font-size: 12px;
+    font-size: 14px;
     border-left: 5px solid #eee;
 }
 ```
