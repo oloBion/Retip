@@ -1,15 +1,17 @@
 
 #' Predict Retention Time
 #' @export RT.spell
-#' @param training A training dataset with calculated Chemical Descriptors used in the model
-#' @param target A target dataset with calculated Chemical Descriptors where you want to predict Retention Time
+#' @param training A training dataset with calculated Chemical Descriptors
+#' used in the model
+#' @param target A target dataset with calculated Chemical Descriptors where
+#' you want to predict Retention Time
 #' @param model A previusly computed model, like Xgboost, Keras etc
 #' @param cesc A model for center and scale data calculated with cesc function
 #' @return  Returns target dataframe with Retention time calculated
 #' @examples
 #' \donttest{
-#' # target dataframe needs to have 3 mandatory columns Name, InchIKey ans SMILES
-#' # and the whole descriptors calculated and not filtered
+#' # target dataframe needs to have 3 mandatory columns Name, InChiKey and
+#' SMILES and the whole descriptors calculated and not filtered
 #' target_rtp <- RT.spell(training,target,model=xgb)}
 
 

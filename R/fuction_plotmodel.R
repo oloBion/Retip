@@ -27,10 +27,6 @@ p.model <- function(t, m, title = "title", crh_leght = 16) {
     prd <- stats::predict(m, h2o::as.h2o(t)[, 2:ncolt])
     prd <- as.data.frame(prd)
     names(prd) <- c("RTP")
-
-    # Variables
-    rt_obs <- as.data.frame(t)$RT
-    rt_pred <- prd$RTP
   } else {
     # Test data
     t1 <- as.matrix(t)
@@ -40,11 +36,11 @@ p.model <- function(t, m, title = "title", crh_leght = 16) {
     prd <- stats::predict(m, t1[, 2:ncolt1])
     prd <- data.frame(prd)
     names(prd) <- c("RTP")
-
-    # Variables
-    rt_obs <- t$RT
-    rt_pred <- prd$RTP
   }
+
+  # Variables
+  rt_obs <- t$RT
+  rt_pred <- prd$RTP
 
   # RT observed, predicted and error df
   df <- data.frame(rt_obs, rt_pred, rt_obs - rt_pred)

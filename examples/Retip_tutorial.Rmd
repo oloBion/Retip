@@ -1,6 +1,6 @@
 ---
 title: "Retip - Retention Time Prediction for metabolomics"
-author: "[Paolo Bonini](https://www.researchgate.net/profile/Paolo-Bonini-2); [Tobias Kind](https://fiehnlab.ucdavis.edu/staff/kind); [Hiroshi Tsugawa](https://www.researchgate.net/profile/Hiroshi-Tsugawa); [Dinesh Barupal](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30); [Oliver Fiehn](https://fiehnlab.ucdavis.edu/staff/fiehn)"
+author: "[Paolo Bonini](https://www.researchgate.net/profile/Paolo-Bonini-2), [Tobias Kind](https://fiehnlab.ucdavis.edu/staff/kind), [Hiroshi Tsugawa](https://www.researchgate.net/profile/Hiroshi-Tsugawa), [Dinesh Barupal](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30), [Oliver Fiehn](https://fiehnlab.ucdavis.edu/staff/fiehn)"
 published-on: "10 May 2020 in [Analytical Chemistry](https://pubs.acs.org/doi/10.1021/acs.analchem.9b05765)"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
@@ -45,7 +45,7 @@ In case you want to avoid building a library from scratch, you can utilize publi
 ```{r}
 setwd("~/Documentos/Retip/examples")
 library(keras)
-#> install_keras()
+# install_keras()
 library(rJava)
 library(rcdklibs)
 library(rcdk)
@@ -57,6 +57,7 @@ library(gtable)
 library(readxl)
 library(lattice)
 library(h2o)
+h2o::h2o.init(nthreads = -1)
 source("~/Documentos/Retip/R/function_getCD.R")
 source("~/Documentos/Retip/R/function_chemspace.R")
 source("~/Documentos/Retip/R/model_lighgbm.R")
@@ -64,6 +65,7 @@ source("~/Documentos/Retip/R/model_keras.R")
 source("~/Documentos/Retip/R/model_automl.R")
 source("~/Documentos/Retip/R/fuction_plotmodel.R")
 source("~/Documentos/Retip/R/function_RT_spell.R")
+source("~/Documentos/Retip/R/fuction_getscore.R")
 ```
 
 ## Set up Retip
@@ -171,7 +173,7 @@ Our suggestion is to compute all of them. Each function have an integrated tunin
 **Have fun!**
 
 ```{r warning=FALSE, message=FALSE, results='hide'}
-build_models <- TRUE
+build_models <- FALSE
 
 if (build_models) {
   rf  <- fit.rf(training)
@@ -197,7 +199,7 @@ if (build_models) {
   brnn <- readRDS("brnn_model.rds")
   keras <- keras::load_model_hdf5("keras_HI")
   lightgbm <- readRDS("lightgbm_model.rds")
-  aml <- h2o.loadModel("automl_h2o_model/###") ### add the name of your saved model
+  aml <- h2o.loadModel("automl_h2o_model/StackedEnsemble_BestOfFamily_1_AutoML_1_20240523_84024") ### add the name of your saved model
 }
 ```
 
@@ -217,7 +219,8 @@ The best model is always the first based on lower RMSE value. You can check only
 ```{r}
 #> first you have to put the testing daframe and then the name of the models
 #> you have computed
-stat <- get.score(testing, xgb, rf, brnn, keras, lightgbm)
+stat <- get.score(testing, xgb, rf, brnn, keras, lightgbm, aml)
+stat
 ```
 
 You can also visualize model performance using function `p.model` using testing dataframe as input. You can also use training data or whole data to see how it change, even if the only really important is the testing one.
@@ -563,6 +566,15 @@ Remember these few tips:
 -   Look at your smiles before import in Retip, if you have cavities in it will not work properly.
 
 Remember Leonardo Da Vinci suggestion:
+
+```{css style settings, echo = FALSE}
+blockquote {
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-size: 12px;
+    border-left: 5px solid #eee;
+}
+```
 
 > I have been impressed with the urgency of doing. Knowing is not enough; we must apply. Being willing is not enough; we must do.
 

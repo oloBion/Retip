@@ -2,3 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+examples/brnn_model.rds
+examples/MSFINDER_export.txt
+examples/lightgbm_model.rds
+examples/keras_HI
+examples/rf_model.rds
+examples/xgb_model.rds
+examples/automl_h2o_model/StackedEnsemble_BestOfFamily_1_AutoML_1_20240523_84024
