@@ -1,7 +1,7 @@
 Package: Retip
 Type: Package
 Title: Retention Time Prediction for Metabolomics
-Version: 0.5.4
+Version: 0.5.5
 Authors@R: c(
     person("Paolo", "Bonini", , "pb@ngalab.com", c("aut", "cre")),
     person("Tobias", "Kind", , "tkind@ucdavis.edu",role = "aut"),
@@ -16,7 +16,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Depends: 
-    R (>= 3.5),
+    R (>= 4.4),
     ggplot2,
     keras
 Imports: 
@@ -26,7 +26,12 @@ Imports:
     doParallel,
     brnn,
     rcdk,
-    dplyr
+    dplyr,
+    gridExtra,
+    grid,
+    gtable,
+    lattice,
+    h2o
 Suggests: 
     knitr,
     rmarkdown
