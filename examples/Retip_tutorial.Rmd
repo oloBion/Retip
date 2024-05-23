@@ -286,6 +286,24 @@ rp_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext",
 rp_ext_desc <- getCD(rp_ext)
 ```
 
+Clean data set from NA and low variance values using the Retip function `proc.data` as you did before with your data.
+
+```{r}
+#> Clean dataset from NA and low variance value
+db_rt_ext <- proc.data(rp_ext_desc)
+```
+
+Center and scale your data if you performed this step before.
+
+```{r}
+if (cesc) {
+  # Build a model to use for center and scale a dataframe
+  preproc_ext <- cesc(db_rt_ext)
+  # use the above created model for center and scale dataframe
+  db_rt_ext <- predict(preproc_ext, db_rt_ext)
+}
+```
+
 #### XGBoost
 
 ```{r}

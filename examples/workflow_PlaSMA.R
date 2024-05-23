@@ -18,15 +18,11 @@ prep.wizard()
 rp2 <- readxl::read_excel("Plasma_positive.xlsx", sheet = "lib_2",
                           col_types = c("text", "text", "text", "numeric"))
 
-
 # Calculate Chemical Descriptors fron RCDK
 descs <- getCD(rp2)
 
 # Clean dataset from NA and low variance value
 db_rt <- proc.data(descs)
-
-# Plot ChemSpace
-chem.space(db_rt, t = "HMDB", title = "HMDB - RIKEN PLASMA")
 
 # Remove missing descriptors in Retip library
 if (remove_descriptors) {
@@ -77,16 +73,9 @@ if (build_models) {
   # replace ### with the name of your saved model
 }
 
-# Testing and plot Models
+# Model stats
 stat <- get.score(testing, xgb, rf, brnn, keras, lightgbm, aml)
 print(stat)
-
-p.model(testing, m = xgb, title = "XGBoost - RIKEN PLASMA")
-p.model(testing, m = rf, title = "Random forest - RIKEN PLASMA")
-p.model(testing, m = brnn, title = "BRNN - RIKEN PLASMA")
-p.model(testing, m = lightgbm, title = "LightGBM - RIKEN PLASMA")
-p.model(testing, m = keras, title = "Keras - RIKEN PLASMA")
-p.model(testing, m = aml, title = "autoML - RIKEN PLASMA")
 
 # Retention Time Prediction SPELL
 
@@ -99,19 +88,30 @@ rp_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext",
 # Calculate Chemical Descriptors fron RCDK
 rp_ext_desc <- getCD(rp_ext)
 
+# Clean dataset from NA and low variance value
+db_rt_ext <- proc.data(rp_ext_desc)
+
+# Optional center and scale data
+if (cesc) {
+  # Build a model to use for center and scale a dataframe
+  preproc_ext <- cesc(db_rt_ext)
+  # use the above created model for center and scale dataframe
+  db_rt_ext <- predict(preproc_ext, db_rt_ext)
+}
+
 # Models
 if (cesc) {
-  rp_ext_pred_xgb <- Retip::RT.spell(training, rp_ext_desc, model = xgb,
+  rp_ext_pred_xgb <- Retip::RT.spell(training, db_rt_ext, model = xgb,
                                      cesc = preproc)
-  rp_ext_pred_rf <- Retip::RT.spell(training, rp_ext_desc, model = rf,
+  rp_ext_pred_rf <- Retip::RT.spell(training, db_rt_ext, model = rf,
                                     cesc = preproc)
-  rp_ext_pred_brnn <- Retip::RT.spell(training, rp_ext_desc, model = brnn,
+  rp_ext_pred_brnn <- Retip::RT.spell(training, db_rt_ext, model = brnn,
                                       cesc = preproc)
-  rp_ext_pred_lightgbm <- RT.spell(training, rp_ext_desc, model = lightgbm,
+  rp_ext_pred_lightgbm <- RT.spell(training, db_rt_ext, model = lightgbm,
                                    cesc = preproc)
-  rp_ext_pred_keras <- RT.spell(training, rp_ext_desc, model = keras,
+  rp_ext_pred_keras <- RT.spell(training, db_rt_ext, model = keras,
                                 cesc = preproc)
-  rp_ext_pred_aml <- RT.spell(training, rp_ext_desc, model = aml,
+  rp_ext_pred_aml <- RT.spell(training, db_rt_ext, model = aml,
                               cesc = preproc)
 } else {
   rp_ext_pred_xgb <- Retip::RT.spell(training, rp_ext_desc, model = xgb)
