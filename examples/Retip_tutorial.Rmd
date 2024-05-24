@@ -189,60 +189,6 @@ if (build_models) {
 }
 ```
 
-```{r}
-xgb_vars <- caret::varImp(xgb)[["importance"]]
-rf_vars <- caret::varImp(rf)[["importance"]]
-brnn_vars <- caret::varImp(brnn)[["importance"]]
-lightgbm_vars <- lightgbm::lgb.importance(lightgbm)
-aml_vars <- t(h2o::h2o.varimp(aml))
-```
-
-```{r}
-model <- xgb
-df <- caret::varImp(model)[["importance"]]
-colnames(df) <- c('Value')
-df$Feature <- rownames(df)
-rownames(df) <- NULL
-df <- df[order(df$Value, decreasing = TRUE), ]
-df <- df[1:20, ]
-```
-
-```{r}
-model <- aml
-number <- 3
-df <- t(h2o::h2o.varimp(model))
-mdl <- colnames(df)[number]
-print(mdl)
-df <- data.frame(df[, number])
-colnames(df) <- c('Value')
-df$Feature <- rownames(df)
-rownames(df) <- NULL
-df <- df[order(df$Value, decreasing = TRUE), ]
-df <- df[1:20, ]
-```
-
-```{r}
-model <- lightgbm
-df <- lightgbm::lgb.importance(lightgbm)[, 1:2]
-colnames(df)[colnames(df) == 'Gain'] <- 'Value'
-df <- df[order(df$Value, decreasing = TRUE), ]
-df <- df[1:20, ]
-```
-
-```{r}
-mdl_name <- "XGBoost"
-library(ggplot2)
-ggplot(df, aes(x= reorder(Feature, Value), y=Value)) + 
-  geom_bar(stat="identity", fill="#D02937") + coord_flip() + 
-  ggplot2::labs(title=paste0(mdl_name, "\n Feature importance (top 20)")) +
-  theme_classic() + 
-  ggplot2::theme(plot.title = element_text(color = "#384049", face = "bold",
-                                             hjust = 0.5),
-                   axis.line = element_line(colour = "#384049"),
-                   axis.text = element_text(colour = "#384049"),
-                   axis.title = element_blank())
-```
-
 ## Testing and plot models
 
 Congratulations you have built your model!
@@ -332,7 +278,7 @@ For the autoML model, the statistics and the figures are obtained from the best 
 
 ## Feature importance
 
-You can visualize the important features of your model using the `p.model.features` function. You have to indicate your model (`model`) and your model type (`mdl_type`). The accepted inputs for `mdl_type` are XGBoost (`xgb`), Random Forest (`rf`), BRNN (`brnn`), LightGBM (`lightgbm`) and autoML (`h2o`). The Keras model is not supported.
+You can visualize the feature importance of your model using the `p.model.features` function. You have to indicate your model (`model`) and your model type (`mdl_type`). The accepted inputs for `mdl_type` are XGBoost (`xgb`), Random Forest (`rf`), BRNN (`brnn`), LightGBM (`lightgbm`) and autoML (`h2o`). The Keras model is not supported.
 
 ### XGBoost
 
