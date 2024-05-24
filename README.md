@@ -27,8 +27,28 @@ Retip 0.5.5 requires R 4.4.0 and it is recommended to use RStudio IDE to run it.
 1.  Download and install R from the [CRAN](https://cran.r-project.org/) (64 bit version recommended)
 2.  Download and install [RStudio](https://posit.co/download/rstudio-desktop/#download)
 3.  Download and install [Java JDK](https://www.oracle.com/java/technologies/downloads/#java8)
+
+Run the following command lines to install Java in Ubuntu.
+
+```{bash}
+sudo apt update
+sudo apt install default-jre
+sudo apt install default-jdk
+sudo R CMD javareconf
+```
+
+It is also possible that `r-cran-rjava` needs to be installed.
+
 4.  Download and install [Rtools](https://cran.rstudio.com/bin/windows/Rtools/) (Windows)
-5.  Run the following command block to install all required packages, as well as the Retip packages and Retip library.
+5.  Download and install [python3](https://www.python.org/downloads/) (required to use Keras model)
+
+Run the following command line to install `python` with R.
+
+```{r}
+reticulate::install_python(version = 3.10)
+```
+
+6.  Run the following command block to install all required packages, as well as the Retip packages and Retip library.
 
 ```{r}
 install.packages('rJava', repos='http://cran.rstudio.com/')
@@ -41,12 +61,15 @@ install.packages('rcdklibs', version='2.9', repos='http://cran.rstudio.com/')
 install.packages('doParallel', version='1.0.17', repos='http://cran.rstudio.com/')
 install.packages('stringi', version='1.8.4', repos='http://cran.rstudio.com/')
 install.packages('lattice', version='0.22-5', repos='http://cran.rstudio.com/')
+install.packages('randomForest', version='4.7-1.1', repos='http://cran.rstudio.com/')
 install.packages('xgboost', version='1.7.7.1', repos='http://cran.rstudio.com/')
 install.packages('brnn', version='0.9.3', repos='http://cran.rstudio.com/')
+install.packages('lightgbm', version='4.3.0', repos='http://cran.rstudio.com/')
 install.packages('h2o', version='3.44.0.3')
 install.packages('gtable', version='0.3.5', repos='http://cran.rstudio.com/')
 install.packages('grid', version='4.4.0', repos='http://cran.rstudio.com/')
 install.packages('gridExtra', version='2.3', repos='http://cran.rstudio.com/')
+install.packages('reticulate', version='1.37', repos='http://cran.rstudio.com/')
 
 devtools::install_github('Paolobnn/Retiplib')
 devtools::install_github('Paolobnn/Retip')

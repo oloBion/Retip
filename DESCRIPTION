@@ -31,7 +31,9 @@ Imports:
     grid,
     gtable,
     lattice,
-    h2o
+    h2o,
+    randomForest,
+    lightgbm
 Suggests: 
     knitr,
     rmarkdown
