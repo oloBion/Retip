@@ -3,7 +3,7 @@ keras_installed <- TRUE
 remove_descriptors <- TRUE
 cesc <- FALSE
 build_models <- FALSE
-model <- "xgb" # all, xgb, rf, lightgbm, keras, brnn, h2o
+model <- "h2o" # all, xgb, rf, lightgbm, keras, brnn, h2o
 
 # Packages import
 setwd("~/Documentos/Retip/examples")
@@ -99,7 +99,6 @@ if (model == "all") {
     mdl <- readRDS("lightgbm_model.rds")
   }
 } else if (model == "xgb") {
-  print("OK")
   if (build_models) {
     mdl <- fit.xgboost(training)
     saveRDS(xgb, "xgb_model.rds")
@@ -112,12 +111,12 @@ if (model == "all") {
     h2o::h2o.saveModel(aml@leader, "automl_h2o_model")
   } else {
     h2o::h2o.init(nthreads = -1)
-    mdl <- h2o.loadModel("automl_h2o_model/###")
+    mdl <- h2o::h2o.loadModel("automl_h2o_model/##")
   }
 }
-
+source("~/Documentos/Retip/R/fuction_getscore.R")
 # Model stats
-if (model == all) {
+if (model == "all") {
   stat <- get.score(testing, xgb, rf, brnn, keras, lightgbm, aml)
 } else {
   stat <- get.score(testing, mdl)
@@ -147,7 +146,7 @@ if (cesc) {
 }
 
 # Models
-if (model == all) {
+if (model == "all") {
   if (cesc) {
     rp_ext_pred_xgb <- Retip::RT.spell(training, db_rt_ext, model = xgb,
                                        cesc = preproc)
@@ -187,7 +186,7 @@ db_mona <- prep.mona(msp = "MoNA-export-CASMI_2016.msp")
 mona <- getCD(db_mona)
 
 # Models
-if (model == all) {
+if (model == "all") {
   if (cesc) {
     mona_rt_xgb <- Retip::RT.spell(training, mona, model = xgb,
                                    cesc = preproc)
@@ -220,14 +219,14 @@ if (model == all) {
   if (cesc) {
     mona_rt <- Retip::RT.spell(training, mona, model = mdl, cesc = preproc)
   } else {
-    mona_rt <- Retip::RT.spell(training, mona, model = xgb)
+    mona_rt <- Retip::RT.spell(training, mona, model = mdl)
   }
 
   addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt)
 }
 
 ## Retip included library
-if (model == all) {
+if (model == "all") {
   if (cesc) {
     all_pred_xgb <- RT.spell(training, target = "ALL", model = xgb,
                              cesc = preproc)

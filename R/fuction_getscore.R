@@ -27,12 +27,11 @@ get.score <- function(t, m1, m2, m3, m4, m5, m6) {
   # Test data
   ncolt <- ncol(t)
   tmtx <- as.matrix(t)
-  th2o <- h2o::as.h2o(t)
   rt_obs <- t$RT
 
   if (isS4(m1)) {
     # RT prediction on test dataframe
-    prd <- stats::predict(m1, th2o[, 2:ncolt])
+    prd <- stats::predict(m1, h2o::as.h2o(t)[, 2:ncolt])
     prd <- as.data.frame(prd)
     names(prd) <- c("RTP")
   } else {
@@ -61,7 +60,7 @@ get.score <- function(t, m1, m2, m3, m4, m5, m6) {
   } else {
     if (isS4(m2)) {
       # RT prediction on test dataframe
-      prd <- stats::predict(m2, th2o[, 2:ncolt])
+      prd <- stats::predict(m2, h2o::as.h2o(t)[, 2:ncolt])
       prd <- as.data.frame(prd)
       names(prd) <- c("RTP")
     } else {
@@ -90,7 +89,7 @@ get.score <- function(t, m1, m2, m3, m4, m5, m6) {
   } else {
     if (isS4(m3)) {
       # RT prediction on test dataframe
-      prd <- stats::predict(m3, th2o[, 2:ncolt])
+      prd <- stats::predict(m3, h2o::as.h2o(t)[, 2:ncolt])
       prd <- as.data.frame(prd)
       names(prd) <- c("RTP")
     } else {
@@ -119,7 +118,7 @@ get.score <- function(t, m1, m2, m3, m4, m5, m6) {
   } else {
     if (isS4(m4)) {
       # RT prediction on test dataframe
-      prd <- stats::predict(m4, th2o[, 2:ncolt])
+      prd <- stats::predict(m4, h2o::as.h2o(t)[, 2:ncolt])
       prd <- as.data.frame(prd)
       names(prd) <- c("RTP")
     } else {
@@ -147,7 +146,7 @@ get.score <- function(t, m1, m2, m3, m4, m5, m6) {
   } else {
     if (isS4(m5)) {
       # RT prediction on test dataframe
-      prd <- stats::predict(m5, th2o[, 2:ncolt])
+      prd <- stats::predict(m5, h2o::as.h2o(t)[, 2:ncolt])
       prd <- as.data.frame(prd)
       names(prd) <- c("RTP")
     } else {
@@ -175,7 +174,7 @@ get.score <- function(t, m1, m2, m3, m4, m5, m6) {
   } else {
     if (isS4(m6)) {
       # RT prediction on test dataframe
-      prd <- stats::predict(m6, th2o[, 2:ncolt])
+      prd <- stats::predict(m6, h2o::as.h2o(t)[, 2:ncolt])
       prd <- as.data.frame(prd)
       names(prd) <- c("RTP")
     } else {
