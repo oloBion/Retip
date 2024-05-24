@@ -114,7 +114,7 @@ if (model == "all") {
     mdl <- h2o::h2o.loadModel("automl_h2o_model/##")
   }
 }
-source("~/Documentos/Retip/R/fuction_getscore.R")
+
 # Model stats
 if (model == "all") {
   stat <- get.score(testing, xgb, rf, brnn, keras, lightgbm, aml)
