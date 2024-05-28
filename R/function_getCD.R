@@ -15,10 +15,16 @@ getCD <- function(x) {
   print(paste0("Converting SMILES..."))
 
   for (i in 1:nrow(x)) {
-    smi <- rcdk::parse.smiles(as.character(unlist(x[i, "SMILES"]))) [[1]]
-    smi1 <- rcdk::generate.2d.coordinates(smi)
-    smi1 <- rcdk::get.smiles(smi, rcdk::smiles.flavors(c("CxSmiles")))
-    x$SMILES[i] <- smi1
+    smiles <- tryCatch({
+      smi <- rcdk::parse.smiles(as.character(unlist(x[i, "SMILES"]))) [[1]]
+      smi1 <- rcdk::generate.2d.coordinates(smi)
+      smi1 <- rcdk::get.smiles(smi, rcdk::smiles.flavors(c("CxSmiles")))
+    }, error = function(err){
+      print(unlist(x[i, "Name"]))
+      print(err)
+      return(matrix(data=NA, nrow=1, ncol=length(x)))
+    })
+    x$SMILES[i] <- smiles
     print(paste0(i, " of ", nrow(x)))
   }
 
@@ -37,8 +43,15 @@ getCD <- function(x) {
   descs1_x <- rcdk::eval.desc(mols_x, descNames1)
 
   for (i in 2:nrow(x)) {
-    mols1 <- rcdk::parse.smiles(as.character(unlist(x[i, "SMILES"])))
-    descs1_x[i, ] <- rcdk::eval.desc(mols1, descNames1)
+    mols_desc <- tryCatch({
+      mols1 <- rcdk::parse.smiles(as.character(unlist(x[i, "SMILES"])))
+      mols1_desc <- rcdk::eval.desc(mols1, descNames1)
+    }, error = function(err) {
+      print(unlist(x[i, "Name"]))
+      print(err)
+      return(matrix(data=NA, nrow=1, ncol=length(x)))
+    })
+    descs1_x[i, ] <- mols_desc
     print(paste0(i, " of ", nrow(x)))
   }
 
@@ -59,9 +72,18 @@ getCD <- function(x) {
   descs_x_loop <- rcdk::eval.desc(mols_x1, descNames[-20])
 
   for (i in 2:nrow(x_na_rem)) {
-    mols <- rcdk::parse.smiles(as.character(unlist(x_na_rem[i, "SMILES"])))[[1]]
-    rcdk::convert.implicit.to.explicit(mols)
-    descs_x_loop[i, ] <- rcdk::eval.desc(mols, descNames[-20])
+    mols_desc1 <- tryCatch({
+      mols <- rcdk::parse.smiles(as.character(unlist(x_na_rem[i, "SMILES"])))[[1]]
+      rcdk::convert.implicit.to.explicit(mols)
+      mols_desc1 <- rcdk::eval.desc(mols, descNames[-20])
+    }, error = function(err) {
+      print(unlist(x[i, "Name"]))
+      print(err)
+      return(matrix(data=NA, nrow=1, ncol=length(x)))
+    })
+    if (sum(is.na(mols_desc1)) != length(mols_desc1)) {
+      descs_x_loop[i, ] <- mols_desc1
+    }
     print(paste0(i, " of ", nrow(x_na_rem)))
   }
   datadesc <- data.frame(x_na_rem, descs_x_loop)
