@@ -17,6 +17,7 @@ Please cite:
 -   **XGBoost:** an extreme Gradient Boosting for tree algorithms.
 -   **lightGBM:** a gradient boosting framework that uses tree based learning algorithms.
 -   **Keras:** a high-level neural networks API for Tensorflow.
+-   **H2O:** an automatic machine learning tool.
 
 **Retip** also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB and STOFF.
 
