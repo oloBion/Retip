@@ -10,7 +10,7 @@
 #' @return  Returns target dataframe with Retention time calculated
 #' @examples
 #' \donttest{
-#' # target dataframe needs to have 3 mandatory columns Name, InChiKey and
+#' # target dataframe needs to have 3 mandatory columns Name, InChIKey and
 #' SMILES and the whole descriptors calculated and not filtered
 #' target_rtp <- RT.spell(training,target,model=xgb)}
 

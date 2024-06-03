@@ -23,7 +23,7 @@ Predict Retention Time
 }
 \examples{
 \donttest{
-# target dataframe needs to have 3 mandatory columns Name, InchIKey ans SMILES
+# target dataframe needs to have 3 mandatory columns Name, InChIKey ans SMILES
 # and the whole descriptors calculated and not filtered
 target_rtp <- RT.spell(training,target,model=xgb)}
 }

@@ -8,9 +8,9 @@
 
 
 fit.automl.h2o <- function(training, max_models = 30) {
-  h2o::h2o.init(nthreads = -1)
+  h2o::h2o.init(nthreads = -1, strict_version_check=FALSE)
   training <- h2o::as.h2o(training)
-  nonx <- c("Name", "InChiKey", "SMILES", "RT")
+  nonx <- c("Name", "InChIKey", "SMILES", "RT")
   x <- setdiff(names(training), nonx)
   y <- "RT"
   print("Computing model autoML  ... Please wait ...")

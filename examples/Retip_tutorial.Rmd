@@ -24,11 +24,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Get started
 
-To use **Retip**, you need to prepare a compound retention time library in the format below. The input file needs compound **Name**, **InChiKey**, **SMILES** code and experimental **retention time** information for each compound. The input must be an MS Excel file. **Retip** will use this input file to build a the model and will predict retention times for other biochemical databases or an input query list of compounds. It is suggested that the file has at least 300 compounds to build a good retention time prediction model.
+To use **Retip**, you need to prepare a compound retention time library in the format below. The input file needs compound **Name**, **InChIKey**, **SMILES** code and experimental **retention time** information for each compound. The input must be an MS Excel file. **Retip** will use this input file to build a the model and will predict retention times for other biochemical databases or an input query list of compounds. It is suggested that the file has at least 300 compounds to build a good retention time prediction model.
 
 Input file view:
 
-| **Name**                                     | **InChiKey**                | **SMILES**                                           | **RT**   |
+| **Name**                                     | **InChIKey**                | **SMILES**                                           | **RT**   |
 |----------------------------------------------|-----------------------------|------------------------------------------------------|----------|
 | (2-oxo-2,3-dihydro-1H-indol-3-yl)acetic acid | ILGMGHZPXRDCCS-UHFFFAOYSA-N | C1=CC=C2C(=C1)C(C(=O)N2)CC(=O)O                      | 2.019083 |
 | 1,1-Dimethyl-4-phenylpiperazinium            | WVHNHHJEHFWYHH-UHFFFAOYSA-N | CC1C(NC(CN1)C2=CC=CC=C2)C                            | 2.60795  |
@@ -47,7 +47,7 @@ Set `keras_installed = TRUE` if you have installed keras.
 ```{r message=FALSE, warning=FALSE, results='hide'}
 setwd("/home/npa/Documentos/Retip/examples")
 library(Retip)
-keras_installed <- FALSE
+keras_installed <- TRUE
 if (!keras_installed) {
   keras::install_keras()
 }
@@ -112,7 +112,7 @@ Centering and scaling can be useful for Keras model, but can decrease performanc
 ```{r warning=FALSE, message=FALSE, results='hide'}
 #> Optional center and scale data
 
-remove_descriptors <- TRUE
+remove_descriptors <- FALSE
 if (remove_descriptors) {
   db_rt <- dplyr::select(db_rt, -c(Fsp3, nA, nG))
 }
@@ -184,7 +184,7 @@ if (build_models) {
   brnn <- readRDS("brnn_model.rds")
   keras <- keras::load_model_hdf5("keras_HI")
   lightgbm <- readRDS("lightgbm_model.rds")
-  h2o::h2o.init(nthreads = -1)
+  h2o::h2o.init(nthreads = -1, strict_version_check=FALSE)
   aml <- h2o.loadModel("automl_h2o_model/###") # replace ### with the name of your saved model
 }
 ```
@@ -331,7 +331,7 @@ You have 3 options to make a prediction:
 
 ### 1. Personal database
 
-In that case, you have to import your excel with compound **Name**, **InChiKey** and **SMILES code**, compute CD and then make the prediction.
+In that case, you have to import your excel with compound **Name**, **InChIKey** and **SMILES code**, compute CD and then make the prediction.
 
 ```{r warning = FALSE, message = FALSE, results='hide'}
 # import excel file for external validation set

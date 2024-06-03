@@ -2,7 +2,7 @@
 #' Extract information from msp file downloaded from MoNA
 #' @export prep.mona
 #' @param mspfile A msp file downloaded from MoNA
-#' @return  dataframe with Name, InchIKey and SMILES
+#' @return  dataframe with Name, InChIKey and SMILES
 #' @examples
 #' \donttest{
 #' mona <- prep.mona(msp=mona.msp)}

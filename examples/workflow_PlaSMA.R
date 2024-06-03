@@ -70,7 +70,7 @@ if (model == "all") {
     keras <- keras::load_model_hdf5("keras_HI")
     lightgbm <- readRDS("lightgbm_model.rds")
     xgb <- readRDS("xgb_model.rds")
-    h2o::h2o.init(nthreads = -1)
+    h2o::h2o.init(nthreads = -1, strict_version_check=FALSE)
     aml <- h2o.loadModel("automl_h2o_model/###")
     # replace ### with the name of your saved model
   }
@@ -110,7 +110,7 @@ if (model == "all") {
     mdl <- fit.automl.h2o(training)
     h2o::h2o.saveModel(aml@leader, "automl_h2o_model")
   } else {
-    h2o::h2o.init(nthreads = -1)
+    h2o::h2o.init(nthreads = -1, strict_version_check=FALSE)
     mdl <- h2o::h2o.loadModel("automl_h2o_model/##")
   }
 }

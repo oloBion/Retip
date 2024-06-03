@@ -29,28 +29,28 @@ RT.export <- function(data, program = "MSFINDER", pol = "pos") {
   }
 
   if ("MSDIAL" %in% program) {
-    export <- dplyr::inner_join(data,retip_lib_v2[, 2:6], "InchIKey")
+    export <- dplyr::inner_join(data,retip_lib_v2[, 2:6], "InChIKey")
     export$pos <- export$Exact.mass + H
     export$adduct <- ion
     export <- data.frame(export$Name, export$pos, export$RTP, export$adduct,
-                         export$InchIKey)
+                         export$InChIKey)
     colnames(export) <- c("Name", "Pos-m/z", "RT", "Adduct", "InChIKey")
     utils::write.table(x = export, "MSDIAL_export.txt", sep = "\t",
                        col.names = T, row.names = F, dec = ".", quote = F)
   } else if ("MSFINDER" %in% program) {
-    export <- data.frame(data$InchIKey, data$RTP)
+    export <- data.frame(data$InChIKey, data$RTP)
     colnames(export) <- c("INCHKEY", "RT")
     utils::write.table(x = export, "MSFINDER_export.txt", sep = "\t",
                        col.names = T, row.names = F, dec = ".", quote = F)
   } else if ("AGILENT" %in% program) {
-    export <- dplyr::inner_join(data, retip_lib_v2[, 2:6], "InchIKey")
+    export <- dplyr::inner_join(data, retip_lib_v2[, 2:6], "InChIKey")
     export <- data.frame(export$Name, export$Formula, export$RTP)
     colnames(export) <- c("Name", "Formula", "RT")
     gsub(",", "*", export$Name) -> export$Name
     utils::write.table(x = export, "AGILENT_export.csv", sep = ",",
                        col.names = T, row.names = F, dec = ".", quote = F)
   } else if ("THERMO" %in% program) {
-    export <- dplyr::inner_join(data, retip_lib_v2[, 2:6], "InchIKey")
+    export <- dplyr::inner_join(data, retip_lib_v2[, 2:6], "InChIKey")
     export$pos <- export$Exact.mass + H
     export <- data.frame(export$Exact.mass, export$Name, export$Formula,
                          export$pos, export$RTP)
@@ -60,7 +60,7 @@ RT.export <- function(data, program = "MSFINDER", pol = "pos") {
     utils::write.table(x = export, "THERMO_export.csv", sep = ",",
                        col.names = T, row.names = F, dec = ".", quote = F)
   } else if ("WATERS" %in% program) {
-    export <- dplyr::inner_join(data, retip_lib_v2[, 2:6], "InchIKey")
+    export <- dplyr::inner_join(data, retip_lib_v2[, 2:6], "InChIKey")
     export$adduct <- ion_w
     gsub(",", "*", export$Name) -> export$Name
     export <- data.frame(export$Name, export$Formula, export$adduct,
