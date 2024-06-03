@@ -14,7 +14,7 @@ Description: Predicted retention time can be useful in liquid chromatography ana
 License: CC BY 4.0
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.3.1
 Depends: 
     R (>= 4.4),
     ggplot2,
@@ -42,6 +42,3 @@ Enhances:
     Retiplib
 URL: https://www.retip.app
 VignetteBuilder: knitr
-
-
-

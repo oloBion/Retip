@@ -10,13 +10,15 @@ proc.data(x)
 \item{x}{A dataset with calculated Chemical Descriptors.}
 }
 \value{
-Returns cleaned up dataset removing column with NA value and Near zero variance.
+Returns cleaned up dataset removing column with NA value and Near
+zero variance.
 }
 \description{
 Clean dataset removing NA value and Near zero variance columns.
 }
 \examples{
 \donttest{
-# descs is a previusly dataset with calculate chemical descriptors from function getCD
+# descs is a previusly dataset with calculate chemical descriptors from
+function getCD
 db_rt <- proc.data(descs)}
 }

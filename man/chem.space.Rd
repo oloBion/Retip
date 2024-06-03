@@ -4,7 +4,7 @@
 \alias{chem.space}
 \title{Extract information from msp file downloaded from MoNA}
 \usage{
-chem.space(db_rt, t = "HMDB", title)
+chem.space(db_rt, target, title = "")
 }
 \arguments{
 \item{db_rt}{A user library dataframe with chemical descriptors calculated}
@@ -21,5 +21,5 @@ Extract information from msp file downloaded from MoNA
 }
 \examples{
 \donttest{
-chem.space(db_rt,t="HMDB", title="")}
+chem.space(db_rt,t="HMDB")}
 }
