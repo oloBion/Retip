@@ -17,7 +17,7 @@ chem.space <- function (db_rt, target, title='') {
   if ("ALL" %in% target) {
     target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 1] != "N/A")
   }else if ("HMDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 7] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 7] != "")
   }else if ("KNAPSACK" %in% target) {
     target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 8] != "N/A")
   }else if ("CHEBI" %in% target) {
@@ -53,9 +53,15 @@ chem.space <- function (db_rt, target, title='') {
   }else if ("SERUM" %in% target) {
     target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 24] != "N/A")
   }else if ("PLANTCYC" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 26] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 25] != "N/A")
   }else if ("UNPD" %in% target) {
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 26] != "N/A")
+  }else if ("BLEXP" %in% target) {
     target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 27] != "N/A")
+  }else if ("NPA" %in% target) {
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 28] != "N/A")
+  }else if ("COCONUT" %in% target) {
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 29] != "N/A")
   }else {
     target <- target
   }

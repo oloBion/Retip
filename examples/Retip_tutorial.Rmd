@@ -100,7 +100,7 @@ You have now created your library with chemical descriptors. It is time to visua
 The answer is not easy and pass trough another question: is the chemical space of my library large enough? So we have created function `chem.space` to plot your indulged data into chemical reality. You can chose a target between several database (BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB, STOFF). In red you will see your library, in gray the chosen database.
 
 ```{r warning=FALSE}
-chem.space(db_rt, t = "HMDB", title = "HMDB - RIKEN PLASMA")
+chem.space(db_rt, target = "HMDB", title = "HMDB - RIKEN PLASMA")
 ```
 
 ## Center and scale - Optional - Warning
