@@ -17,49 +17,49 @@
 
 
 RT.spell <- function(training, target, model = model, cesc = cesc) {
-  retip_lib_v1 <- data.frame(Retip::retip_lib_head, Retiplib::retip_lib_v1)
+  retip_lib_v2 <- data.frame(Retip::retip_lib_head, Retiplib::retip_lib_v2)
   if ("ALL" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 1] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 1] != "N/A")
   } else if ("HMDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 7] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 7] != "N/A")
   } else if ("KNAPSACK" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 8] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 8] != "N/A")
   } else if ("CHEBI" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 9] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 9] != "N/A")
   } else if ("DRUGBANK" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 10] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 10] != "N/A")
   } else if ("SMPDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 11] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 11] != "N/A")
   } else if ("YMDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 12] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 12] != "N/A")
   } else if ("T3DB" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 13] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 13] != "N/A")
   } else if ("FOODB" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 14] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 14] != "N/A")
   } else if ("NANPDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 15] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 15] != "N/A")
   } else if ("STOFF" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 16] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 16] != "N/A")
   } else if ("BMDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 17] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 17] != "N/A")
   } else if ("LIPIDMAPS" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 18] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 18] != "N/A")
   } else if ("URINE" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 19] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 19] != "N/A")
   } else if ("SALIVA" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 20] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 20] != "N/A")
   } else if ("FECES" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 21] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 21] != "N/A")
   } else if ("ECMDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 22] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 22] != "N/A")
   } else if ("CSF" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 23] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 23] != "N/A")
   } else if ("SERUM" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 24] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 24] != "N/A")
   } else if ("PLANTCYC" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 26] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 26] != "N/A")
   } else if ("UNPD" %in% target) {
-    target <- dplyr::filter(retip_lib_v1, retip_lib_v1[, 27] != "N/A")
+    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 27] != "N/A")
   } else {
     target <- target
   }
