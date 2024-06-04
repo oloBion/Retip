@@ -19,6 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 -   **XGBoost:** an extreme Gradient Boosting for tree algorithms.
 -   **lightGBM:** a gradient boosting framework that uses tree based learning algorithms.
 -   **Keras:** a high-level neural networks API for Tensorflow.
+-   **H2O autoML:** an automatic machine learning tool.
 
 **Retip** also includes useful biochemical databases like: HMDB, KNApSAcK, ChEBI, DrugBank, SMPDB, YMDB, T3DB, FooDB, NANPDB, STOFF, BMDB, LipidMAPS, Urine, Saliva, Feces, ECMDB, CSF, Serum, PubChem.1, PlantCyc, UNPD, BLEXP, NPA and COCONUT.
 
@@ -250,16 +251,16 @@ p.model(testing, m = lightgbm, title = "LightGBM - RIKEN PLASMA")
 p.model(testing, m = keras, title = "Keras - RIKEN PLASMA")
 ```
 
-### autoML
+### H2O autoML
 
 ```{r warning=FALSE}
 #> first you have to put the testing daframe and then the name of the models
 #> you want to visualize.
 #> Last value is the title of the graphics.
-p.model(testing, m = aml, title = "autoML - RIKEN PLASMA")
+p.model(testing, m = aml, title = "H2O autoML - RIKEN PLASMA")
 ```
 
-For the autoML model, the statistics and the figures are obtained from the best model (`aml@leader`). If you want to check one of the other models, you have to select it using the model ID. The same applies when saving your AutoML model. You will find an example of how to get a different model in the following command block.
+For the H2O autoML model, the statistics and the figures are obtained from the best model (`aml@leader`). If you want to check one of the other models, you have to select it using the model ID. The same applies when saving your H2O AutoML model. You will find an example of how to get a different model in the following command block.
 
 ```{r}
 #> First, get the leaderboard of your model
@@ -272,7 +273,7 @@ For the autoML model, the statistics and the figures are obtained from the best 
 
 ## Feature importance
 
-You can visualize the feature importance of your model using the `p.model.features` function. You have to indicate your model (`model`) and your model type (`mdl_type`). The accepted inputs for `mdl_type` are XGBoost (`xgb`), Random Forest (`rf`), BRNN (`brnn`), LightGBM (`lightgbm`) and autoML (`h2o`). The Keras model is not supported.
+You can visualize the feature importance of your model using the `p.model.features` function. You have to indicate your model (`model`) and your model type (`mdl_type`). The accepted inputs for `mdl_type` are XGBoost (`xgb`), Random Forest (`rf`), BRNN (`brnn`), LightGBM (`lightgbm`) and H2O autoML (`h2o`). The Keras model is not supported.
 
 ### XGBoost
 
@@ -301,7 +302,7 @@ p.model.features(brnn, mdl_type = "brnn")
 p.model.features(lightgbm, mdl_type = "lightgbm")
 ```
 
-### autoML
+### H2O autoML
 
 It is not possible to plot the stacked ensemble models, but it is possible to plot the best 20 models used to construct the stacked one. For this reason, you have to indicate the number of the model (`h2o_number`) you want to see. You can find the correspondence between model ID and number running the following command line.
 
@@ -413,7 +414,7 @@ if (cesc) {
 }
 ```
 
-#### autoML
+#### H2O autoML
 
 ```{r}
 #> perform the RT spell
@@ -498,7 +499,7 @@ if (cesc) {
 addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_keras)
 ```
 
-#### autoML
+#### H2O autoML
 
 ```{r message=FALSE, results='hide'}
 if (cesc) {
@@ -594,7 +595,7 @@ if (cesc) {
 export_rtp <- RT.export(all_pred_keras, program = "MSFINDER", pol = "pos")
 ```
 
-#### autoML
+#### H2O autoML
 
 ```{r}
 #> example of all Retip included compounds predicted and exported to MSFINDER
