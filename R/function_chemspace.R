@@ -1,9 +1,9 @@
-
-
 #' Extract information from msp file downloaded from MoNA
 #' @export chem.space
 #' @param db_rt A user library dataframe with chemical descriptors calculated
-#' @param target Target database to be compared. Choice with: "ALL",  "HMDB",  "KNAPSACK",
+#' @param target Target database to be compared. Choice between: "ALL",  "HMDB",  "KNAPSACK", "CHEBI",
+#' "DRUGBANK", "SMPDB", "YMDB", "T3DB", "FOODB", "NANPDB", "STOFF", "BMDB", "LIPIDMAPS", "URINE",
+#' "SALIVA", "FECES", "ECMDB", "CSF", "SERUM", "PUBCHEM.1", "PLANTCYC", "UNPD", "BLEXP", "NPA", "COCONUT"
 #' @param title A title for the plot. Example: Plasma - HMDB
 #' @return  plot chemical space between user library and target database
 #' @examples

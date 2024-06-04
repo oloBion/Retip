@@ -1,10 +1,12 @@
-
 #' Predict Retention Time
 #' @export RT.spell
 #' @param training A training dataset with calculated Chemical Descriptors
 #' used in the model
 #' @param target A target dataset with calculated Chemical Descriptors where
-#' you want to predict Retention Time
+#' you want to predict Retention Time. The options of the Retip libraty are:
+#' "ALL",  "HMDB",  "KNAPSACK", "CHEBI", "DRUGBANK", "SMPDB", "YMDB", "T3DB",
+#' "FOODB", "NANPDB", "STOFF", "BMDB", "LIPIDMAPS", "URINE", "SALIVA", "FECES",
+#' "ECMDB", "CSF", "SERUM", "PUBCHEM.1", "PLANTCYC", "UNPD", "BLEXP", "NPA", "COCONUT"
 #' @param model A previusly computed model, like Xgboost, Keras etc
 #' @param cesc A model for center and scale data calculated with cesc function
 #' @return  Returns target dataframe with Retention time calculated

@@ -11,7 +11,10 @@ RT.spell(training, target, model = model, cesc = cesc)
 used in the model}
 
 \item{target}{A target dataset with calculated Chemical Descriptors where
-you want to predict Retention Time}
+you want to predict Retention Time. The options of the Retip libraty are:
+"ALL",  "HMDB",  "KNAPSACK", "CHEBI", "DRUGBANK", "SMPDB", "YMDB", "T3DB",
+"FOODB", "NANPDB", "STOFF", "BMDB", "LIPIDMAPS", "URINE", "SALIVA", "FECES",
+"ECMDB", "CSF", "SERUM", "PUBCHEM.1", "PLANTCYC", "UNPD", "BLEXP", "NPA", "COCONUT"}
 
 \item{model}{A previusly computed model, like Xgboost, Keras etc}
 
