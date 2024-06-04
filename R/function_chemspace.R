@@ -12,8 +12,7 @@
 
 chem.space <- function(db_rt, target, title = "") {
 
-  retip_lib_desc <- Retiplib::get.retiplib()
-  retip_lib <- data.frame(Retip::retip_lib_head, retip_lib_desc)
+  retip_lib <- Retiplib::get.retiplib()
 
   if ("ALL" %in% target) {
     target <- retip_lib[!is.na(retip_lib$Name), ]

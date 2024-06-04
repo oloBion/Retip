@@ -12,8 +12,7 @@
 
 RT.export <- function(data, program = "MSFINDER", pol = "pos") {
 
-  retip_lib_desc <- Retiplib::get.retiplib()
-  retip_lib <- data.frame(Retip::retip_lib_head, retip_lib_desc)
+  retip_lib <- Retiplib::get.retiplib()
 
   if ("pos" %in% pol) {
     H <- 1.007276

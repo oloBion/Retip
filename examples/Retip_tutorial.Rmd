@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 -   **lightGBM:** a gradient boosting framework that uses tree based learning algorithms.
 -   **Keras:** a high-level neural networks API for Tensorflow.
 
-**Retip** also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB, STOFF, NANPDB, LipidMAPS, Urine, Saliva, Feces, CSF, Serum, PubChem.1, BLEXP, NPA and COCONUT.
+**Retip** also includes useful biochemical databases like: HMDB, KNApSAcK, ChEBI, DrugBank, SMPDB, YMDB, T3DB, FooDB, NANPDB, STOFF, BMDB, LipidMAPS, Urine, Saliva, Feces, ECMDB, CSF, Serum, PubChem.1, PlantCyc, UNPD, BLEXP, NPA and COCONUT.
 
 ## Get started
 
@@ -47,7 +47,7 @@ Set `keras_installed = TRUE` if you have installed keras.
 ```{r message=FALSE, warning=FALSE, results='hide'}
 setwd("/home/npa/Documentos/Retip/examples")
 library(Retip)
-keras_installed <- TRUE
+keras_installed <- FALSE
 if (!keras_installed) {
   keras::install_keras()
 }
@@ -547,7 +547,7 @@ export_rtp <- RT.export(all_pred_xgb, program = "MSFINDER", pol = "pos")
 #### Random forest
 
 ```{r}
-#> example of all Retip included compounds predicted and exported to MSFINDER
+#> example of all Retip included compounds predicted and exported to MSFINDERh2o
 if (cesc) {
   all_pred_rf <- RT.spell(training, target = "ALL", model = rf,
                           cesc = preproc)
