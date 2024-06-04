@@ -111,12 +111,6 @@ Centering and scaling can be useful for Keras model, but can decrease performanc
 
 ```{r warning=FALSE, message=FALSE, results='hide'}
 #> Optional center and scale data
-
-remove_descriptors <- FALSE
-if (remove_descriptors) {
-  db_rt <- dplyr::select(db_rt, -c(Fsp3, nA, nG))
-}
-
 #> this option improves Keras model
 cesc <- FALSE
 if (cesc) {
@@ -547,7 +541,7 @@ export_rtp <- RT.export(all_pred_xgb, program = "MSFINDER", pol = "pos")
 #### Random forest
 
 ```{r}
-#> example of all Retip included compounds predicted and exported to MSFINDERh2o
+#> example of all Retip included compounds predicted and exported to MSFINDER
 if (cesc) {
   all_pred_rf <- RT.spell(training, target = "ALL", model = rf,
                           cesc = preproc)
