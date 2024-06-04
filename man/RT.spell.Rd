@@ -7,9 +7,14 @@
 RT.spell(training, target, model = model, cesc = cesc)
 }
 \arguments{
-\item{training}{A training dataset with calculated Chemical Descriptors used in the model}
+\item{training}{A training dataset with calculated Chemical Descriptors
+used in the model}
 
-\item{target}{A target dataset with calculated Chemical Descriptors where you want to predict Retention Time}
+\item{target}{A target dataset with calculated Chemical Descriptors where
+you want to predict Retention Time. The options of the Retip libraty are:
+"ALL",  "HMDB",  "KNAPSACK", "CHEBI", "DRUGBANK", "SMPDB", "YMDB", "T3DB",
+"FOODB", "NANPDB", "STOFF", "BMDB", "LIPIDMAPS", "URINE", "SALIVA", "FECES",
+"ECMDB", "CSF", "SERUM", "PUBCHEM.1", "PLANTCYC", "UNPD", "BLEXP", "NPA", "COCONUT"}
 
 \item{model}{A previusly computed model, like Xgboost, Keras etc}
 
@@ -23,7 +28,7 @@ Predict Retention Time
 }
 \examples{
 \donttest{
-# target dataframe needs to have 3 mandatory columns Name, InchIKey ans SMILES
-# and the whole descriptors calculated and not filtered
+# target dataframe needs to have 3 mandatory columns Name, InChIKey and
+SMILES and the whole descriptors calculated and not filtered
 target_rtp <- RT.spell(training,target,model=xgb)}
 }

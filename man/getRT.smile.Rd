@@ -4,8 +4,12 @@
 \alias{getRT.smile}
 \title{Calculate the Retention Time from a smiles entry}
 \usage{
-getRT.smile(smile = "O=C(O)C(NC(=O)C(N)C)CC(C)C", training,
-  model = model, cesc = cesc)
+getRT.smile(
+  smile = "O=C(O)C(NC(=O)C(N)C)CC(C)C",
+  training,
+  model = model,
+  cesc = cesc
+)
 }
 \arguments{
 \item{smile}{A SMILE code}

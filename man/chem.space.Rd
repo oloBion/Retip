@@ -4,12 +4,16 @@
 \alias{chem.space}
 \title{Extract information from msp file downloaded from MoNA}
 \usage{
-chem.space(db_rt, t = "HMDB")
+chem.space(db_rt, target, title = "")
 }
 \arguments{
 \item{db_rt}{A user library dataframe with chemical descriptors calculated}
 
-\item{t}{Target database to be compared. Choice with: "ALL",  "HMDB",  "KNAPSACK",}
+\item{target}{Target database to be compared. Choice between: "ALL",  "HMDB",  "KNAPSACK", "CHEBI",
+"DRUGBANK", "SMPDB", "YMDB", "T3DB", "FOODB", "NANPDB", "STOFF", "BMDB", "LIPIDMAPS", "URINE",
+"SALIVA", "FECES", "ECMDB", "CSF", "SERUM", "PUBCHEM.1", "PLANTCYC", "UNPD", "BLEXP", "NPA", "COCONUT"}
+
+\item{title}{A title for the plot. Example: Plasma - HMDB}
 }
 \value{
 plot chemical space between user library and target database

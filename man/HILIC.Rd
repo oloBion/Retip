@@ -4,7 +4,9 @@
 \name{HILIC}
 \alias{HILIC}
 \title{FiehnHilic positive dataset.}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 970 rows and 4 columns.}
+\format{
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 970 rows and 4 columns.
+}
 \source{
 \href{http://mona.fiehnlab.ucdavis.edu/}{QTL Archive}
 }

@@ -8,39 +8,37 @@
 #' addRT.mona(msp="MoNA-export-CASMI_2016.msp",mona_rt)}
 
 
-addRT.mona <- function (msp="mspfile",prediction) {
+addRT.mona <- function(msp = "mspfile", prediction) {
 
-# Read the MSP file
-mspfile <- msp
-specfile <- readLines(mspfile, n=-1L)
+  # Read the MSP file
+  mspfile <- msp
+  specfile <- readLines(mspfile, n = -1L)
 
-# Read the RT information
+  # Read the RT information
 
-rtvec <- prediction$RTP
-names(rtvec) <- prediction$InChIKey
+  rtvec <- prediction$RTP
+  names(rtvec) <- prediction$InChIKey
 
 
 
-# Loop through each spectra
-startind <- grep("Name:", specfile)
-endind <- c(startind[-1]-1, length(specfile))
+  # Loop through each spectra
+  startind <- grep("Name:", specfile)
+  endind <- c(startind[-1] - 1, length(specfile))
 
-con1 <- file(msp,"w")
-for (i in 1:length(startind)) {
-  spect <- specfile[startind[i]:endind[i]]
+  con1 <- file(msp,"w")
+  for (i in 1:length(startind)) {
+    spect <- specfile[startind[i]:endind[i]]
 
-  ik <- gsub("InChIKey: ","",spect[grep("InChIKey:", spect)])
+    ik <- gsub("InChIKey: ", "", spect[grep("InChIKey:", spect)])
 
-  vec_print <- paste0("RETENTIONTIME: ",rtvec[ik])
+    vec_print <- paste0("RETENTIONTIME: ", rtvec[ik])
 
-  spect1 <- c(spect[1:5],paste0(vec_print), spect[6:length(spect)])
+    spect1 <- c(spect[1:5], paste0(vec_print), spect[6:length(spect)])
 
-  writeLines(spect1, con1)
+    writeLines(spect1, con1)
 
-  print(i)
+    print(i)
+  }
+  close(con1)
+
 }
-close(con1)
-
-}
-
-

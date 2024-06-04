@@ -1,7 +1,7 @@
 Package: Retip
 Type: Package
 Title: Retention Time Prediction for Metabolomics
-Version: 0.5.4
+Version: 0.5.5
 Authors@R: c(
     person("Paolo", "Bonini", , "pb@ngalab.com", c("aut", "cre")),
     person("Tobias", "Kind", , "tkind@ucdavis.edu",role = "aut"),
@@ -14,9 +14,9 @@ Description: Predicted retention time can be useful in liquid chromatography ana
 License: CC BY 4.0
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.3.1
 Depends: 
-    R (>= 3.5),
+    R (>= 4.4),
     ggplot2,
     keras
 Imports: 
@@ -26,7 +26,14 @@ Imports:
     doParallel,
     brnn,
     rcdk,
-    dplyr
+    dplyr,
+    gridExtra,
+    grid,
+    gtable,
+    lattice,
+    h2o,
+    randomForest,
+    lightgbm
 Suggests: 
     knitr,
     rmarkdown
@@ -35,6 +42,3 @@ Enhances:
     Retiplib
 URL: https://www.retip.app
 VignetteBuilder: knitr
-
-
-

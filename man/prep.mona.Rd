@@ -10,7 +10,7 @@ prep.mona(mspfile = "mona.msp")
 \item{mspfile}{A msp file downloaded from MoNA}
 }
 \value{
-dataframe with Name, InchIKey and SMILES
+dataframe with Name, InChIKey and SMILES
 }
 \description{
 Extract information from msp file downloaded from MoNA

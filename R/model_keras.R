@@ -17,7 +17,6 @@ fit.keras <- function(training,testing) {
 
   ### Data Preparation
 
-
   train_data <- training
   test_data <- testing
 
@@ -44,29 +43,26 @@ fit.keras <- function(training,testing) {
     flag_numeric("learning_rate", 0.001)
   )
 
-
   input <- layer_input(shape = ncol(train_data))
   predictions <- input %>%
-    layer_dense(units = FLAGS$dense_units, activation = 'selu') %>%
+    layer_dense(units = FLAGS$dense_units, activation = "selu") %>%
     layer_dropout(rate = FLAGS$dropout) %>%
-    layer_dense(units = FLAGS$dense_units, activation = 'selu') %>%
+    layer_dense(units = FLAGS$dense_units, activation = "selu") %>%
     layer_dropout(rate = FLAGS$dropout) %>%
-    layer_dense(units = FLAGS$dense_units, activation = 'selu') %>%
+    layer_dense(units = FLAGS$dense_units, activation = "selu") %>%
     layer_dropout(rate = FLAGS$dropout) %>%
     layer_dense(units = 1)
 
   model1 <- keras_model(input, predictions) %>% compile(
-    loss = 'mse',
-    optimizer = optimizer_rmsprop(lr = FLAGS$learning_rate),
-    metrics = c('mean_absolute_error')
+    loss = "mse",
+    optimizer = optimizer_rmsprop(learning_rate = FLAGS$learning_rate),
+    metrics = c("mean_absolute_error")
   )
 
+  print("Computing model1 Keras  ... Please wait ...")
 
-
-  print(paste0("Computing model1 Keras  ... Please wait ..."))
-
-  early_stop <- callback_early_stopping(monitor = "val_loss", patience = 50,restore_best_weights = TRUE)
-
+  early_stop <- callback_early_stopping(monitor = "val_loss", patience = 50,
+                                        restore_best_weights = TRUE)
 
   # Fit the model and store training stats
   history1 <- model1 %>% fit(
@@ -79,9 +75,7 @@ fit.keras <- function(training,testing) {
     callbacks = list(early_stop)
   )
 
-
   #Model 2
-
   predictions2 <- input %>%
     layer_dense(units = FLAGS$dense_units, activation = 'selu') %>%
     layer_dropout(rate = FLAGS$dropout2) %>%
@@ -92,16 +86,12 @@ fit.keras <- function(training,testing) {
     layer_dense(units = 1)
 
   model2 <- keras_model(input, predictions2) %>% compile(
-    loss = 'mse',
-    optimizer = optimizer_rmsprop(lr = FLAGS$learning_rate),
-    metrics = c('mean_absolute_error')
+    loss = "mse",
+    optimizer = optimizer_rmsprop(learning_rate = FLAGS$learning_rate),
+    metrics = c("mean_absolute_error")
   )
 
-
-
-  print(paste0("Computing model2 Keras  ... Please wait ..."))
-
-
+  print("Computing model2 Keras  ... Please wait ...")
 
   # Fit the model and store training stats
   history2 <- model2 %>% fit(
@@ -115,7 +105,6 @@ fit.keras <- function(training,testing) {
   )
 
   #Model 3
-
   predictions3 <- input %>%
     layer_dense(units = FLAGS$dense_units, activation = 'selu') %>%
     layer_dropout(rate = FLAGS$dropout3) %>%
@@ -126,16 +115,12 @@ fit.keras <- function(training,testing) {
     layer_dense(units = 1)
 
   model3 <- keras_model(input, predictions3) %>% compile(
-    loss = 'mse',
-    optimizer = optimizer_rmsprop(lr = FLAGS$learning_rate),
-    metrics = c('mean_absolute_error')
+    loss = "mse",
+    optimizer = optimizer_rmsprop(learning_rate = FLAGS$learning_rate),
+    metrics = c("mean_absolute_error")
   )
 
-
-
   print("Computing model3 Keras  ... Please wait ...")
-
-
 
   # Fit the model and store training stats
   history3 <- model3 %>% fit(
@@ -148,7 +133,6 @@ fit.keras <- function(training,testing) {
     callbacks = early_stop
   )
 
-
   c(loss, mae1) %<-% (model1 %>% evaluate(test_data, test_labels, verbose = 0))
   c(loss, mae2) %<-% (model2 %>% evaluate(test_data, test_labels, verbose = 0))
   c(loss, mae3) %<-% (model3 %>% evaluate(test_data, test_labels, verbose = 0))
@@ -156,11 +140,10 @@ fit.keras <- function(training,testing) {
   print(paste0("Mean absolute 2 error on test set: ", sprintf("%.2f", mae2)))
   print(paste0("Mean absolute 3 error on test set: ", sprintf("%.2f", mae3)))
 
-
-  if (mae1 < mae2 & mae1 < mae3 ){
+  if (mae1 < mae2 & mae1 < mae3 ) {
     print("Return Model 1")
     return(model1)
-  } else if (mae2 < mae1 & mae2 < mae3 ) {
+  } else if (mae2 < mae1 & mae2 < mae3) {
     print("Return Model 2")
     return(model2)
   } else {

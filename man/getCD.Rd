@@ -7,7 +7,7 @@
 getCD(x)
 }
 \arguments{
-\item{x}{A dataframe with 3 mandatory column: "Name", "InchIKey", "SMILES".}
+\item{x}{A dataframe with 3 mandatory column: "Name", "InChIKey", "SMILES".}
 }
 \value{
 A dataframe with calculated CD. Some compund can be missing if smiles is incorect or if molecule returns error in CDK
@@ -18,7 +18,7 @@ Calculate Chemical Descriptors using RCDK
 \examples{
 \donttest{
 # RP and HILIC are previusly loaded dataset from excel with
-# Name, InchIKey, SMILES and Retention Time
+# Name, InChIKey, SMILES and Retention Time
 descs <- getCD(RP)
 descs <- getCD(HILIC)}
 }
