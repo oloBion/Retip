@@ -5,7 +5,7 @@
 \alias{retip_lib_head}
 \title{All MS Fider library head.}
 \format{
-An object of class \code{data.frame} with 64004 rows and 6 columns.
+An object of class \code{data.frame} with 551637 rows and 6 columns.
 }
 \source{
 \href{http://prime.psc.riken.jp/Metabolomics_Software/MS-FINDER/}{QTL Archive}
