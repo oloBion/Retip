@@ -1,6 +1,5 @@
 # Variables
 keras_installed <- TRUE
-remove_descriptors <- TRUE
 cesc <- FALSE
 build_models <- FALSE
 model <- "h2o" # all, xgb, rf, lightgbm, keras, brnn, h2o
@@ -24,11 +23,6 @@ descs <- getCD(rp2)
 
 # Clean dataset from NA and low variance value
 db_rt <- proc.data(descs)
-
-# Remove missing descriptors in Retip library
-if (remove_descriptors) {
-  db_rt <- dplyr::select(db_rt, -c(Fsp3, nA, nG))
-}
 
 # Optional center and scale data
 if (cesc) {
@@ -87,9 +81,9 @@ if (model == "all") {
 } else if (model == "keras") {
   if (build_models) {
     mdl <- fit.keras(training, testing)
-    save_model_hdf5(keras, filepath = "keras_HI")
+    save_model_hdf5(keras, filepath = "keras_model.h5")
   } else {
-    mdl <- keras::load_model_hdf5("keras_HI")
+    mdl <- keras::load_model_hdf5("keras_model.h5")
   }
 } else if (model == "lightgbm") {
   if (build_models) {

@@ -162,7 +162,7 @@ if (build_models) {
   saveRDS(brnn, "brnn_model.rds")
 
   keras <- fit.keras(training, testing)
-  save_model_hdf5(keras, filepath = "keras_HI")
+  save_model_hdf5(keras, filepath = "keras_model.h5")
 
   lightgbm <- fit.lightgbm(training, testing)
   saveRDS(lightgbm, "lightgbm_model.rds")
@@ -177,7 +177,7 @@ if (build_models) {
   xgb <- readRDS("xgb_model.rds")
   rf <- readRDS("rf_model.rds")
   brnn <- readRDS("brnn_model.rds")
-  keras <- keras::load_model_hdf5("keras_HI")
+  keras <- keras::load_model_hdf5("keras_model.h5")
   lightgbm <- readRDS("lightgbm_model.rds")
   h2o::h2o.init(nthreads = -1, strict_version_check=FALSE)
   aml <- h2o.loadModel("automl_h2o_model/###") # replace ### with the name of your saved model
