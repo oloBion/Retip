@@ -10,60 +10,61 @@
 #' \donttest{
 #' chem.space(db_rt,t="HMDB")}
 
-chem.space <- function (db_rt, target, title = '') {
+chem.space <- function(db_rt, target, title = "") {
 
-  retip_lib_v2 <- data.frame(Retip::retip_lib_head, Retiplib::retip_lib_v2)
+  retip_lib_desc <- Retiplib::get.retiplib()
+  retip_lib <- data.frame(Retip::retip_lib_head, retip_lib_desc)
 
   if ("ALL" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$Name), ]
+    target <- retip_lib[!is.na(retip_lib$Name), ]
   }else if ("HMDB" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$HMDB), ]
+    target <- retip_lib[!is.na(retip_lib$HMDB), ]
   }else if ("KNAPSACK" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$KNApSAcK), ]
+    target <- retip_lib[!is.na(retip_lib$KNApSAcK), ]
   }else if ("CHEBI" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$ChEBI), ]
+    target <- retip_lib[!is.na(retip_lib$ChEBI), ]
   }else if ("DRUGBANK" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$DrugBank), ]
+    target <- retip_lib[!is.na(retip_lib$DrugBank), ]
   }else if ("SMPDB" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$SMPDB), ]
+    target <- retip_lib[!is.na(retip_lib$SMPDB), ]
   }else if ("YMDB" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$YMDB), ]
+    target <- retip_lib[!is.na(retip_lib$YMDB), ]
   }else if ("T3DB" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$T3DB), ]
+    target <- retip_lib[!is.na(retip_lib$T3DB), ]
   }else if ("FOODB" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$FooDB), ]
+    target <- retip_lib[!is.na(retip_lib$FooDB), ]
   }else if ("NANPDB" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$NANPDB), ]
+    target <- retip_lib[!is.na(retip_lib$NANPDB), ]
   }else if ("STOFF" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$STOFF), ]
+    target <- retip_lib[!is.na(retip_lib$STOFF), ]
   }else if ("BMDB" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$BMDB), ]
+    target <- retip_lib[!is.na(retip_lib$BMDB), ]
   }else if ("LIPIDMAPS" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$LipidMAPS), ]
+    target <- retip_lib[!is.na(retip_lib$LipidMAPS), ]
   }else if ("URINE" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$Urine), ]
+    target <- retip_lib[!is.na(retip_lib$Urine), ]
   }else if ("SALIVA" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$Saliva), ]
+    target <- retip_lib[!is.na(retip_lib$Saliva), ]
   }else if ("FECES" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$Feces), ]
+    target <- retip_lib[!is.na(retip_lib$Feces), ]
   }else if ("ECMDB" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$ECMDB), ]
+    target <- retip_lib[!is.na(retip_lib$ECMDB), ]
   }else if ("CSF" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$CSF), ]
+    target <- retip_lib[!is.na(retip_lib$CSF), ]
   }else if ("SERUM" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$Serum), ]
+    target <- retip_lib[!is.na(retip_lib$Serum), ]
   }else if ("PUBCHEM1" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$PubChem.1), ]
+    target <- retip_lib[!is.na(retip_lib$PubChem.1), ]
   }else if ("PLANTCYC" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$PlantCyc), ]
+    target <- retip_lib[!is.na(retip_lib$PlantCyc), ]
   }else if ("UNPD" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$UNPD), ]
+    target <- retip_lib[!is.na(retip_lib$UNPD), ]
   }else if ("BLEXP" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$BLEXP), ]
+    target <- retip_lib[!is.na(retip_lib$BLEXP), ]
   }else if ("NPA" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$NPA), ]
+    target <- retip_lib[!is.na(retip_lib$NPA), ]
   }else if ("COCONUT" %in% target) {
-    target <- retip_lib_v2[!is.na(retip_lib_v2$COCONUT), ]
+    target <- retip_lib[!is.na(retip_lib$COCONUT), ]
   }else {
     target <- target
   }
