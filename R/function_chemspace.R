@@ -10,58 +10,60 @@
 #' \donttest{
 #' chem.space(db_rt,t="HMDB")}
 
-chem.space <- function (db_rt, target, title='') {
+chem.space <- function (db_rt, target, title = '') {
 
-  retip_lib_v2 <- data.frame(Retip::retip_lib_head,Retiplib::retip_lib_v2)
+  retip_lib_v2 <- data.frame(Retip::retip_lib_head, Retiplib::retip_lib_v2)
 
   if ("ALL" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 1] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$Name), ]
   }else if ("HMDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 7] != "")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$HMDB), ]
   }else if ("KNAPSACK" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 8] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$KNApSAcK), ]
   }else if ("CHEBI" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 9] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$ChEBI), ]
   }else if ("DRUGBANK" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 10] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$DrugBank), ]
   }else if ("SMPDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 11] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$SMPDB), ]
   }else if ("YMDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 12] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$YMDB), ]
   }else if ("T3DB" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 13] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$T3DB), ]
   }else if ("FOODB" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 14] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$FooDB), ]
   }else if ("NANPDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 15] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$NANPDB), ]
   }else if ("STOFF" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 16] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$STOFF), ]
   }else if ("BMDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 17] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$BMDB), ]
   }else if ("LIPIDMAPS" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 18] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$LipidMAPS), ]
   }else if ("URINE" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 19] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$Urine), ]
   }else if ("SALIVA" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 20] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$Saliva), ]
   }else if ("FECES" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 21] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$Feces), ]
   }else if ("ECMDB" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 22] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$ECMDB), ]
   }else if ("CSF" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 23] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$CSF), ]
   }else if ("SERUM" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 24] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$Serum), ]
+  }else if ("PUBCHEM1" %in% target) {
+    target <- retip_lib_v2[!is.na(retip_lib_v2$PubChem.1), ]
   }else if ("PLANTCYC" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 25] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$PlantCyc), ]
   }else if ("UNPD" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 26] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$UNPD), ]
   }else if ("BLEXP" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 27] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$BLEXP), ]
   }else if ("NPA" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 28] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$NPA), ]
   }else if ("COCONUT" %in% target) {
-    target <- dplyr::filter(retip_lib_v2, retip_lib_v2[, 29] != "N/A")
+    target <- retip_lib_v2[!is.na(retip_lib_v2$COCONUT), ]
   }else {
     target <- target
   }

@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 -   **lightGBM:** a gradient boosting framework that uses tree based learning algorithms.
 -   **Keras:** a high-level neural networks API for Tensorflow.
 
-**Retip** also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB and STOFF.
+**Retip** also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB, STOFF, NANPDB, LipidMAPS, Urine, Saliva, Feces, CSF, Serum, PubChem.1, BLEXP, NPA and COCONUT.
 
 ## Get started
 
