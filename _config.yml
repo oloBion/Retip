@@ -10,7 +10,7 @@ baseurl: ""
 title: Retip - Retention Time prediction for Metabolomics
 
 # Short description of your site
-description: Retip is an R package for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis.
+description: Retip is a tool, available as an R package, for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis.
 
 
 
