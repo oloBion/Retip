@@ -14,23 +14,22 @@ Please cite:
 
 ## Introduction
 
-Retip is an R package for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis. Retention time calculation can be useful in identifying unknowns and removing false positive annotations. 
-It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model:
+**Retip** is a tool for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis, available as both an [**R package**](https://github.com/olobion/Retip/tree/master) and a [**Python package**](https://github.com/oloBion/pyRetip/tree/master). Retention time calculation can be useful in identifying unknowns and removing false positive annotations. It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model:
 
-- Random Forest: a decision tree algorithms
-- BRNN: Bayesian Regularized Neural Network
-- XGBoost: an extreme Gradient Boosting for tree algorithms
-- lightGBM: a gradient boosting framework that uses tree based learning algorithms.
-- Keras: a high-level neural networks API for Tensorflow
+-   **Random Forest:** a decision tree algorithms.
+-   **BRNN:** Bayesian Regularized Neural Network.
+-   **XGBoost:** an extreme Gradient Boosting for tree algorithms.
+-   **lightGBM:** a gradient boosting framework that uses tree based learning algorithms.
+-   **Keras:** a high-level neural networks API for Tensorflow.
+-   **H2O autoML:** an automatic machine learning tool.
 
-Retip also includes useful biochemical databases like: BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB and STOFF. 
-
+**Retip** also includes useful biochemical databases like: HMDB, KNApSAcK, ChEBI, DrugBank, SMPDB, YMDB, T3DB, FooDB, NANPDB, STOFF, BMDB, LipidMAPS, Urine, Saliva, Feces, ECMDB, CSF, Serum, PubChem.1, PlantCyc, UNPD, BLEXP, NPA and COCONUT.
 
 ## Get started
 
-To use Retip, an user needs to prepare a compound retention time library in the format below. The input file needs compound Name, InChiKey, SMILES code and experimental retention time information for each compound. The input must be an MS Excel file. Retip will use this input file to build a the model and will predict retention times for other biochemical databases or an input query list of compounds. It is suggested that the file has at least 300 compounds to build a good retention time prediction model. 
+To use **Retip**, you need to prepare a compound retention time library in the format below. The input file needs compound **Name**, **InChIKey**, **SMILES** code and experimental **retention time** information for each compound. The input must be an MS Excel file. **Retip** will use this input file to build a the model and will predict retention times for other biochemical databases or an input query list of compounds. It is suggested that the file has at least 300 compounds to build a good retention time prediction model.
 
-Input file view :
+Input file view:
 
 | NAME                                         | InChIKey                    | SMILES                          | RT       |
 |----------------------------------------------|-----------------------------|---------------------------------|----------|
@@ -44,232 +43,223 @@ Input file view :
 
 In  case, you want to avoid building a library from scratch, you can utilize publicly available libraries from Riken, Japan [PlaSMA](http://plasma.riken.jp/) and the West Coast Metabolomics Center UC Davis, USA [MoNA](http://mona.fiehnlab.ucdavis.edu/). Experimentation details for these two libraries are available here (link). We have already calculated retention time for several databases for these two experimental conditions. 
 
-If you want your retention time library to be included in Retip, please contact the Retip team (pb@ngalab.com). 
+If you would like that your retention time library to be included in Retip, please contact the Retip team (pb@olobion.ai).
 
 ## Retip installation
-It is suggested that RStudio IDE is used to run Retip.
 
-Download R and install (64 bit version Recommended):
-[CRAN](https://cran.r-project.org/)
+Retip 2.0 requires R 4.4.0 and it is recommended to use RStudio IDE to run it.
 
-Download RStudio and install:
-[RStudio](https://www.rstudio.com/products/rstudio/download/#download)
+1.  Download and install R from the [CRAN](https://cran.r-project.org/) (64 bit version recommended)
+2.  Download and install [RStudio](https://posit.co/download/rstudio-desktop/#download)
+3.  Download and install [Java JDK](https://www.oracle.com/java/technologies/downloads/#java8)
 
-Download Java JDK and install:
-[Java_JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+Run the following command lines to install Java in Ubuntu.
 
-Download Rtools and install:
-[RTools](https://cran.rstudio.com/bin/windows/Rtools/)
-
-
-Run these commands in RStudio console to install the Retip package. 
-
-```{r}
-install.packages("devtools")
-devtools::install_github("Paolobnn/Retiplib")
-devtools::install_github("Paolobnn/Retip")
-
-library(keras)
-install_keras()
-
+```{bash}
+sudo apt update
+sudo apt install default-jre
+sudo apt install default-jdk
+sudo R CMD javareconf
 ```
 
-To make the package fully works in R you need to install also:
+It is also possible that `r-cran-rjava` needs to be installed.
 
-1. LightGBM. We already know that is a very difficult to do it, and you have to find your way if you want to use this machine learning. Follow these instructions: 
-[LightGBM](https://github.com/microsoft/LightGBM/tree/master/R-package)
+4.  Download and install [Rtools](https://cran.rstudio.com/bin/windows/Rtools/) (Windows)
+5.  Download and install [python3](https://www.python.org/downloads/) (required to use Keras model)
 
-If you can't install don't worry, you can use Xgboost, RandomForest and BRNN, that are installed together with Retip.
+Run the following command line to install `python` with R.
 
+```{r}
+reticulate::install_python(version = 3.10)
+```
+
+6.  Run the following command block to install all required packages, as well as the Retip packages and Retip library.
+
+```{r}
+install.packages('rJava', repos='http://cran.rstudio.com/')
+
+install.packages('devtools', version='2.4.5', repos='http://cran.rstudio.com/')
+install.packages('caret', version='6.0-94', repos='http://cran.rstudio.com/')
+install.packages('ggplot2', version='3.5.1', repos='http://cran.rstudio.com/')
+install.packages('rcdk', version='3.8.1', repos='http://cran.rstudio.com/')
+install.packages('rcdklibs', version='2.9', repos='http://cran.rstudio.com/')
+install.packages('doParallel', version='1.0.17', repos='http://cran.rstudio.com/')
+install.packages('stringi', version='1.8.4', repos='http://cran.rstudio.com/')
+install.packages('lattice', version='0.22-5', repos='http://cran.rstudio.com/')
+install.packages('randomForest', version='4.7-1.1', repos='http://cran.rstudio.com/')
+install.packages('xgboost', version='1.7.7.1', repos='http://cran.rstudio.com/')
+install.packages('brnn', version='0.9.3', repos='http://cran.rstudio.com/')
+install.packages('lightgbm', version='4.3.0', repos='http://cran.rstudio.com/')
+install.packages('h2o', version='3.44.0.3')
+install.packages('gtable', version='0.3.5', repos='http://cran.rstudio.com/')
+install.packages('grid', version='4.4.0', repos='http://cran.rstudio.com/')
+install.packages('gridExtra', version='2.3', repos='http://cran.rstudio.com/')
+install.packages('reticulate', version='1.37', repos='http://cran.rstudio.com/')
+
+devtools::install_github('olobion/Retiplib')
+devtools::install_github('olobion/Retip')
+```
+
+:warning: It is not possible to install Retip in conda enviroment because `rJava` requires NVIDIA drivers.
+
+To make the package work fully in R, you need to install **LightGBM**, which can be very difficult. If you encounter problems, follow these instructions: 
+[LightGBM](https://github.com/microsoft/LightGBM/tree/master/R-package). If you do not need to use it, do not worry - you can continue using **XGBoost**, **RandomForest**, **BRNN** and **H2O**.
 
 ## Retip workflow functions
 
-To run the Retip workflow for an input compound library, following functions need to be called in a sequence. 
+To run the Retip workflow for an input compound library, following functions need to be called in a sequence.
+
 1. prep.wizard
 2. getCD
 3. proc.data
 4. chem.space
 5. split training and testing
 6. fit.model
-7. p.model
-8. get.score
-9. RT.spell
+7. get.score
+8. p.model
+9. p.model.features
+10. RT.spell
 
+## Packages import
+
+Set `keras_installed = TRUE` if you have installed keras.
+
+```{r}
+setwd("/home/npa/Documentos/Retip/examples")
+library(Retip)
+keras_installed <- FALSE
+if (!keras_installed) {
+  keras::install_keras()
+}
+```
 
 ## Set up Retip
 
-First of all you have execute function prepare.wizard that is needed to activate the parallel computing to speed up models functions.
+First of all you have execute function `prepare.wizard` that is needed to activate the parallel computing to speed up models functions.
 
 Then you have to import your custom excel file or use FiehnLab Hilic or Riken Plasma included library.
 
 ```{r}
-library(Retip)
-
 #>Starts parallel computing
 prep.wizard()
 
 # import excel file for training and testing data
-RP2 <- readxl::read_excel("Plasma_positive.xlsx", sheet = "lib_2", col_types = c("text", 
-                                                                              "text", "text", "numeric"))
-# import excel file for external validation set
-RP_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext", col_types = c("text", 
-                                                                                  "text", "text", "numeric"))
+rp2 <- readxl::read_excel("Plasma_positive.xlsx", sheet = "lib_2",
+                          col_types = c("text", "text", "text", "numeric"))
 
 #> or use HILIC database included in Retip
-HILIC <- HILIC
-
+#> HILIC <- HILIC
 ```
 
 ## Compute Chemical Descriptors with CDK
 
-Now it's time to compute chemical descriptors with CDK a JAVA based open source project aimed at cheminformatics. 
-Several core people around the Steinbeck group developed the code. According to Ohloh the development took 136 Person , several years and translated into several million dollars in development cost.
-For you will be simple as type “getCD”.
-Depending on your library length and your PC it will take few minutes to several hours. 
-There is a counter to visualize the progress.
-It’s possible that the return table have less compounds respect the one you have start with. This is because some of yours smile code is not well formatted or for some compounds CDK is not able to calculate chemical descriptors. It’s a pity but in real life happens that you have to leave behind even your favorite compound. If happens with most of compounds check SMILES, or better use Pubchem interchange service to get good working SMILES for your library. Remember: clean your SMILES from salts and metal containing compounds before starting Retip to avoid cavities. You can use for this purpose ChemAxon standardizer, for example.
+Now it is time to compute chemical descriptors with CDK a JAVA based open source project aimed at cheminformatics. Several core people around the Steinbeck group developed the code. According to Ohloh the development took 136 Person, several years and translated into several million dollars in development cost. For you will be simple as type `getCD`. Depending on your library length and your PC it will take few minutes to several hours. There is a counter to visualize the progress. It’s possible that the return table have less compounds respect the one you have start with. This is because some of yours smile code is not well formatted or for some compounds CDK is not able to calculate chemical descriptors. It is a pity but in real life happens that you have to leave behind even your favorite compound. If happens with most of compounds check SMILES, or better use Pubchem interchange service to get good working SMILES for your library.
 
+**Remember:** clean your SMILES from salts and metal containing compounds before starting Retip to avoid cavities. You can use for this purpose ChemAxon standardizer, for example.
 
 ```{r}
-
-#> Calculate Chemical Descriptors from CDK
-descs <- getCD(HILIC)
-
+descs <- getCD(rp2)
 ```
 
 ## Clean dataset
 
-Some machine learning model didn’t like NA value, or low variance columns. 
-So they are eliminated to improve model performance.
-This is done in Retip function proc.data 
+Some machine learning model did not like NA value, or low variance columns. So they are eliminated to improve model performance. This is done in Retip function `proc.data`.
 
 ```{r}
-
 #> Clean dataset from NA and low variance value
 db_rt <- proc.data(descs)
-
 ```
-
 
 ## Plot ChemSpace
 
-You have now created your library with chemical descriptors. 
-It’s time to visualize your data and answer a two crucial question: 
+You have now created your library with chemical descriptors. It is time to visualize your data and answer a two crucial question:
 
-- what do you want to predict? 
-- Can I use my library to predict the whole Human Metabolome Database? Or PlantCyc?
+-   What do you want to predict?
+-   Can I use my library to predict the whole Human Metabolome Database? Or PlantCyc?
 
-The answer is not easy and pass trough another question: is the chemical space of my library large enough?
-So we have created function chem.space to plot your indulged data into chemical reality. You can chose a target between several database (BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB, STOFF). 
-In green you will see your library, in blue the chosen target.
+The answer is not easy and pass trough another question: is the chemical space of my library large enough? So we have created function `chem.space` to plot your indulged data into chemical reality. You can chose a target between several database (HMDB, KNAPSACK, CHEBI, DRUGBANK, SMPDB, YMDB, T3DB, FOODB, NANPDB, STOFF, BMDB, LIPIDMAPS, URINE, SALIVA, FECES, ECMDB, CSF, SERUM, PUBCHEM.1, PLANTCYC, UNPD, BLEXP, NPA and COCONUT.). In red you will see your library, in gray the chosen database.
 
-```{r}
+![Chemspace](/vignettes/chemspace.png)
 
-#> Plot chem space, the first value is your library with Chemical descriptors calculated, 
-#> the second one is your target that can be a included database 
-#> or your favourite one that you have uploaded inside Retip
+## Center and scale (optional) :warning:
 
-chem.space(db_rt,t="HMDB")
+Centering and scaling can be useful for Keras model, but can decrease performance of others models. Actually is a very delicate step that you have to pay a lot of attention. Set `cesc=TRUE` if you want to perform this step. In that case, `cesc` input will be included when you predict your target database. It is necessary to avoid obtaining a completely wrong prediction.
 
-```
-
-![Chemspace](/vignettes/chemspace.jpeg)
-
-
-## Center and scale - Optional - Warning
-
-Centering and scaling can be useful for Keras model, but can decrease performance of others models. 
-Actually is a very delicate step that you have to pay a lot of attention. If you use this function you have to remember to include cesc option also when you are predicting your target database. If you don’t you will have a completely wrong prediction. 
-
-Pay attention!
-
+**Pay attention!**
 
 ```{r}
-
-#>################ Options center and scale data  ####################################
-
+#> Optional center and scale data
 #> this option improves Keras model
+cesc <- FALSE
+if (cesc) {
+  # Build a model to use for center and scale a dataframe
+  preproc <- cesc(db_rt)
+  # use the above created model for center and scale dataframe
+  db_rt <- predict(preproc, db_rt)
+}
 
-preProc <- cesc(db_rt) #Build a model to use for center and scale a dataframe 
-db_rt <- predict(preProc,db_rt) # use the above created model for center and scale dataframe
-
-#> IMPORTANT : if you use this option remember to set cesc variable 
-#> #########   into rt.spell and getRT.smile functions
-
-#>#####################################################################################
-
+#> IMPORTANT : if you use this option remember to set cesc variable into
+#> rt.spell and getRT.smile functions
 ```
 
 ## Training and Testing set-up
 
-A very important step is to split in training and testing your data frame. 
+A very important step is to split in training and testing your data frame.
 
-Guide lines to build effective model explicitly specify:
-"QSAR/QSPR model have to be properly validated using data which was not in the training set."
+Guide lines to build effective model explicitly specify: *"QSAR/QSPR model have to be properly validated using data which was not in the training set"*.
 
-This is not new, is known from the Ancient Rome “divide et impera” (divide and conquer).
+This is not new, is known from the Ancient Rome *"divide et impera"* (divide and conquer).
 
-We can use caret function createdatapartition as follow:
-
+We can use caret function `createDataPartition` as follow:
 
 ```{r}
-
 #> Split in training and testing using caret::createDataPartition
 set.seed(101)
-inTraining <- caret::createDataPartition(db_rt$XLogP, p = .8, list = FALSE)
-training <- db_rt[ inTraining,]
-testing  <- db_rt[-inTraining,]
-
-
+in_training <- caret::createDataPartition(db_rt$XLogP, p = .8, list = FALSE)
+training <- db_rt[in_training, ]
+testing <- db_rt[-in_training, ]
 ```
-
-
 
 ## Building QSAR models:
 
-Now is time to put your hands on Retip ALMA mater: Advanced Learning Machine Algorithms.
+Now is time to put your hands on Retip ALMA mater: ***Advanced Learning Machine Algorithms***.
 
-Our suggestion is to compute all of them . Each function have an integrated tuning function to find out best parameters on your own library.
-Don't worry too much about over fitting because we have done 10 times fold cross validation.
-Each model have his advantage or disadvantage, it's simply depends on your data the one that fit better. 
-Have fun!
+Our suggestion is to compute all of them. Each function have an integrated tuning function to find out best parameters on your own library. Do not worry too much about over fitting because we have done 10 times fold cross validation. Each model have his advantage or disadvantage, it is simply depends on your data the one that fit better. Your models will be saved after building them so you can directly load them the next time that you open your project. Set `buildModels=FALSE` to load your previously built models.
 
-```{r}
+**Have fun!**
 
-#> Train Model
+```{r warning=FALSE, message=FALSE, results='hide'}
+build_models <- TRUE
 
-xgb <- fit.xgboost(training)
+if (build_models) {
+  rf  <- fit.rf(training)
+  saveRDS(rf, "rf_model.rds")
 
-rf  <- fit.rf(training)
+  brnn <- fit.brnn(training)
+  saveRDS(brnn, "brnn_model.rds")
 
-brnn <- fit.brnn(training)
+  keras <- fit.keras(training, testing)
+  save_model_hdf5(keras, filepath = "keras_model.h5")
 
-keras <- fit.keras(training,testing)
+  lightgbm <- fit.lightgbm(training, testing)
+  saveRDS(lightgbm, "lightgbm_model.rds")
 
-lightgbm <- fit.lightgbm(training,testing)
-
-
+  xgb <- fit.xgboost(training)
+  saveRDS(xgb, "xgb_model.rds")
+  
+  aml <- fit.automl.h2o(training)
+  # It saves by default the best model
+  h2o::h2o.saveModel(aml@leader, "automl_h2o_model")
+} else {
+  xgb <- readRDS("xgb_model.rds")
+  rf <- readRDS("rf_model.rds")
+  brnn <- readRDS("brnn_model.rds")
+  keras <- keras::load_model_hdf5("keras_model.h5")
+  lightgbm <- readRDS("lightgbm_model.rds")
+  h2o::h2o.init(nthreads = -1, strict_version_check=FALSE)
+  aml <- h2o.loadModel("automl_h2o_model/###") # replace ### with the name of your saved model
+}
 ```
-
-OBS: if you are going to quit your R project and open again Lightgbm and Keras disappears and you have to compute it again...To avoid this problem you have to save yours models in this simple way:
-
-```{r}
-
-#> save an RF, XGBOOST, BRNN, LIGHTGBM models 
-saveRDS(lightgbm, "light_plasma.rds")
-#> load
-light_plasma <- readRDS("light_plasma.rds")
-
-
-#> save or load keras model
-save_model_hdf5(keras1,filepath = "keras_HI")
-#> load
-keras_HI <- load_model_hdf5("keras_HI")
-
-
-```
-
-
 
 ## Testing and plot models
 
