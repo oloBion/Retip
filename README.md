@@ -23,7 +23,7 @@ Please cite:
 
 ## Retip installation
 
-Retip 0.5.5 requires R 4.4.0 and it is recommended to use RStudio IDE to run it.
+Retip 2.0 requires R 4.4.0 and it is recommended to use RStudio IDE to run it.
 
 1.  Download and install R from the [CRAN](https://cran.r-project.org/) (64 bit version recommended)
 2.  Download and install [RStudio](https://posit.co/download/rstudio-desktop/#download)
