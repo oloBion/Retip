@@ -4,11 +4,6 @@ author: "[Paolo Bonini](https://www.researchgate.net/profile/Paolo-Bonini-2), [T
 published-on: "10 May 2020 in [Analytical Chemistry](https://pubs.acs.org/doi/10.1021/acs.analchem.9b05765)"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
-header-includes:
-  - \usepackage{titling}
-  - \pretitle{\begin{center}
-    \includegraphics[width=2in,height=2in]{retip_logo.png}\LARGE\\}
-  - \posttitle{\end{left}}
 ---
 
 ```{r setup, include=FALSE}
