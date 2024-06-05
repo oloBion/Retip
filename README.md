@@ -12,6 +12,8 @@ Please cite:
 
 > Retip: Retention Time Prediction for Compound Annotation in Untargeted Metabolomics Paolo Bonini, Tobias Kind, Hiroshi Tsugawa, Dinesh Kumar Barupal, and Oliver Fiehn Analytical Chemistry 2020 92 (11), 7515-7522 DOI: 10.1021/acs.analchem.9b05765
 
+Retip 2.0 was updated and released in June 2024 by [oloBion](https://www.olobion.ai/).
+
 ## Introduction
 
 **Retip** is a tool for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis, available as both an [**R package**](https://github.com/olobion/Retip/tree/master) and a [**Python package**](https://github.com/oloBion/pyRetip/tree/master). Retention time calculation can be useful in identifying unknowns and removing false positive annotations. The [**R package**](https://github.com/olobion/Retip/tree/master) uses six different machine learning algorithms to built a stable, accurate and fast RT prediction model:
