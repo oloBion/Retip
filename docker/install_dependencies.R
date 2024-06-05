@@ -18,5 +18,5 @@ install.packages('grid', version='4.4.0', repos='http://cran.rstudio.com/')
 install.packages('gridExtra', version='2.3', repos='http://cran.rstudio.com/')
 install.packages('reticulate', version='1.37', repos='http://cran.rstudio.com/')
 
-devtools::install_github('Paolobnn/Retiplib')
-devtools::install_github('neuspou/Retip')
+devtools::install_github('olobion/Retiplib')
+devtools::install_github('olobion/Retip')
