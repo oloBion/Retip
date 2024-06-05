@@ -1,26 +1,18 @@
 ![Retip Logo](/vignettes/Rerip_logo.png)
 
-
-
-
 # Retip - Retention Time Prediction for metabolomics
 
-Published 10 May 2020 in Analytical Chemistry [link](https://doi.org/10.1021/acs.analchem.9b05765)
-
-Please cite: 
-
-Retip: Retention Time Prediction for Compound Annotation in Untargeted Metabolomics
-Paolo Bonini, Tobias Kind, Hiroshi Tsugawa, Dinesh Kumar Barupal, and Oliver Fiehn
-Analytical Chemistry 2020 92 (11), 7515-7522 
-DOI: 10.1021/acs.analchem.9b05765
-
-
-Authors: [Paolo Bonini(2)](https://www.researchgate.net/profile/Paolo_Bonini2) , [Tobias Kind(1)](https://fiehnlab.ucdavis.edu/staff/kind), [Hiroshi Tsugawa(3)](https://www.researchgate.net/profile/Hiroshi_Tsugawa), [Dinesh Barupal(1)](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30) and [Oliver Fiehn(1)](https://fiehnlab.ucdavis.edu/staff/fiehn)
+[Paolo Bonini (2)](https://www.researchgate.net/profile/Paolo-Bonini-2), [Tobias Kind (1)](https://fiehnlab.ucdavis.edu/staff/kind), [Hiroshi Tsugawa (3)](https://www.researchgate.net/profile/Hiroshi-Tsugawa), [Dinesh Barupal (1)](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30), [Oliver Fiehn (1)](https://fiehnlab.ucdavis.edu/staff/fiehn)
 
 1. [FiehnLab](https://fiehnlab.ucdavis.edu/)
 2. [NGAlab](https://www.researchgate.net/lab/NGALAB-Paolo-Bonini)
 3. [Riken](http://prime.psc.riken.jp/)
 
+Published 10 May 2020 in [Analytical Chemistry](https://pubs.acs.org/doi/10.1021/acs.analchem.9b05765)
+
+Please cite:
+
+> Retip: Retention Time Prediction for Compound Annotation in Untargeted Metabolomics Paolo Bonini, Tobias Kind, Hiroshi Tsugawa, Dinesh Kumar Barupal, and Oliver Fiehn Analytical Chemistry 2020 92 (11), 7515-7522 DOI: 10.1021/acs.analchem.9b05765
 
 ## Introduction
 
