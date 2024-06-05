@@ -1,4 +1,4 @@
-FROM r-base:4.4.4
+FROM r-base:4.4.0
 LABEL maintainer="sajjan.s.mehta@gmail.com"
 
 # install Retip build dependencies
@@ -6,6 +6,7 @@ RUN apt-get update && \
     apt-get install -yqq --no-install-recommends curl wget git && \
     apt-get install -yqq --no-install-recommends build-essential cmake libcurl4-gnutls-dev libxml2-dev libssl-dev libgit2-dev && \
     apt-get install -yqq --no-install-recommends libfontconfig1-dev libcairo2-dev pandoc && \
+    apt-get install -yqq --no-install-recommends libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev && \
     apt-get -yqq install openjdk-11-jdk && \
     rm -rf /var/lib/apt/lists/*
 

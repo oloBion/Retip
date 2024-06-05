@@ -12,7 +12,7 @@ install.packages('randomForest', version='4.7-1.1', repos='http://cran.rstudio.c
 install.packages('xgboost', version='1.7.7.1', repos='http://cran.rstudio.com/')
 install.packages('brnn', version='0.9.3', repos='http://cran.rstudio.com/')
 install.packages('lightgbm', version='4.3.0', repos='http://cran.rstudio.com/')
-install.packages('h2o', version='3.44.0.3')
+install.packages('h2o', version='3.44.0.3', repos='http://cran.rstudio.com/')
 install.packages('gtable', version='0.3.5', repos='http://cran.rstudio.com/')
 install.packages('grid', version='4.4.0', repos='http://cran.rstudio.com/')
 install.packages('gridExtra', version='2.3', repos='http://cran.rstudio.com/')
