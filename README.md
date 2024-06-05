@@ -14,7 +14,7 @@ Please cite:
 
 ## Introduction
 
-**Retip** is a tool for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis, available as both an [**R package**](https://github.com/olobion/Retip/tree/master) and a [**Python package**](https://github.com/oloBion/pyRetip/tree/master). Retention time calculation can be useful in identifying unknowns and removing false positive annotations. It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model:
+**Retip** is a tool for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis, available as both an [**R package**](https://github.com/olobion/Retip/tree/master) and a [**Python package**](https://github.com/oloBion/pyRetip/tree/master). Retention time calculation can be useful in identifying unknowns and removing false positive annotations. The **R package** uses six different machine learning algorithms to built a stable, accurate and fast RT prediction model:
 
 -   **Random Forest:** a decision tree algorithms.
 -   **BRNN:** Bayesian Regularized Neural Network.
@@ -100,7 +100,7 @@ devtools::install_github('olobion/Retiplib')
 devtools::install_github('olobion/Retip')
 ```
 
-:warning: It is not possible to install Retip in conda enviroment because `rJava` requires NVIDIA drivers.
+It is not possible to install Retip in conda enviroment because `rJava` requires NVIDIA drivers.
 
 To make the package work fully in R, you need to install **LightGBM**, which can be very difficult. If you encounter problems, follow these instructions: 
 [LightGBM](https://github.com/microsoft/LightGBM/tree/master/R-package). If you do not need to use it, do not worry - you can continue using **XGBoost**, **RandomForest**, **BRNN** and **H2O**.
@@ -125,7 +125,7 @@ To run the Retip workflow for an input compound library, following functions nee
 Set `keras_installed = TRUE` if you have installed keras.
 
 ```{r}
-setwd("/home/npa/Documentos/Retip/examples")
+setwd("") # path to the examples folder
 library(Retip)
 keras_installed <- FALSE
 if (!keras_installed) {
@@ -181,7 +181,7 @@ The answer is not easy and pass trough another question: is the chemical space o
 
 ![Chemspace](/vignettes/chemspace.png)
 
-## Center and scale (optional) :warning:
+## Center and scale Optional - Warning
 
 Centering and scaling can be useful for Keras model, but can decrease performance of others models. Actually is a very delicate step that you have to pay a lot of attention. Set `cesc=TRUE` if you want to perform this step. In that case, `cesc` input will be included when you predict your target database. It is necessary to avoid obtaining a completely wrong prediction.
 
@@ -228,7 +228,7 @@ Our suggestion is to compute all of them. Each function have an integrated tunin
 
 **Have fun!**
 
-```{r warning=FALSE, message=FALSE, results='hide'}
+```{r}
 build_models <- TRUE
 
 if (build_models) {
@@ -264,115 +264,465 @@ if (build_models) {
 ## Testing and plot models
 
 Congratulations you have built your model!
-Let’s see how much accurate it is.
-First of all check the scores with function get.score. Returns:
-- RMSE: root-mean-square error (the most important one)
-- R2: coefficient of determination 
-- MAE : Mean Absolute Error
-- 95% +/- min: is the 95% confidence in minutes
 
-The best model is always the first based on lower RMSE value.
-You can check only one model or all of them (maximum 5) at same time.
+Let’s see how much accurate it is. First of all check the scores with function `get.score`. Returns:
+
+-   **RMSE:** root-mean-square error (the most important one)
+-   **R2:** coefficient of determination
+-   **MAE:** Mean Absolute Error
+-   **95% ± min:** is the 95% confidence in minutes
+
+The best model is always the first based on lower RMSE value. You can check only one model or all of them (maximum 6) at same time.
 
 ```{r}
-
-#> first you have to put the testing daframe and then the name of the models you have computed
-stat <- get.score(testing,xgb,rf,brnn,keras,lightgbm)
-
+#> first you have to put the testing dataframe and then the name of the models
+#> you have computed
+stat <- get.score(testing, xgb, rf, brnn, keras, lightgbm, aml)
+stat
 ```
 
+You can also visualize model performance using function `p.model` using testing dataframe as input. You can also use training data or whole data to see how it change, even if the only really important is the testing one.
 
-You can also visualize model performance in a plot using function p.model with testing dataframe.
+### XGBoost
 
 ```{r}
-
-#> first you have to put the testing daframe and then the name of the models you want to visualize. 
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
 #> Last value is the title of the graphics.
-p.model(testing, m=brnn,title = "  RIKEN PLASMA")
-
+p.model(testing, m = xgb, title = "XGBoost - RIKEN PLASMA")
 ```
 
-![error hilic](/vignettes/error_hilic.jpeg)
-![predreal hilic](/vignettes/pred_real_hilic.jpeg)
+![error_xgboost](/vignettes/error_xgboost.png)
+![predreal_xgboost](/vignettes/pred_xgboost.png)
 
-You can do this for all your model and see the difference between them. You can also use training data or whole data to see how it change, even if the only really important is the testing one.
+### Random forest
 
+```{r}
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
+#> Last value is the title of the graphics.
+p.model(testing, m = rf, title = "Random forest - RIKEN PLASMA")
+```
+
+![error_randomforest](/vignettes/error_randomforest.png)
+![predreal_randomforest](/vignettes/pred_randomforest.png)
+
+### BRNN
+
+```{r}
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
+#> Last value is the title of the graphics.
+p.model(testing, m = brnn, title = "BRNN - RIKEN PLASMA")
+```
+
+![error_brnn](/vignettes/error_brnn.png)
+![predreal_brnn](/vignettes/pred_brnn.png)
+
+### LightGBM
+
+```{r}
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
+#> Last value is the title of the graphics.
+p.model(testing, m = lightgbm, title = "LightGBM - RIKEN PLASMA")
+```
+
+![error_lightgbm](/vignettes/error_lightgbm.png)
+![predreal_lightgbm](/vignettes/pred_lightgbm.png)
+
+### Keras
+
+```{r}
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
+#> Last value is the title of the graphics.
+p.model(testing, m = keras, title = "Keras - RIKEN PLASMA")
+```
+
+![error_keras](/vignettes/error_keras.png)
+![predreal_keras](/vignettes/pred_keras.png)
+
+### H2O autoML
+
+```{r}
+#> first you have to put the testing daframe and then the name of the models
+#> you want to visualize.
+#> Last value is the title of the graphics.
+p.model(testing, m = aml, title = "H2O autoML - RIKEN PLASMA")
+```
+
+![error_h2o](/vignettes/error_h2o.png)
+![predreal_h2o](/vignettes/pred_h2o.png)
+
+For the H2O autoML model, the statistics and the figures are obtained from the best model (`aml@leader`). If you want to check one of the other models, you have to select it using the model ID. The same applies when saving your H2O AutoML model. You will find an example of how to get a different model in the following command block.
+
+```{r}
+#> First, get the leaderboard of your model
+# aml_lb <- as.data.frame(h2o::h2o.get_leaderboard(object = aml, extra_columns = "ALL"))
+#> Second, decide the model you want to inspect and select
+#> The number corresponds to the index
+# model_id <- aml_lb[3, "model_id"]
+# selected_model <- h2o::h2o.getModel(model_id)
+```
+
+## Feature importance
+
+You can visualize the feature importance of your model using the `p.model.features` function. You have to indicate your model (`model`) and your model type (`mdl_type`). The accepted inputs for `mdl_type` are XGBoost (`xgb`), Random Forest (`rf`), BRNN (`brnn`), LightGBM (`lightgbm`) and H2O autoML (`h2o`). The Keras model is not supported.
+
+### XGBoost
+
+```{r}
+p.model.features(xgb, mdl_type = "xgb")
+```
+
+![features_xgboost](/vignettes/features_xgboost.png)
+
+### Random forest
+
+```{r}
+p.model.features(rf, mdl_type = "rf")
+```
+
+![features_randomforest](/vignettes/features_randomforest.png)
+
+### BRNN
+
+```{r}
+p.model.features(brnn, mdl_type = "brnn")
+```
+
+![features_brnn](/vignettes/features_brnn.png)
+
+### LightGBM
+
+```{r}
+p.model.features(lightgbm, mdl_type = "lightgbm")
+```
+
+![features_lightgbm](/vignettes/features_lightgbm.png)
+
+### H2O autoML
+
+It is not possible to plot the stacked ensemble models, but it is possible to plot the best 20 models used to construct the stacked one. For this reason, you have to indicate the number of the model (`h2o_number`) you want to see. You can find the correspondence between model ID and number running the following command line.
+
+```{r}
+# aml_model_number <- as.data.frame(rownames(h2o::h2o.varimp(aml)))
+```
+
+```{r}
+p.model.features(aml, mdl_type = "h2o", h2o_number = 1)
+```
+
+![features_h2o](/vignettes/features_h2o.png)
 
 ## Retention Time Prediction SPELL
 
-This is the the final step. 
-All the effort made before have been accomplished to compute the prediction on a whole database.
+This is the the final step. All the effort made before have been accomplished to compute the prediction on a whole database.
 
 You have 3 options to make a prediction:
-- for your personal database
-- for downloaded mona.msp 
-- for a Retip included database 
 
-1. In the first case you have to import your excel with 3 mandatory columns NAME INCHKEY and SMILES, compute CD and then make the prediction. Just like this:
+-   for your personal database
+-   for downloaded mona.msp
+-   for a Retip included database
 
+### 1. Personal database
+
+In that case, you have to import your excel with compound **Name**, **InChIKey** and **SMILES code**, compute CD and then make the prediction.
 
 ```{r}
-
-#> import dataset
-
-pathogen_box <- readxl::read_excel("pathogen_box_hilic_rt.xlsx", col_types = c("text", 
-                                                               "text", "text"))
+# import excel file for external validation set
+rp_ext <- readxl::read_excel("Plasma_positive.xlsx", sheet = "ext",
+                             col_types = c("text", "text", "text", "numeric"))
 #> compute Chemical descriptors
-pathogen_box_desc <- getCD(pathogen_box)
-
-#> perform the RT spell
-pathogen_box_pred <- RT.spell(training,pathogen_box_desc,model=keras)
-
+rp_ext_desc <- getCD(rp_ext)
 ```
 
-2. In the second case you have to put your msp downloaded from Mona inside your project folder. First function is needed to extract information from msp and build input table. Then you have to compute CD, make the prediction and incorporate again inside msp. In this way the msp you have in your project folder is ready to be used for compound identification with MSMS and Retention time prediction.
-Here an example:
+Clean data set from NA and low variance values using the Retip function `proc.data` as you did before with your data.
 
 ```{r}
+#> Clean dataset from NA and low variance value
+db_rt_ext <- proc.data(rp_ext_desc)
+```
 
+Center and scale your data if you performed this step before.
 
-db_mona <- prep.mona(msp="MoNA-export-CASMI_2016.msp")
+```{r}
+if (cesc) {
+  # Build a model to use for center and scale a dataframe
+  preproc_ext <- cesc(db_rt_ext)
+  # use the above created model for center and scale dataframe
+  db_rt_ext <- predict(preproc_ext, db_rt_ext)
+}
+```
+
+#### XGBoost
+
+```{r}
+#> perform the RT spell
+if (cesc) {
+  rp_ext_pred_xgb <- Retip::RT.spell(training, rp_ext_desc, model = xgb,
+                                     cesc = preproc)
+} else {
+  rp_ext_pred_xgb <- Retip::RT.spell(training, rp_ext_desc, model = xgb)
+}
+```
+
+#### Random forest
+
+```{r}
+#> perform the RT spell
+if (cesc) {
+  rp_ext_pred_rf <- Retip::RT.spell(training, rp_ext_desc, model = rf,
+                                    cesc = preproc)
+} else {
+  rp_ext_pred_rf <- Retip::RT.spell(training, rp_ext_desc, model = rf)
+}
+```
+
+#### BRNN
+
+```{r}
+#> perform the RT spell
+if (cesc) {
+  rp_ext_pred_brnn <- Retip::RT.spell(training, rp_ext_desc, model = brnn,
+                                      cesc = preproc)
+} else {
+  rp_ext_pred_brnn <- Retip::RT.spell(training, rp_ext_desc, model = brnn)
+}
+```
+
+#### LightGBM
+
+```{r}
+#> perform the RT spell
+if (cesc) {
+  rp_ext_pred_lightgbm <- RT.spell(training, rp_ext_desc, model = lightgbm,
+                                   cesc = preproc)
+} else {
+  rp_ext_pred_lightgbm <- RT.spell(training, rp_ext_desc, model = lightgbm)
+}
+```
+
+#### Keras
+
+```{r}
+#> perform the RT spell
+if (cesc) {
+  rp_ext_pred_keras <- RT.spell(training, rp_ext_desc, model = keras,
+                                cesc = preproc)
+} else {
+  rp_ext_pred_keras <- RT.spell(training, rp_ext_desc, model = keras)
+}
+```
+
+#### H2O autoML
+
+```{r}
+#> perform the RT spell
+if (cesc) {
+  rp_ext_pred_aml <- RT.spell(training, rp_ext_desc, model = aml,
+                                cesc = preproc)
+} else {
+  rp_ext_pred_aml <- RT.spell(training, rp_ext_desc, model = aml)
+}
+```
+
+### 2. Downloaded mona.msp
+
+Here, you have to put your msp downloaded from [Mona](https://mona.fiehnlab.ucdavis.edu/downloads) inside your project folder. First, `prep.mona` function is needed to extract information from msp file and build input table. Then, you have to compute CD using `getCD`, make the prediction and incorporate again inside msp file. In this way the msp file you have in your project folder is ready to be used for compound identification with MSMS and Retention time prediction.
+
+```{r}
+db_mona <- prep.mona(msp = "MoNA-export-CASMI_2016.msp")
 
 mona <- getCD(db_mona)
-
-mona_rt3 <- RT.spell(training,mona,model=keras_HI)
-
-addRT.mona(msp="MoNA-export-CASMI_2016.msp",mona_rt)
-
 ```
 
-The last option is the easiest one. We have computed for you more than 300k compounds to save your time and more important save electricity (we love nature). 
-You have just to chose a target database and a type of output: 
+#### XGBoost
 
 ```{r}
+if (cesc) {
+  mona_rt_xgb <- RT.spell(training, mona, model = xgb, cesc = preproc)
+} else {
+  mona_rt_xgb <- RT.spell(training, mona, model = xgb)
+}
 
-#> example of all Retip included compounds predicted and exported to MSFINDER
-
-all_pred <- RT.spell(training,target="ALL",model=keras,output="MSFINDER")
-export_rtp <- RT.export(all_pred, program="MSFINDER",pol="pos")
-
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_xgb)
 ```
 
-YES, as you have seen you can chose from different output style of your prediction. Now we have available:
-- "MSDIAL": identification with accurate Mass and RTP (RECOMMENDED) [get MSDIAL](http://prime.psc.riken.jp/compms/msdial/main.html)
-- "MSFINDER": identification with accurate Mass, in silico fragmentation MS2 and RTP (RECOMMENDED) [get MSFINDER](http://prime.psc.riken.jp/compms/msfinder/main.html)
-- "AGILENT": works with Mass Hunter software
-- "THERMO"
-- "WATERS"
-- "SCIEX"
+#### Random forest
 
-You have to chose the polarity you are working "pos" or "neg"
+```{r}
+if (cesc) {
+  mona_rt_rf <- RT.spell(training, mona, model = rf, cesc = preproc)
+} else {
+  mona_rt_rf <- RT.spell(training, mona, model = rf)
+}
+
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_rf)
+```
+
+#### BRNN
+
+```{r}
+if (cesc) {
+  mona_rt_brnn <- RT.spell(training, mona, model = brnn,
+                           cesc = preproc)
+} else {
+  mona_rt_brnn <- RT.spell(training, mona, model = brnn)
+}
+
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_brnn)
+```
+
+#### LightGBM
+
+```{r}
+if (cesc) {
+  mona_rt_lightgbm <- RT.spell(training, mona, model = lightgbm,
+                               cesc = preproc)
+} else {
+  mona_rt_lightgbm <- RT.spell(training, mona, model = lightgbm)
+}
+
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_lightgbm)
+```
+
+#### Keras
+
+```{r}
+if (cesc) {
+  mona_rt_keras <- RT.spell(training, mona, model = keras,
+                            cesc = preproc)
+} else {
+  mona_rt_keras <- RT.spell(training, mona, model = keras)
+}
+
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_keras)
+```
+
+#### H2O autoML
+
+```{r}
+if (cesc) {
+  mona_rt_aml <- RT.spell(training, mona, model = aml,
+                            cesc = preproc)
+} else {
+  mona_rt_aml <- RT.spell(training, mona, model = aml)
+}
+
+addRT.mona(msp = "MoNA-export-CASMI_2016.msp", mona_rt_aml)
+```
+
+
+### 3. Retip included database
+
+This option is the easiest one. We computed more than 300k compounds to save your time and more important save electricity (we love nature). You have just to chose a target database, the type of output and the polarity (`pos` or `neg`).
+
+The available outputs are:
+
+-   **`MSDIAL`:** identification with accurate Mass and RTP (*RECOMMENDED*); [get MSDIAL](http://prime.psc.riken.jp/compms/msdial/main.html)
+-   **`MSFINDER`:** identification with accurate Mass, in silico fragmentation MS2 and RTP (*RECOMMENDED*); [get MSFINDER](http://prime.psc.riken.jp/compms/msfinder/main.html)
+-   **`AGILENT`:** works with Mass Hunter software
+-   **`THERMO`**
+-   **`WATERS`**
+-   **`SCIEX`**
+
+#### XGBoost
+
+```{r}
+#> example of all Retip included compounds predicted and exported to MSFINDER
+if (cesc) {
+  all_pred_xgb <- RT.spell(training, target = "ALL", model = xgb,
+                           cesc = preproc)
+} else {
+  all_pred_xgb <- RT.spell(training, target = "ALL", model = xgb)
+}
+
+export_rtp <- RT.export(all_pred_xgb, program = "MSFINDER", pol = "pos")
+```
+
+#### Random forest
+
+```{r}
+#> example of all Retip included compounds predicted and exported to MSFINDER
+if (cesc) {
+  all_pred_rf <- RT.spell(training, target = "ALL", model = rf,
+                          cesc = preproc)
+} else {
+  all_pred_rf <- RT.spell(training, target = "ALL", model = rf)
+}
+
+export_rtp <- RT.export(all_pred_rf, program = "MSFINDER", pol = "pos")
+```
+
+#### BRNN
+
+```{r}
+#> example of all Retip included compounds predicted and exported to MSFINDER
+if (cesc) {
+  all_pred_brnn <- RT.spell(training, target = "ALL", model = brnn,
+                            cesc = preproc)
+} else {
+  all_pred_brnn <- RT.spell(training, target = "ALL", model = brnn)
+}
+
+export_rtp <- RT.export(all_pred_brnn, program = "MSFINDER", pol = "pos")
+```
+
+#### LightGBM
+
+```{r}
+#> example of all Retip included compounds predicted and exported to MSFINDER
+if (cesc) {
+  all_pred_lightgbm <- RT.spell(training, target = "ALL", model = lightgbm,
+                                cesc = preproc)
+} else {
+  all_pred_lightgbm <- RT.spell(training, target = "ALL", model = lightgbm)
+}
+
+export_rtp <- RT.export(all_pred_lightgbm, program = "MSFINDER", pol = "pos")
+```
+
+#### Keras
+
+```{r}
+#> example of all Retip included compounds predicted and exported to MSFINDER
+if (cesc) {
+  all_pred_keras <- RT.spell(training, target = "ALL", model = keras,
+                             cesc = preproc)
+} else {
+  all_pred_keras <- RT.spell(training, target = "ALL", model = keras)
+}
+
+export_rtp <- RT.export(all_pred_keras, program = "MSFINDER", pol = "pos")
+```
+
+#### H2O autoML
+
+```{r}
+#> example of all Retip included compounds predicted and exported to MSFINDER
+if (cesc) {
+  all_pred_aml <- RT.spell(training, target = "ALL", model = aml,
+                             cesc = preproc)
+} else {
+  all_pred_aml <- RT.spell(training, target = "ALL", model = aml)
+}
+
+export_rtp <- RT.export(all_pred_aml, program = "MSFINDER", pol = "pos")
+```
 
 ## Conclusions Remarks:
 
 Remember these few tips:
 
-- split your data into training and testing 80/20. And if you want to be cool use also an additional external dataset;
-- Don’t cheat yourself doing cherry picking with testing molecules that are out-liner and putting in training data. Leave at it is, is better know the truth than lie to yourself;
-- As you probably know R use set.seed when you have a random function. This is needed to get the same results when you do it again. There is a set seed before the split training/testing. If you modify you get a slightly different results in your models if the problematic compounds are inside training data. This is not a real cheat because is random driven ;-)
-- Look at your smiles before import in Retip, if you have cavities in it will not work properly.
+-   Split your data into training and testing (80/20). If you want to be cool use also an additional external dataset.
+-   Do not cheat yourself doing cherry picking with testing molecules that are out-liner and putting in training data. Leave at it is, is better know the truth than lie to yourself.
+-   As you probably know R use `set.seed` when you have a random function. This is needed to get the same results when you do it again. There is a set seed before the split training/testing. If you modify you get a slightly different results in your models if the problematic compounds are inside training data. This is not a real cheat because is random driven ;-)
+-   Look at your smiles before import in Retip, if you have cavities in it will not work properly.
 
 Remember Leonardo Da Vinci suggestion:
-“I have been impressed with the urgency of doing. Knowing is not enough; we must apply. Being willing is not enough; we must do."
 
-Retip born to helps you in identification in metabolomics workflow, it’s not an exhibition of knowledge. The success of this app is if helps in your work, in real world metabolomics experiments.
+> I have been impressed with the urgency of doing. Knowing is not enough; we must apply. Being willing is not enough; we must do.
+
+**Retip** born to helps you in identification in metabolomics workflow, it is not an exhibition of knowledge. The success of this app is if helps in your work, in real world metabolomics experiments.
