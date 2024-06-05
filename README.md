@@ -2,11 +2,9 @@
 
 # Retip - Retention Time Prediction for metabolomics
 
-[Paolo Bonini (2)](https://www.researchgate.net/profile/Paolo-Bonini-2), [Tobias Kind (1)](https://fiehnlab.ucdavis.edu/staff/kind), [Hiroshi Tsugawa (3)](https://www.researchgate.net/profile/Hiroshi-Tsugawa), [Dinesh Barupal (1)](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30), [Oliver Fiehn (1)](https://fiehnlab.ucdavis.edu/staff/fiehn)
+[Paolo Bonini](https://www.researchgate.net/profile/Paolo-Bonini-2)<sup>2</sup>, [Tobias Kind](https://fiehnlab.ucdavis.edu/staff/kind)<sup>1</sup>, [Hiroshi Tsugawa](https://www.researchgate.net/profile/Hiroshi-Tsugawa)<sup>3</sup>, [Dinesh Barupal](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30)<sup>1</sup>, [Oliver Fiehn](https://fiehnlab.ucdavis.edu/staff/fiehn)<sup>1</sup>
 
-1. [FiehnLab](https://fiehnlab.ucdavis.edu/)
-2. [NGAlab](https://www.researchgate.net/lab/NGALAB-Paolo-Bonini)
-3. [Riken](http://prime.psc.riken.jp/)
+<sup>1</sup>[FiehnLab](https://fiehnlab.ucdavis.edu/), <sup>2</sup>[NGAlab](https://www.researchgate.net/lab/NGALAB-Paolo-Bonini), <sup>3</sup>[Riken](http://prime.psc.riken.jp/)
 
 Published 10 May 2020 in [Analytical Chemistry](https://pubs.acs.org/doi/10.1021/acs.analchem.9b05765)
 
