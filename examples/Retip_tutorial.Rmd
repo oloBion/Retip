@@ -4,6 +4,11 @@ author: "[Paolo Bonini](https://www.researchgate.net/profile/Paolo-Bonini-2), [T
 published-on: "10 May 2020 in [Analytical Chemistry](https://pubs.acs.org/doi/10.1021/acs.analchem.9b05765)"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
+header-includes:
+  - \usepackage{titling}
+  - \pretitle{\begin{center}
+    \includegraphics[width=2in,height=2in]{retip_logo.png}\LARGE\\}
+  - \posttitle{\end{left}}
 ---
 
 ```{r setup, include=FALSE}
@@ -12,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-**Retip** is an R package for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis. Retention time calculation can be useful in identifying unknowns and removing false positive annotations. It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model:
+**Retip** is a tool for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis, available as both an [**R package**](https://github.com/olobion/Retip/tree/master) and a [**Python package**](https://github.com/oloBion/pyRetip/tree/master). Retention time calculation can be useful in identifying unknowns and removing false positive annotations. The [**R package**](https://github.com/olobion/Retip/tree/master) uses six different machine learning algorithms to built a stable, accurate and fast RT prediction model:
 
 -   **Random Forest:** a decision tree algorithms.
 -   **BRNN:** Bayesian Regularized Neural Network.
@@ -46,7 +51,7 @@ In case you want to avoid building a library from scratch, you can utilize publi
 Set `keras_installed = TRUE` if you have installed keras.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
-setwd("/home/npa/Documentos/Retip/examples")
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 library(Retip)
 keras_installed <- FALSE
 if (!keras_installed) {
@@ -98,7 +103,7 @@ You have now created your library with chemical descriptors. It is time to visua
 -   What do you want to predict?
 -   Can I use my library to predict the whole Human Metabolome Database? Or PlantCyc?
 
-The answer is not easy and pass trough another question: is the chemical space of my library large enough? So we have created function `chem.space` to plot your indulged data into chemical reality. You can chose a target between several database (BMDB, ChEBI, DrugBank, ECMDB, FooDB, HMDB, KNApSAcK, PlantCyc, SMPDB, T3DB, UNPD, YMDB, STOFF). In red you will see your library, in gray the chosen database.
+The answer is not easy and pass trough another question: is the chemical space of my library large enough? So we have created function `chem.space` to plot your indulged data into chemical reality. You can chose a target between several database (HMDB, KNAPSACK, CHEBI, DRUGBANK, SMPDB, YMDB, T3DB, FOODB, NANPDB, STOFF, BMDB, LIPIDMAPS, URINE, SALIVA, FECES, ECMDB, CSF, SERUM, PUBCHEM.1, PLANTCYC, UNPD, BLEXP, NPA and COCONUT). In red you will see your library, in gray the chosen database.
 
 ```{r warning=FALSE}
 chem.space(db_rt, target = "HMDB", title = "HMDB - RIKEN PLASMA")

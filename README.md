@@ -1,6 +1,10 @@
+![Retip Logo](/examples/retip_logo.png)
+
 # Retip - Retention Time prediction for metabolomics
 
-[Paolo Bonini](https://www.researchgate.net/profile/Paolo-Bonini-2), [Tobias Kind](https://fiehnlab.ucdavis.edu/staff/kind), [Hiroshi Tsugawa](https://www.researchgate.net/profile/Hiroshi-Tsugawa), [Dinesh Barupal](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30), [Oliver Fiehn](https://fiehnlab.ucdavis.edu/staff/fiehn)
+[Paolo Bonini](https://www.researchgate.net/profile/Paolo-Bonini-2)<sup>2</sup>, [Tobias Kind](https://fiehnlab.ucdavis.edu/staff/kind)<sup>1</sup>, [Hiroshi Tsugawa](https://www.researchgate.net/profile/Hiroshi-Tsugawa)<sup>3</sup>, [Dinesh Barupal](https://fiehnlab.ucdavis.edu/component/contact/contact/11-members/14-wcmc/30)<sup>1</sup>, [Oliver Fiehn](https://fiehnlab.ucdavis.edu/staff/fiehn)<sup>1</sup>
+
+<sup>1</sup>[FiehnLab](https://fiehnlab.ucdavis.edu/), <sup>2</sup>[NGAlab](https://www.researchgate.net/lab/NGALAB-Paolo-Bonini), <sup>3</sup>[Riken](http://prime.psc.riken.jp/)
 
 Published 10 May 2020 in [Analytical Chemistry](https://pubs.acs.org/doi/10.1021/acs.analchem.9b05765)
 
@@ -10,7 +14,7 @@ Please cite:
 
 ## Introduction
 
-**Retip** is a tool for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis, available as both an **R package** and a [**Python package**](https://github.com/oloBion/pyRetip/tree/master). Retention time calculation can be useful in identifying unknowns and removing false positive annotations. It uses five different machine learning algorithms to built a stable, accurate and fast RT prediction model:
+**Retip** is a tool for predicting Retention Time (RT) for small molecules in a high pressure liquid chromatography (HPLC) Mass Spectrometry analysis, available as both an [**R package**](https://github.com/olobion/Retip/tree/master) and a [**Python package**](https://github.com/oloBion/pyRetip/tree/master). Retention time calculation can be useful in identifying unknowns and removing false positive annotations. The [**R package**](https://github.com/olobion/Retip/tree/master) uses six different machine learning algorithms to built a stable, accurate and fast RT prediction model:
 
 -   **Random Forest:** a decision tree algorithms.
 -   **BRNN:** Bayesian Regularized Neural Network.
