@@ -125,7 +125,7 @@ To run the Retip workflow for an input compound library, following functions nee
 Set `keras_installed = TRUE` if you have installed keras.
 
 ```{r}
-setwd("") # path to the examples folder
+setwd(setwd(dirname(rstudioapi::getActiveDocumentContext()$path)))
 library(Retip)
 keras_installed <- FALSE
 if (!keras_installed) {
@@ -177,7 +177,7 @@ You have now created your library with chemical descriptors. It is time to visua
 -   What do you want to predict?
 -   Can I use my library to predict the whole Human Metabolome Database? Or PlantCyc?
 
-The answer is not easy and pass trough another question: is the chemical space of my library large enough? So we have created function `chem.space` to plot your indulged data into chemical reality. You can chose a target between several database (HMDB, KNAPSACK, CHEBI, DRUGBANK, SMPDB, YMDB, T3DB, FOODB, NANPDB, STOFF, BMDB, LIPIDMAPS, URINE, SALIVA, FECES, ECMDB, CSF, SERUM, PUBCHEM.1, PLANTCYC, UNPD, BLEXP, NPA and COCONUT.). In red you will see your library, in gray the chosen database.
+The answer is not easy and pass trough another question: is the chemical space of my library large enough? So we have created function `chem.space` to plot your indulged data into chemical reality. You can chose a target between several database (HMDB, KNAPSACK, CHEBI, DRUGBANK, SMPDB, YMDB, T3DB, FOODB, NANPDB, STOFF, BMDB, LIPIDMAPS, URINE, SALIVA, FECES, ECMDB, CSF, SERUM, PUBCHEM.1, PLANTCYC, UNPD, BLEXP, NPA and COCONUT). In red you will see your library, in gray the chosen database.
 
 ![Chemspace](/vignettes/chemspace.png)
 
