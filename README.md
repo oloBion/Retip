@@ -72,12 +72,12 @@ install.packages('grid', version='4.4.0', repos='http://cran.rstudio.com/')
 install.packages('gridExtra', version='2.3', repos='http://cran.rstudio.com/')
 install.packages('reticulate', version='1.37', repos='http://cran.rstudio.com/')
 
-devtools::install_github('Paolobnn/Retiplib')
-devtools::install_github('Paolobnn/Retip')
+devtools::install_github('olobion/Retiplib')
+devtools::install_github('olobion/Retip')
 ```
 
 :warning: It is not possible to install Retip in conda enviroment because `rJava` requires NVIDIA drivers.
 
 ## Usage
 
-You will find a tutorial in the [**Retip app**](https://www.retip.app/) as well as in the examples folder of the [**GitHub repository**](https://github.com/PaoloBnn/Retip/tree/master?tab=readme-ov-file).
+You will find a tutorial in the [**Retip app**](https://www.retip.app/) as well as in the examples folder of the [**GitHub repository**](https://github.com/olobion/Retip/tree/master?tab=readme-ov-file).
